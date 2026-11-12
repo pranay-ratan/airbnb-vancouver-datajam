@@ -1,0 +1,5 @@
+data/raw/insideairbnb/*.gz
+data/raw/insideairbnb/*.geojson
+data/processed/
+__pycache__/
+*.pyc

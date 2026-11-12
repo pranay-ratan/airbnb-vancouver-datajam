@@ -1,0 +1,8 @@
+step,listings_remaining
+raw listings,6131
+entire home/apt only (investable whole units),5012
+drop hotel-like / serviced / hostel property types,4938
+minimum stay < 28 nights (true short-term),3563
+has a valid nightly price,3288
+"price $40-$2,000 per night (outlier trim)",3268
+purchasable asset class (condo/townhouse/house; drop suites & guesthouses),2579
