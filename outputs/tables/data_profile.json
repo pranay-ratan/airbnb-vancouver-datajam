@@ -1,0 +1,85 @@
+{
+ "snapshot": "2026-06-15",
+ "rows": 6509,
+ "columns": 90,
+ "scrape_dates": {
+  "2026-06-15": 1295,
+  "2026-06-16": 3058,
+  "2026-07-06": 2156
+ },
+ "rows_previous_scrape": 2156,
+ "entire_homes": 5322,
+ "price_missing_share_all": 0.102013,
+ "quote_nights_counts": {
+  "1": 1881,
+  "2": 1768,
+  "90": 1308,
+  "3": 527,
+  "4": 119,
+  "5": 85
+ },
+ "quote_days_ahead_median": 3.0,
+ "quote_checkin_by_week": {
+  "2026-06-15": 2795,
+  "2026-06-22": 772,
+  "2026-06-29": 304,
+  "2026-07-06": 747,
+  "2026-07-13": 129,
+  "2026-07-20": 61,
+  "2026-07-27": 126,
+  "2026-08-03": 65
+ },
+ "q90_month_price_over_price_field": 89.997739,
+ "occ_formula_match_share": 0.998704,
+ "occ_at_cap_share": 0.124417,
+ "revenue_is_price_x_occ_corr": 1.0,
+ "stay_segments_entire": {
+  "nightly": 3826,
+  "90+ nights": 1388,
+  "28-89 nights": 35
+ },
+ "share_90plus_entire": 0.265877,
+ "apartments_nightly": 1564,
+ "apartments_90plus": 1022,
+ "core_apartments_nightly": 1254,
+ "core_apartments_90plus": 657,
+ "core_90plus_month_asking_1br": 4492.8,
+ "core_90plus_month_asking_2br": 6636.6,
+ "nightly_entire": 3826,
+ "licence_both_numbers_share": 0.9161,
+ "licence_exempt_share": 0.061683,
+ "licence_none_share": 0.000784,
+ "licence_year_prefix": {
+  "26": 2856,
+  "25": 471,
+  "24": 122,
+  "23": 42
+ },
+ "brief_city_counts": {
+  "active_listings": 4969,
+  "licences": 3248,
+  "suspensions": 69
+ },
+ "nightly_no_review_yet": 461,
+ "nightly_first_review_within_6m": 906,
+ "nightly_new_share": 0.357292,
+ "supply_by_snapshot": {
+  "2025-12-14": {
+   "nightly": 2724,
+   "90plus": 1733
+  },
+  "2026-03-21": {
+   "nightly": 3041,
+   "90plus": 1511
+  },
+  "2026-06-15": {
+   "nightly": 3826,
+   "90plus": 1388
+  },
+  "2026-09-17": {
+   "nightly": 3562,
+   "90plus": 1333
+  }
+ },
+ "comps": 1037
+}

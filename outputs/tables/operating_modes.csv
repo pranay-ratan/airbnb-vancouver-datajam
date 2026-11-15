@@ -1,0 +1,6 @@
+mode,noi_per_unit,yield,vacancy_tax_per_unit
+"Nightly all year, vacancy taxes not applied",15798.215893348903,0.022858476333432003,0.0
+"Nightly all year, Empty Homes Tax and Speculation Tax applied",-10548.384106651101,-0.015262482174290753,26346.6
+Unfurnished 12-month lease,16276.810599999995,0.0241807248322347,0.0
+"Hybrid: nightly in the four peak months, 30+-night stays in the other eight",19717.199901281943,0.028528863660785227,0.0
+"Hybrid with a five-month nightly season (tested, not chosen)",20794.52822747563,0.03008765259074294,0.0

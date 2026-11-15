@@ -1,0 +1,92 @@
+{
+ "base": {
+  "listings": 321,
+  "nightly_yield": 0.022858,
+  "hybrid_yield": 0.028529,
+  "median_nights": 156.0,
+  "median_price": 366.753779,
+  "guest_rev_per_unit": 53281.021931
+ },
+ "price_as_quoted": {
+  "listings": 321,
+  "nightly_yield": 0.029755,
+  "hybrid_yield": 0.03222,
+  "median_nights": 156.0,
+  "median_price": 416.53,
+  "guest_rev_per_unit": 60512.380009
+ },
+ "all_ages": {
+  "listings": 474,
+  "nightly_yield": 0.01559,
+  "hybrid_yield": 0.024594,
+  "median_nights": 132.0,
+  "median_price": 362.060726,
+  "guest_rev_per_unit": 44526.405051
+ },
+ "no_licence_filter": {
+  "listings": 341,
+  "nightly_yield": 0.021715,
+  "hybrid_yield": 0.027912,
+  "median_nights": 150.0,
+  "median_price": 364.746244,
+  "guest_rev_per_unit": 51953.233993
+ },
+ "all_ages_any_licence": {
+  "listings": 532,
+  "nightly_yield": 0.013367,
+  "hybrid_yield": 0.023392,
+  "median_nights": 120.0,
+  "median_price": 352.185942,
+  "guest_rev_per_unit": 41886.944083
+ },
+ "every_priced_listing": {
+  "listings": 598,
+  "nightly_yield": 0.009584,
+  "hybrid_yield": 0.021341,
+  "median_nights": 102.0,
+  "median_price": 357.041888,
+  "guest_rev_per_unit": 37263.970321
+ },
+ "fee_3pct": {
+  "listings": 321,
+  "nightly_yield": 0.030375,
+  "hybrid_yield": 0.032552,
+  "median_nights": 156.0,
+  "median_price": 366.753779,
+  "guest_rev_per_unit": 53281.021931
+ },
+ "dtes_west_price": {
+  "listings": 142,
+  "nightly_yield": 0.021507,
+  "hybrid_yield": 0.026757,
+  "median_nights": 153.0,
+  "median_price": 377.561891,
+  "guest_rev_per_unit": 57718.902395
+ },
+ "dtes_east_price": {
+  "listings": 142,
+  "nightly_yield": 0.027772,
+  "hybrid_yield": 0.034208,
+  "median_nights": 153.0,
+  "median_price": 377.561891,
+  "guest_rev_per_unit": 57718.902395
+ },
+ "houses_3plus_bedrooms": {
+  "listings": 240,
+  "nightly_yield": 0.003554,
+  "hybrid_yield": 0.005111,
+  "median_nights": 117.0,
+  "median_price": 581.218877,
+  "guest_rev_per_unit": 71561.738357
+ },
+ "houses_all_entire_homes": {
+  "listings": 614,
+  "nightly_yield": -0.001047,
+  "hybrid_yield": 0.003171,
+  "median_nights": 138.0,
+  "median_price": 393.256054,
+  "guest_rev_per_unit": 54587.859073
+ },
+ "small_entire_homes_dropped": 783,
+ "suites_dropped": 679
+}

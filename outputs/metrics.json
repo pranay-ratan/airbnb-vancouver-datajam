@@ -1,0 +1,1344 @@
+{
+ "credit": "Data: Inside Airbnb, Vancouver, 15 June 2026, CC BY 4.0.",
+ "snapshot": "2026-06-15",
+ "budget": 10000000,
+ "recommendation": {
+  "units": 14,
+  "deployed": 9675842.75,
+  "reserve": 324157.25,
+  "noi_p10": 213328.49433250312,
+  "noi_p50": 269952.7269275197,
+  "noi_p90": 340170.0649619608,
+  "yield_p10": 0.022047536307109,
+  "yield_p50": 0.0278996604122694,
+  "yield_p90": 0.0351566342851077,
+  "prob_yield_below_1pct": 0.0,
+  "units_missing_tenancy_test": 0.137,
+  "allocation": {
+   "Downtown": 9,
+   "Downtown Eastside": 4,
+   "West End": 1
+  },
+  "pool_listings": 321,
+  "nightly_months": "May-August",
+  "furnished_months": "September-April",
+  "unit_allin_cost": 691131.625,
+  "unit_purchase": 658665.0,
+  "unit_price": 366.7537793371725,
+  "unit_nights": 156.0
+ },
+ "profile": {
+  "snapshot": "2026-06-15",
+  "rows": 6509,
+  "columns": 90,
+  "scrape_dates": {
+   "2026-06-15": 1295,
+   "2026-06-16": 3058,
+   "2026-07-06": 2156
+  },
+  "rows_previous_scrape": 2156,
+  "entire_homes": 5322,
+  "price_missing_share_all": 0.102013,
+  "quote_nights_counts": {
+   "1": 1881,
+   "2": 1768,
+   "90": 1308,
+   "3": 527,
+   "4": 119,
+   "5": 85
+  },
+  "quote_days_ahead_median": 3.0,
+  "quote_checkin_by_week": {
+   "2026-06-15": 2795,
+   "2026-06-22": 772,
+   "2026-06-29": 304,
+   "2026-07-06": 747,
+   "2026-07-13": 129,
+   "2026-07-20": 61,
+   "2026-07-27": 126,
+   "2026-08-03": 65
+  },
+  "q90_month_price_over_price_field": 89.997739,
+  "occ_formula_match_share": 0.998704,
+  "occ_at_cap_share": 0.124417,
+  "revenue_is_price_x_occ_corr": 1.0,
+  "stay_segments_entire": {
+   "nightly": 3826,
+   "90+ nights": 1388,
+   "28-89 nights": 35
+  },
+  "share_90plus_entire": 0.265877,
+  "apartments_nightly": 1564,
+  "apartments_90plus": 1022,
+  "core_apartments_nightly": 1254,
+  "core_apartments_90plus": 657,
+  "core_90plus_month_asking_1br": 4492.8,
+  "core_90plus_month_asking_2br": 6636.6,
+  "nightly_entire": 3826,
+  "licence_both_numbers_share": 0.9161,
+  "licence_exempt_share": 0.061683,
+  "licence_none_share": 0.000784,
+  "licence_year_prefix": {
+   "26": 2856,
+   "25": 471,
+   "24": 122,
+   "23": 42
+  },
+  "brief_city_counts": {
+   "active_listings": 4969,
+   "licences": 3248,
+   "suspensions": 69
+  },
+  "nightly_no_review_yet": 461,
+  "nightly_first_review_within_6m": 906,
+  "nightly_new_share": 0.357292,
+  "supply_by_snapshot": {
+   "2025-12-14": {
+    "nightly": 2724,
+    "90plus": 1733
+   },
+   "2026-03-21": {
+    "nightly": 3041,
+    "90plus": 1511
+   },
+   "2026-06-15": {
+    "nightly": 3826,
+    "90plus": 1388
+   },
+   "2026-09-17": {
+    "nightly": 3562,
+    "90plus": 1333
+   }
+  },
+  "comps": 1037
+ },
+ "price_basis": {
+  "measured": true,
+  "june_over_sept": {
+   "condo": 1.141896,
+   "townhouse": 1.136529,
+   "house": 1.136529
+  },
+  "june_over_sept_all": 1.16213,
+  "june_over_sept_core_condo": 1.141687,
+  "n_same_listing": 2865,
+  "peak_week_ratio": 1.37457,
+  "first_week_ratio": 1.114614,
+  "post_cup_summer_ratio": 1.14119,
+  "post_cup_summer_n": 199,
+  "march_over_sept": 0.878521,
+  "n_march": 661,
+  "median_price_june_nightly": 415.0,
+  "median_price_sept_nightly": 348.5
+ },
+ "seasonality": {
+  "month_share": {
+   "1": 0.046374,
+   "2": 0.047634,
+   "3": 0.058292,
+   "4": 0.064161,
+   "5": 0.113163,
+   "6": 0.114172,
+   "7": 0.132858,
+   "8": 0.133506,
+   "9": 0.112263,
+   "10": 0.079751,
+   "11": 0.054043,
+   "12": 0.043782
+  },
+  "month_share_core_apartments": {
+   "1": 0.04754,
+   "2": 0.047085,
+   "3": 0.059781,
+   "4": 0.064222,
+   "5": 0.119392,
+   "6": 0.112844,
+   "7": 0.126395,
+   "8": 0.131007,
+   "9": 0.114439,
+   "10": 0.082043,
+   "11": 0.052721,
+   "12": 0.04253
+  },
+  "price_index_sept_100": {
+   "1": 0.878521,
+   "2": 0.878521,
+   "3": 0.878521,
+   "4": 0.929014,
+   "5": 0.979507,
+   "6": 1.08,
+   "7": 1.14119,
+   "8": 1.14119,
+   "9": 1.0,
+   "10": 0.949261,
+   "11": 0.878521,
+   "12": 0.878521
+  },
+  "annual_price_level_vs_sept": 1.005437,
+  "peak_months": [
+   5,
+   6,
+   7,
+   8
+  ],
+  "peak_share": 0.493699,
+  "peak_adr_uplift": 1.084085,
+  "peak_after_june_share": 0.770785,
+  "five_month_season": {
+   "peak_months": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "peak_share": 0.605962,
+   "peak_adr_uplift": 1.067506,
+   "peak_after_june_share": 0.81325
+  },
+  "off_season_share": 0.506301,
+  "jun_dec_share": 0.670375,
+  "reviews_in_window": 27774,
+  "established_comps": 1037,
+  "summer_reviews_2026_vs_2025_same_listings": 1.041183,
+  "summer_listings_compared": 751,
+  "rolling_stays_index": {
+   "2025-12-14": 1.0,
+   "2026-03-21": 0.990571,
+   "2026-06-15": 0.976323,
+   "2026-09-17": 0.954514
+  },
+  "rolling_stays_listings": 1457
+ },
+ "validation": {
+  "v1_revenue_corr": 1.0,
+  "v2_occupancy_formula_match": 0.998704,
+  "v2_share_at_cap": 0.124417,
+  "v3_listings": 1037,
+  "v3_median_estimated_summer_occupancy": 0.572258,
+  "v3_median_summer_unavailable": 0.61039,
+  "v4_rank_correlation": 0.679348,
+  "v4_top3_beat_average_share": 0.993333,
+  "v4_top3_edge_points": 0.006356,
+  "v5_segments_compared": 10,
+  "v5_rank_correlation_june_vs_sept": 0.878788,
+  "v5_core1_yield_june": 0.022858,
+  "v5_core1_yield_sept": 0.022374,
+  "v5_house_yield_june": 0.003554,
+  "v5_house_yield_sept": 0.002802,
+  "v5_condo_yield_june": 0.021513,
+  "v5_condo_yield_sept": 0.021152,
+  "v5_core1_price_june_basis": 366.753779,
+  "v5_core1_price_sept": 349.892076,
+  "v6_nights_9_12_months": 168.0,
+  "v6_nights_12_plus_months": 156.0,
+  "v6_nights_all_ages": 120.0,
+  "v6_share_under_12_months": 0.372308,
+  "v7_off_season_days": 242,
+  "v7_off_season_nightly_occupancy": 0.293738,
+  "v7_peak_nightly_occupancy": 0.563539,
+  "v7_off_season_nightly_rate": 336.682868,
+  "v7_furnished_rent_per_day": 95.342466
+ },
+ "decisions": {
+  "base": {
+   "listings": 321,
+   "nightly_yield": 0.022858,
+   "hybrid_yield": 0.028529,
+   "median_nights": 156.0,
+   "median_price": 366.753779,
+   "guest_rev_per_unit": 53281.021931
+  },
+  "price_as_quoted": {
+   "listings": 321,
+   "nightly_yield": 0.029755,
+   "hybrid_yield": 0.03222,
+   "median_nights": 156.0,
+   "median_price": 416.53,
+   "guest_rev_per_unit": 60512.380009
+  },
+  "all_ages": {
+   "listings": 474,
+   "nightly_yield": 0.01559,
+   "hybrid_yield": 0.024594,
+   "median_nights": 132.0,
+   "median_price": 362.060726,
+   "guest_rev_per_unit": 44526.405051
+  },
+  "no_licence_filter": {
+   "listings": 341,
+   "nightly_yield": 0.021715,
+   "hybrid_yield": 0.027912,
+   "median_nights": 150.0,
+   "median_price": 364.746244,
+   "guest_rev_per_unit": 51953.233993
+  },
+  "all_ages_any_licence": {
+   "listings": 532,
+   "nightly_yield": 0.013367,
+   "hybrid_yield": 0.023392,
+   "median_nights": 120.0,
+   "median_price": 352.185942,
+   "guest_rev_per_unit": 41886.944083
+  },
+  "every_priced_listing": {
+   "listings": 598,
+   "nightly_yield": 0.009584,
+   "hybrid_yield": 0.021341,
+   "median_nights": 102.0,
+   "median_price": 357.041888,
+   "guest_rev_per_unit": 37263.970321
+  },
+  "fee_3pct": {
+   "listings": 321,
+   "nightly_yield": 0.030375,
+   "hybrid_yield": 0.032552,
+   "median_nights": 156.0,
+   "median_price": 366.753779,
+   "guest_rev_per_unit": 53281.021931
+  },
+  "dtes_west_price": {
+   "listings": 142,
+   "nightly_yield": 0.021507,
+   "hybrid_yield": 0.026757,
+   "median_nights": 153.0,
+   "median_price": 377.561891,
+   "guest_rev_per_unit": 57718.902395
+  },
+  "dtes_east_price": {
+   "listings": 142,
+   "nightly_yield": 0.027772,
+   "hybrid_yield": 0.034208,
+   "median_nights": 153.0,
+   "median_price": 377.561891,
+   "guest_rev_per_unit": 57718.902395
+  },
+  "houses_3plus_bedrooms": {
+   "listings": 240,
+   "nightly_yield": 0.003554,
+   "hybrid_yield": 0.005111,
+   "median_nights": 117.0,
+   "median_price": 581.218877,
+   "guest_rev_per_unit": 71561.738357
+  },
+  "houses_all_entire_homes": {
+   "listings": 614,
+   "nightly_yield": -0.001047,
+   "hybrid_yield": 0.003171,
+   "median_nights": 138.0,
+   "median_price": 393.256054,
+   "guest_rev_per_unit": 54587.859073
+  },
+  "small_entire_homes_dropped": 783,
+  "suites_dropped": 679
+ },
+ "tested": {
+  "pool": "core one-bedroom apartments",
+  "pool_listings": 321,
+  "superhost": {
+   "listings": 217,
+   "estimated_nights": 168.0,
+   "reviews_last_year": 28.0,
+   "summer_nights_unavailable": 0.61039,
+   "net_yield": 0.027071
+  },
+  "not_superhost": {
+   "listings": 104,
+   "estimated_nights": 132.0,
+   "reviews_last_year": 21.5,
+   "summer_nights_unavailable": 0.623377,
+   "net_yield": 0.014068
+  },
+  "min_one_night": {
+   "listings": 189,
+   "estimated_nights": 180.0,
+   "reviews_last_year": 30.0,
+   "summer_nights_unavailable": 0.662338,
+   "net_yield": 0.026822
+  },
+  "min_two_nights": {
+   "listings": 109,
+   "estimated_nights": 138.0,
+   "reviews_last_year": 23.0,
+   "summer_nights_unavailable": 0.545455,
+   "net_yield": 0.018339
+  },
+  "rank_corr_estimate_vs_calendar": 0.064962,
+  "rank_corr_listings": 1037,
+  "five_month_season": {
+   "noi_p50": 190654.828525,
+   "units_missing_tenancy_test": 3.8678,
+   "recommended_noi_p50": 269952.726928,
+   "recommended_units_missing": 0.137
+  },
+  "house_suite_laneway": {
+   "net_yield": 0.01825,
+   "core_one_bedroom_yield": 0.022858
+  },
+  "two_bedroom": {
+   "hybrid_yield": 0.026084,
+   "one_bedroom_hybrid_yield": 0.028529
+  },
+  "mount_pleasant": {
+   "listings": 48,
+   "net_yield": 0.022545,
+   "lo": 0.011657,
+   "hi": 0.034274
+  }
+ },
+ "funnel": [
+  {
+   "step": "All listings in the 15 June 2026 file",
+   "listings": 6509
+  },
+  {
+   "step": "Entire homes only (a fund buys whole units)",
+   "listings": 5322
+  },
+  {
+   "step": "Drop hotel-like listings",
+   "listings": 5249
+  },
+  {
+   "step": "Nightly market: minimum stay under 28 nights",
+   "listings": 3826
+  },
+  {
+   "step": "Has a price quote between $40 and $2,000",
+   "listings": 3691
+  },
+  {
+   "step": "Buyable asset: apartment, townhouse or 3+ bedroom house",
+   "listings": 2219
+  },
+  {
+   "step": "Shows both a City licence and a BC registration number",
+   "listings": 1981
+  },
+  {
+   "step": "Established: first review 12+ months before the scrape, and reviewed in the last year",
+   "listings": 1037
+  }
+ ],
+ "assets": {
+  "condo": {
+   "listings": 772.0,
+   "median_price": 401.2913084335176,
+   "median_nights": 150.0,
+   "median_guest_revenue": 53095.60668099371,
+   "median_noi": 12960.948342260575,
+   "median_allin_cost": 691131.625,
+   "revenue_yield": 0.0740177361153297,
+   "net_yield": 0.02151334801325,
+   "net_yield_lo": 0.0198931652302765,
+   "net_yield_hi": 0.0231192195740871,
+   "median_unit_yield": 0.0171791362162914,
+   "share_losing_money": 0.2266839378238342
+  },
+  "townhouse": {
+   "listings": 25.0,
+   "median_price": 643.1447846909317,
+   "median_nights": 54.0,
+   "median_guest_revenue": 34180.44710605712,
+   "median_noi": -2525.3692584632663,
+   "median_allin_cost": 1203540.25,
+   "revenue_yield": 0.0377582985550621,
+   "net_yield": 0.0043416128699276,
+   "net_yield_lo": -0.0013584512381342,
+   "net_yield_hi": 0.0101018438184529,
+   "median_unit_yield": -0.0024142301724734,
+   "share_losing_money": 0.56
+  },
+  "house": {
+   "listings": 240.0,
+   "median_price": 581.2188769490264,
+   "median_nights": 117.0,
+   "median_guest_revenue": 58310.361849082605,
+   "median_noi": 511.38936267219833,
+   "median_allin_cost": 1708935.0,
+   "revenue_yield": 0.0326085815122361,
+   "net_yield": 0.0035544874286066,
+   "net_yield_lo": 0.0020704130383219,
+   "net_yield_hi": 0.0051428200757272,
+   "median_unit_yield": 0.000270721786363,
+   "share_losing_money": 0.4916666666666666
+  }
+ },
+ "segments": [
+  {
+   "neighbourhood_cleansed": "Downtown",
+   "asset": "condo",
+   "listings": 436.0,
+   "median_price": 425.7911617695481,
+   "median_nights": 156.0,
+   "median_guest_revenue": 59338.1798769888,
+   "median_noi": 16701.614351749675,
+   "median_allin_cost": 691131.625,
+   "revenue_yield": 0.0773568719075235,
+   "net_yield": 0.0241367996169546,
+   "net_yield_lo": 0.0220691289098896,
+   "net_yield_hi": 0.0262254719614053,
+   "median_unit_yield": 0.0210526095814689,
+   "share_losing_money": 0.1766055045871559
+  },
+  {
+   "neighbourhood_cleansed": "Mount Pleasant",
+   "asset": "condo",
+   "listings": 48.0,
+   "median_price": 336.64075205622925,
+   "median_nights": 120.0,
+   "median_guest_revenue": 37483.58693199731,
+   "median_noi": 5792.00826470782,
+   "median_allin_cost": 563667.75,
+   "revenue_yield": 0.0815505339867615,
+   "net_yield": 0.022545325019215,
+   "net_yield_lo": 0.0116568696828933,
+   "net_yield_hi": 0.0342741996369287,
+   "median_unit_yield": 0.0102755714952785,
+   "share_losing_money": 0.3541666666666667
+  },
+  {
+   "neighbourhood_cleansed": "Downtown Eastside",
+   "asset": "condo",
+   "listings": 142.0,
+   "median_price": 377.5618907369848,
+   "median_nights": 153.0,
+   "median_guest_revenue": 54171.973067708444,
+   "median_noi": 13879.771415211404,
+   "median_allin_cost": 691131.625,
+   "revenue_yield": 0.0739654511871273,
+   "net_yield": 0.0215071470060357,
+   "net_yield_lo": 0.0176296006605082,
+   "net_yield_hi": 0.0255055192265497,
+   "median_unit_yield": 0.0189194353809835,
+   "share_losing_money": 0.2112676056338028
+  },
+  {
+   "neighbourhood_cleansed": "West End",
+   "asset": "condo",
+   "listings": 34.0,
+   "median_price": 416.2289548610381,
+   "median_nights": 141.0,
+   "median_guest_revenue": 52775.5448234016,
+   "median_noi": 12494.20500422386,
+   "median_allin_cost": 691131.625,
+   "revenue_yield": 0.0720541430270867,
+   "net_yield": 0.0209477070609457,
+   "net_yield_lo": 0.0135969759327176,
+   "net_yield_hi": 0.0289303708700984,
+   "median_unit_yield": 0.0171187583025536,
+   "share_losing_money": 0.2941176470588235
+  },
+  {
+   "neighbourhood_cleansed": "Hastings-Sunrise",
+   "asset": "house",
+   "listings": 21.0,
+   "median_price": 596.2580259720606,
+   "median_nights": 156.0,
+   "median_guest_revenue": 82328.06153934481,
+   "median_noi": 20859.429596313305,
+   "median_allin_cost": 1536741.5,
+   "revenue_yield": 0.0525650822329084,
+   "net_yield": 0.0135385948692815,
+   "net_yield_lo": 0.0067141512198455,
+   "net_yield_hi": 0.020058367116179,
+   "median_unit_yield": 0.0129943116733036,
+   "share_losing_money": 0.3333333333333333
+  },
+  {
+   "neighbourhood_cleansed": "Kitsilano",
+   "asset": "condo",
+   "listings": 33.0,
+   "median_price": 341.6331750001751,
+   "median_nights": 120.0,
+   "median_guest_revenue": 39535.23502753315,
+   "median_noi": 5412.054806647098,
+   "median_allin_cost": 691131.625,
+   "revenue_yield": 0.0586932779334429,
+   "net_yield": 0.0124610563343074,
+   "net_yield_lo": 0.0069793975956183,
+   "net_yield_hi": 0.0188120248966224,
+   "median_unit_yield": 0.0071957149942597,
+   "share_losing_money": 0.303030303030303
+  },
+  {
+   "neighbourhood_cleansed": "Kensington-Cedar Cottage",
+   "asset": "house",
+   "listings": 28.0,
+   "median_price": 544.3419988887217,
+   "median_nights": 102.0,
+   "median_guest_revenue": 55972.30939277484,
+   "median_noi": 3828.9136012264953,
+   "median_allin_cost": 1536741.5,
+   "revenue_yield": 0.0370611943587923,
+   "net_yield": 0.0041774045351849,
+   "net_yield_lo": -0.0002070642229939,
+   "net_yield_hi": 0.008722815157429,
+   "median_unit_yield": 0.0024068356365912,
+   "share_losing_money": 0.3928571428571428
+  },
+  {
+   "neighbourhood_cleansed": "Renfrew-Collingwood",
+   "asset": "house",
+   "listings": 18.0,
+   "median_price": 461.1799280704672,
+   "median_nights": 129.0,
+   "median_guest_revenue": 62031.5997849439,
+   "median_noi": 4139.8155344399165,
+   "median_allin_cost": 1536741.5,
+   "revenue_yield": 0.0360702567228077,
+   "net_yield": 0.0032032469286245,
+   "net_yield_lo": -0.0013162930577685,
+   "net_yield_hi": 0.0082608657619273,
+   "median_unit_yield": 0.0024928268045602,
+   "share_losing_money": 0.3888888888888889
+  },
+  {
+   "neighbourhood_cleansed": "Kitsilano",
+   "asset": "house",
+   "listings": 23.0,
+   "median_price": 790.4753657671735,
+   "median_nights": 78.0,
+   "median_guest_revenue": 42685.66975142737,
+   "median_noi": -17119.347066834227,
+   "median_allin_cost": 2752810.05,
+   "revenue_yield": 0.0235045204966039,
+   "net_yield": 5.344653105678306e-05,
+   "net_yield_lo": -0.0035467853127522,
+   "net_yield_hi": 0.0037962049240099,
+   "median_unit_yield": -0.0055902747280177,
+   "share_losing_money": 0.6521739130434783
+  },
+  {
+   "neighbourhood_cleansed": "Dunbar Southlands",
+   "asset": "house",
+   "listings": 16.0,
+   "median_price": 592.2416885270854,
+   "median_nights": 174.0,
+   "median_guest_revenue": 63352.74213985873,
+   "median_noi": -7489.882455619108,
+   "median_allin_cost": 2907577.275,
+   "revenue_yield": 0.0225191151384698,
+   "net_yield": -0.0015408149119753,
+   "net_yield_lo": -0.0051059233381528,
+   "net_yield_hi": 0.0022501625023291,
+   "median_unit_yield": -0.0027208133941603,
+   "share_losing_money": 0.6875
+  }
+ ],
+ "core_by_bedrooms": [
+  {
+   "bedrooms": 1,
+   "listings": 321,
+   "median_price": 366.7537793371725,
+   "median_nights": 156.0,
+   "allin_cost": 691131.625,
+   "nightly_yield": 0.022858476333432,
+   "lease_yield": 0.0241807248322347,
+   "hybrid_yield": 0.0285288636607852,
+   "nightly_noi": 15798.215893348905,
+   "lease_noi": 16276.810599999995,
+   "hybrid_noi": 19717.199901281943,
+   "share_nightly_beats_lease": 0.4485981308411215,
+   "share_hybrid_beats_lease": 0.6230529595015576,
+   "share_hybrid_beats_nightly": 0.7320872274143302
+  },
+  {
+   "bedrooms": 2,
+   "listings": 217,
+   "median_price": 495.7203028997386,
+   "median_nights": 150.0,
+   "allin_cost": 935413.375,
+   "nightly_yield": 0.021952318352931,
+   "lease_yield": 0.0199181863004808,
+   "hybrid_yield": 0.026083985712664,
+   "nightly_noi": 20534.492199589666,
+   "lease_noi": 18153.7014,
+   "hybrid_noi": 24399.309108934824,
+   "share_nightly_beats_lease": 0.4470046082949309,
+   "share_hybrid_beats_lease": 0.6082949308755761,
+   "share_hybrid_beats_nightly": 0.6820276497695853
+  }
+ ],
+ "modes_unit": [
+  {
+   "mode": "Nightly all year, vacancy taxes not applied",
+   "noi_per_unit": 15798.215893348905,
+   "yield": 0.022858476333432,
+   "vacancy_tax_per_unit": 0.0
+  },
+  {
+   "mode": "Nightly all year, Empty Homes Tax and Speculation Tax applied",
+   "noi_per_unit": -10548.3841066511,
+   "yield": -0.0152624821742907,
+   "vacancy_tax_per_unit": 26346.6
+  },
+  {
+   "mode": "Unfurnished 12-month lease",
+   "noi_per_unit": 16276.810599999995,
+   "yield": 0.0241807248322347,
+   "vacancy_tax_per_unit": 0.0
+  },
+  {
+   "mode": "Hybrid: nightly in the four peak months, 30+-night stays in the other eight",
+   "noi_per_unit": 19717.199901281943,
+   "yield": 0.0285288636607852,
+   "vacancy_tax_per_unit": 0.0
+  },
+  {
+   "mode": "Hybrid with a five-month nightly season (tested, not chosen)",
+   "noi_per_unit": 20794.52822747563,
+   "yield": 0.0300876525907429,
+   "vacancy_tax_per_unit": 0.0
+  }
+ ],
+ "house_tests": [
+  {
+   "test": "Houses (3+ bedrooms), west side",
+   "listings": 97,
+   "revenue_yield": 0.026709332902739,
+   "net_yield": 0.0015554449826584
+  },
+  {
+   "test": "Houses (3+ bedrooms), east side",
+   "listings": 143,
+   "revenue_yield": 0.0401589254774417,
+   "net_yield": 0.0061130265014738
+  },
+  {
+   "test": "Houses if stays run 50% longer than Inside Airbnb assumes",
+   "listings": 240,
+   "revenue_yield": 0.042322615798342,
+   "net_yield": 0.0090534866383969
+  },
+  {
+   "test": "East-side house + suite + laneway home, three listings on one lot",
+   "listings": 465,
+   "revenue_yield": 0.0663421219675292,
+   "net_yield": 0.0182504103072619
+  },
+  {
+   "test": "Core one-bedroom apartments (for comparison)",
+   "listings": 321,
+   "revenue_yield": 0.0770924379729677,
+   "net_yield": 0.022858476333432
+  }
+ ],
+ "strategies": [
+  {
+   "label": "Few large: west-side houses",
+   "pool_listings": 97,
+   "units": 3,
+   "deployed": 8882018.45,
+   "noi_p10": -61625.85324097646,
+   "noi_p50": 3373.9856654067007,
+   "noi_p90": 100933.08101000125,
+   "yield_p10": -0.0070007208841166,
+   "yield_p50": 0.0003826385378853,
+   "yield_p90": 0.0114256541137106,
+   "prob_yield_below_1pct": 0.8702,
+   "prob_loss": 0.4752,
+   "units_missing_tenancy_test": 0.0
+  },
+  {
+   "label": "Houses, east side",
+   "pool_listings": 143,
+   "units": 6,
+   "deployed": 9564836.0,
+   "noi_p10": -33351.041651134576,
+   "noi_p50": 46461.65818143917,
+   "noi_p90": 158046.36820850678,
+   "yield_p10": -0.0035520501327304,
+   "yield_p50": 0.0049333886642811,
+   "yield_p90": 0.0169703004963492,
+   "prob_yield_below_1pct": 0.7242,
+   "prob_loss": 0.233,
+   "units_missing_tenancy_test": 0.0
+  },
+  {
+   "label": "Many small: apartments city-wide",
+   "pool_listings": 772,
+   "units": 12,
+   "deployed": 9595706.6875,
+   "noi_p10": 93708.48867683052,
+   "noi_p50": 198838.57700979488,
+   "noi_p90": 333657.8240938211,
+   "yield_p10": 0.0097759756124485,
+   "yield_p50": 0.020734756845175,
+   "yield_p90": 0.0348151191907801,
+   "prob_yield_below_1pct": 0.1038,
+   "prob_loss": 0.003,
+   "units_missing_tenancy_test": 0.0
+  },
+  {
+   "label": "Core 1-2 bedroom apartments",
+   "pool_listings": 538,
+   "units": 12,
+   "deployed": 9514988.25,
+   "noi_p10": 109187.1222393634,
+   "noi_p50": 211576.3355785981,
+   "noi_p90": 342872.8591766688,
+   "yield_p10": 0.0114604136008357,
+   "yield_p50": 0.0221239569966617,
+   "yield_p90": 0.0356356195974054,
+   "prob_yield_below_1pct": 0.0682,
+   "prob_loss": 0.0012,
+   "units_missing_tenancy_test": 0.0
+  },
+  {
+   "label": "Core one-bedroom apartments",
+   "pool_listings": 321,
+   "units": 14,
+   "deployed": 9675842.75,
+   "noi_p10": 120985.59160458416,
+   "noi_p50": 216242.96909093537,
+   "noi_p90": 340702.547324263,
+   "yield_p10": 0.012503881546089,
+   "yield_p50": 0.0223487477709303,
+   "yield_p90": 0.035211666428153,
+   "prob_yield_below_1pct": 0.0472,
+   "prob_loss": 0.0002,
+   "units_missing_tenancy_test": 0.0
+  }
+ ],
+ "portfolio_modes": [
+  {
+   "label": "Nightly all year (vacancy taxes not applied)",
+   "units": 14,
+   "deployed": 9675842.75,
+   "noi_p10": 123832.07351923687,
+   "noi_p50": 219735.55378795785,
+   "noi_p90": 341307.9455346615,
+   "yield_p10": 0.0127980659378984,
+   "yield_p50": 0.0227097069955955,
+   "yield_p90": 0.0352742344365467,
+   "prob_yield_below_1pct": 0.0448,
+   "prob_loss": 0.0002,
+   "units_missing_tenancy_test": 0.0,
+   "optout_supply_ratio": 0.5239234449760766,
+   "optout_worst_erosion": 0.3437990580847724
+  },
+  {
+   "label": "Nightly all year, with Empty Homes Tax and Speculation Tax",
+   "units": 14,
+   "deployed": 9675842.75,
+   "noi_p10": -250284.5904433074,
+   "noi_p50": -151933.3616987586,
+   "noi_p90": -28505.619788494638,
+   "yield_p10": -0.0258669551490289,
+   "yield_p50": -0.0157023388684937,
+   "yield_p90": -0.0029460606714071,
+   "prob_yield_below_1pct": 0.9904,
+   "prob_loss": 0.9416,
+   "units_missing_tenancy_test": 0.0,
+   "optout_supply_ratio": 0.5239234449760766,
+   "optout_worst_erosion": 0.3437990580847724
+  },
+  {
+   "label": "Unfurnished 12-month lease",
+   "units": 14,
+   "deployed": 9423842.75,
+   "noi_p10": 204837.76146200905,
+   "noi_p50": 227902.21472691096,
+   "noi_p90": 252979.7989685964,
+   "yield_p10": 0.0217361183644547,
+   "yield_p50": 0.0241835757209457,
+   "yield_p90": 0.0268446541055236,
+   "prob_yield_below_1pct": 0.0,
+   "prob_loss": 0.0,
+   "units_missing_tenancy_test": 0.0,
+   "optout_supply_ratio": 0.5239234449760766,
+   "optout_worst_erosion": 0.3437990580847724
+  },
+  {
+   "label": "Hybrid (recommended)",
+   "units": 14,
+   "deployed": 9675842.75,
+   "noi_p10": 213328.49433250312,
+   "noi_p50": 269952.7269275197,
+   "noi_p90": 340170.0649619608,
+   "yield_p10": 0.022047536307109,
+   "yield_p50": 0.0278996604122694,
+   "yield_p90": 0.0351566342851077,
+   "prob_yield_below_1pct": 0.0,
+   "prob_loss": 0.0,
+   "units_missing_tenancy_test": 0.137,
+   "optout_supply_ratio": 0.5239234449760766,
+   "optout_worst_erosion": 0.3437990580847724
+  },
+  {
+   "label": "Hybrid with a five-month nightly season (tested, not chosen)",
+   "units": 14,
+   "deployed": 9675842.75,
+   "noi_p10": 97482.53824214725,
+   "noi_p50": 190654.82852528503,
+   "noi_p90": 285762.3972231029,
+   "yield_p10": 0.0100748369688156,
+   "yield_p50": 0.0197042090752544,
+   "yield_p90": 0.0295335925362266,
+   "prob_yield_below_1pct": 0.098,
+   "prob_loss": 0.0034,
+   "units_missing_tenancy_test": 3.8678,
+   "optout_supply_ratio": 0.5239234449760766,
+   "optout_worst_erosion": 0.3437990580847724
+  },
+  {
+   "label": "Hybrid, opt-out from 1 June cuts nightly revenue 10%",
+   "units": 14,
+   "deployed": 9675842.75,
+   "noi_p10": 197493.08658067408,
+   "noi_p50": 250440.30548616403,
+   "noi_p90": 312125.812378357,
+   "yield_p10": 0.0204109442126551,
+   "yield_p50": 0.0258830483252907,
+   "yield_p90": 0.0322582559930872,
+   "prob_yield_below_1pct": 0.0,
+   "prob_loss": 0.0,
+   "units_missing_tenancy_test": 0.1318,
+   "optout_supply_ratio": 0.5239234449760766,
+   "optout_worst_erosion": 0.3437990580847724
+  },
+  {
+   "label": "Hybrid, opt-out cuts nightly revenue 20%",
+   "units": 14,
+   "deployed": 9675842.75,
+   "noi_p10": 184172.5723822801,
+   "noi_p50": 231670.64873114412,
+   "noi_p90": 288338.5565826503,
+   "yield_p10": 0.0190342667962726,
+   "yield_p50": 0.023943201095444,
+   "yield_p90": 0.0297998390458185,
+   "prob_yield_below_1pct": 0.0006,
+   "prob_loss": 0.0,
+   "units_missing_tenancy_test": 0.1382,
+   "optout_supply_ratio": 0.5239234449760766,
+   "optout_worst_erosion": 0.3437990580847724
+  },
+  {
+   "label": "Hybrid, opt-out worst case (34%: every 90-night apartment switches)",
+   "units": 14,
+   "deployed": 9675842.75,
+   "noi_p10": 157586.00736319958,
+   "noi_p50": 201725.17141247907,
+   "noi_p90": 253371.32138955887,
+   "yield_p10": 0.0162865407628911,
+   "yield_p50": 0.020848330902492,
+   "yield_p90": 0.0261859693192677,
+   "prob_yield_below_1pct": 0.002,
+   "prob_loss": 0.0,
+   "units_missing_tenancy_test": 0.141,
+   "optout_supply_ratio": 0.5239234449760766,
+   "optout_worst_erosion": 0.3437990580847724
+  },
+  {
+   "label": "Nightly, opt-out cuts nightly revenue 20%",
+   "units": 14,
+   "deployed": 9675842.75,
+   "noi_p10": 71072.6770810862,
+   "noi_p50": 153008.00323127862,
+   "noi_p90": 251279.3774894678,
+   "yield_p10": 0.007345373309326,
+   "yield_p50": 0.0158134032543344,
+   "yield_p90": 0.0259697665600722,
+   "prob_yield_below_1pct": 0.1978,
+   "prob_loss": 0.0044,
+   "units_missing_tenancy_test": 0.0,
+   "optout_supply_ratio": 0.5239234449760766,
+   "optout_worst_erosion": 0.3437990580847724
+  }
+ ],
+ "sensitivity": [
+  {
+   "driver": "Purchase price 20% higher / lower",
+   "downside_yield": 0.0228520200299251,
+   "upside_yield": 0.036962463370304,
+   "base_yield": 0.0285288636607852,
+   "swing": 0.0141104433403788
+  },
+  {
+   "driver": "Booked nights 20% lower / higher",
+   "downside_yield": 0.0237859438728846,
+   "upside_yield": 0.0332717834486858,
+   "base_yield": 0.0285288636607852,
+   "swing": 0.0094858395758011
+  },
+  {
+   "driver": "Furnished monthly rent 15% lower / higher",
+   "downside_yield": 0.0245409691696309,
+   "upside_yield": 0.0325167581519394,
+   "base_yield": 0.0285288636607852,
+   "swing": 0.0079757889823085
+  },
+  {
+   "driver": "Off-season let 75% / 95% of the time",
+   "downside_yield": 0.0246013918134363,
+   "upside_yield": 0.030643656193973,
+   "base_yield": 0.0285288636607852,
+   "swing": 0.0060422643805367
+  },
+  {
+   "driver": "Nightly price 10% lower / higher",
+   "downside_yield": 0.025809366094243,
+   "upside_yield": 0.0312483612273273,
+   "base_yield": 0.0285288636607852,
+   "swing": 0.0054389951330842
+  },
+  {
+   "driver": "First-year haircut 20% / none",
+   "downside_yield": 0.0258939082230626,
+   "upside_yield": 0.0311638190985077,
+   "base_yield": 0.0285288636607852,
+   "swing": 0.005269910875445
+  },
+  {
+   "driver": "Strata fees 30% higher / lower",
+   "downside_yield": 0.0261848817890252,
+   "upside_yield": 0.0308728455325451,
+   "base_yield": 0.0285288636607852,
+   "swing": 0.0046879637435199
+  },
+  {
+   "driver": "Manager fee 25% / 15%",
+   "downside_yield": 0.0267855959899248,
+   "upside_yield": 0.0302721313316455,
+   "base_yield": 0.0285288636607852,
+   "swing": 0.0034865353417206
+  }
+ ],
+ "listing_age": [
+  {
+   "age_m": "0-3",
+   "listings": 172,
+   "median_nights": 24.0,
+   "mean_nights": 28.22093023255814
+  },
+  {
+   "age_m": "3-6",
+   "listings": 79,
+   "median_nights": 96.0,
+   "mean_nights": 95.8987341772152
+  },
+  {
+   "age_m": "6-9",
+   "listings": 42,
+   "median_nights": 138.0,
+   "mean_nights": 152.0
+  },
+  {
+   "age_m": "9-12",
+   "listings": 70,
+   "median_nights": 168.0,
+   "mean_nights": 157.35714285714286
+  },
+  {
+   "age_m": "12-24",
+   "listings": 170,
+   "median_nights": 174.0,
+   "mean_nights": 165.54705882352943
+  },
+  {
+   "age_m": "24+",
+   "listings": 442,
+   "median_nights": 150.0,
+   "mean_nights": 149.97737556561086
+  }
+ ],
+ "snapshot_retest": [
+  {
+   "segment": "Core one-bedroom apartments",
+   "june_listings": 321,
+   "june_yield": 0.022858476333432,
+   "sept_listings": 298,
+   "sept_yield": 0.0223742578809535,
+   "june_nights": 156.0,
+   "sept_nights": 162.0,
+   "june_price": 366.7537793371725,
+   "sept_price": 349.892076
+  },
+  {
+   "segment": "All condos",
+   "june_listings": 772,
+   "june_yield": 0.02151334801325,
+   "sept_listings": 709,
+   "sept_yield": 0.021151669471596,
+   "june_nights": 150.0,
+   "sept_nights": 156.0,
+   "june_price": 401.2913084335176,
+   "sept_price": 387.093245
+  },
+  {
+   "segment": "All townhouses",
+   "june_listings": 25,
+   "june_yield": 0.0043416128699276,
+   "sept_listings": 26,
+   "sept_yield": 0.0049105323693237,
+   "june_nights": 54.0,
+   "sept_nights": 78.0,
+   "june_price": 643.1447846909317,
+   "sept_price": 529.8652989999999
+  },
+  {
+   "segment": "All houses",
+   "june_listings": 240,
+   "june_yield": 0.0035544874286066,
+   "sept_listings": 240,
+   "sept_yield": 0.0028018425517941,
+   "june_nights": 117.0,
+   "sept_nights": 127.0,
+   "june_price": 581.2188769490264,
+   "sept_price": 578.126275
+  }
+ ],
+ "price_ratios": [
+  {
+   "comparison": "June / September",
+   "segment": "all nightly entire homes",
+   "listings": 2865,
+   "median_ratio": 1.162,
+   "p25": 0.979,
+   "p75": 1.427
+  },
+  {
+   "comparison": "June / September",
+   "segment": "apartments",
+   "listings": 1098,
+   "median_ratio": 1.142,
+   "p25": 0.962,
+   "p75": 1.414
+  },
+  {
+   "comparison": "June / September",
+   "segment": "core apartments",
+   "listings": 876,
+   "median_ratio": 1.142,
+   "p25": 0.954,
+   "p75": 1.402
+  },
+  {
+   "comparison": "June / September",
+   "segment": "townhouses and houses",
+   "listings": 498,
+   "median_ratio": 1.137,
+   "p25": 0.946,
+   "p75": 1.397
+  },
+  {
+   "comparison": "June / September",
+   "segment": "same quote length in both files",
+   "listings": 1994,
+   "median_ratio": 1.158,
+   "p25": 0.984,
+   "p75": 1.397
+  },
+  {
+   "comparison": "June / September",
+   "segment": "June quote for the week of 2026-06-15",
+   "listings": 1794,
+   "median_ratio": 1.115,
+   "p25": 0.934,
+   "p75": 1.353
+  },
+  {
+   "comparison": "June / September",
+   "segment": "June quote for the week of 2026-06-22",
+   "listings": 528,
+   "median_ratio": 1.235,
+   "p25": 1.039,
+   "p75": 1.449
+  },
+  {
+   "comparison": "June / September",
+   "segment": "June quote for the week of 2026-06-29",
+   "listings": 195,
+   "median_ratio": 1.371,
+   "p25": 1.142,
+   "p75": 1.603
+  },
+  {
+   "comparison": "June / September",
+   "segment": "June quote for the week of 2026-07-06",
+   "listings": 103,
+   "median_ratio": 1.375,
+   "p25": 1.104,
+   "p75": 1.629
+  },
+  {
+   "comparison": "June / September",
+   "segment": "June quote for the week of 2026-07-13",
+   "listings": 46,
+   "median_ratio": 1.372,
+   "p25": 1.185,
+   "p75": 1.662
+  },
+  {
+   "comparison": "June / September",
+   "segment": "June quote for the week of 2026-07-20",
+   "listings": 31,
+   "median_ratio": 1.203,
+   "p25": 1.047,
+   "p75": 1.301
+  },
+  {
+   "comparison": "March / September",
+   "segment": "core apartments",
+   "listings": 661,
+   "median_ratio": 0.879,
+   "p25": 0.714,
+   "p75": 1.038
+  }
+ ],
+ "monthly_stays": [
+  {
+   "month": 1,
+   "reviews_jun25_may26": 1288,
+   "reviews_jun24_may25": 1110,
+   "share_jun25_may26": 0.0464,
+   "share_core_apartments": 0.0475
+  },
+  {
+   "month": 2,
+   "reviews_jun25_may26": 1323,
+   "reviews_jun24_may25": 1143,
+   "share_jun25_may26": 0.0476,
+   "share_core_apartments": 0.0471
+  },
+  {
+   "month": 3,
+   "reviews_jun25_may26": 1619,
+   "reviews_jun24_may25": 1505,
+   "share_jun25_may26": 0.0583,
+   "share_core_apartments": 0.0598
+  },
+  {
+   "month": 4,
+   "reviews_jun25_may26": 1782,
+   "reviews_jun24_may25": 1816,
+   "share_jun25_may26": 0.0642,
+   "share_core_apartments": 0.0642
+  },
+  {
+   "month": 5,
+   "reviews_jun25_may26": 3143,
+   "reviews_jun24_may25": 2750,
+   "share_jun25_may26": 0.1132,
+   "share_core_apartments": 0.1194
+  },
+  {
+   "month": 6,
+   "reviews_jun25_may26": 3171,
+   "reviews_jun24_may25": 2313,
+   "share_jun25_may26": 0.1142,
+   "share_core_apartments": 0.1128
+  },
+  {
+   "month": 7,
+   "reviews_jun25_may26": 3690,
+   "reviews_jun24_may25": 2611,
+   "share_jun25_may26": 0.1329,
+   "share_core_apartments": 0.1264
+  },
+  {
+   "month": 8,
+   "reviews_jun25_may26": 3708,
+   "reviews_jun24_may25": 2622,
+   "share_jun25_may26": 0.1335,
+   "share_core_apartments": 0.131
+  },
+  {
+   "month": 9,
+   "reviews_jun25_may26": 3118,
+   "reviews_jun24_may25": 2556,
+   "share_jun25_may26": 0.1123,
+   "share_core_apartments": 0.1144
+  },
+  {
+   "month": 10,
+   "reviews_jun25_may26": 2215,
+   "reviews_jun24_may25": 1591,
+   "share_jun25_may26": 0.0798,
+   "share_core_apartments": 0.082
+  },
+  {
+   "month": 11,
+   "reviews_jun25_may26": 1501,
+   "reviews_jun24_may25": 1379,
+   "share_jun25_may26": 0.054,
+   "share_core_apartments": 0.0527
+  },
+  {
+   "month": 12,
+   "reviews_jun25_may26": 1216,
+   "reviews_jun24_may25": 1889,
+   "share_jun25_may26": 0.0438,
+   "share_core_apartments": 0.0425
+  }
+ ],
+ "assumptions": {
+  "airbnb_fee": 0.155,
+  "first_year_haircut": 0.1,
+  "stay_nights": 3.0,
+  "mgmt_fee": 0.2,
+  "clean_base": 70.0,
+  "clean_per_bed": 35.0,
+  "supplies_pct": 0.02,
+  "utilities": {
+   "condo": 1800,
+   "townhouse": 2700,
+   "house": 3600
+  },
+  "insurance": {
+   "condo": 1500,
+   "townhouse": 2200,
+   "house": 3000
+  },
+  "licences": 1558,
+  "strata": {
+   "0": 3900,
+   "1": 5400,
+   "2": 7600,
+   "3": 10000
+  },
+  "strata_townhouse": 4200,
+  "prop_tax": 0.00336,
+  "maint": {
+   "condo": 0.003,
+   "townhouse": 0.005,
+   "house": 0.008
+  },
+  "legal_pct": 0.005,
+  "furnish_base": {
+   "condo": 12000,
+   "townhouse": 20000,
+   "house": 25000
+  },
+  "furnish_per_bed": 6000,
+  "eht": 0.03,
+  "svt": 0.01,
+  "lease_rent": {
+   "1": 2400,
+   "2": 2900
+  },
+  "lease_vacancy": 0.015,
+  "lease_mgmt": 0.06,
+  "lease_insurance": 800,
+  "mid_rent": {
+   "1": 2900,
+   "2": 3500
+  },
+  "mid_months": 8,
+  "mid_occupancy": 0.88,
+  "tenancy_days_required": 180,
+  "mid_mgmt": 0.1,
+  "mid_turnovers": 4,
+  "mid_turn_cost": 150
+ },
+ "benchmarks": {
+  "W_house": 2932700,
+  "E_house": 1621400,
+  "W_townhouse": 1334900,
+  "E_townhouse": 985400,
+  "W_condo": 774900,
+  "E_condo": 628600
+ },
+ "benchmark_source": "Greater Vancouver REALTORS, MLS HPI benchmark prices, August 2026"
+}

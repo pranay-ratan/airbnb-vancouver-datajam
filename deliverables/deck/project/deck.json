@@ -1,0 +1,52 @@
+{
+ "v": 4,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-12T13:30:00Z"
+ },
+ "lists": "css",
+ "title": "DDD Vancouver: $10M STR Investment Pitch (DataJam 2026)",
+ "order": [
+  "cover",
+  "recommendation",
+  "data",
+  "where",
+  "price",
+  "houses",
+  "operations",
+  "risks",
+  "tested",
+  "next",
+  "assump",
+  "log1",
+  "log2",
+  "valid",
+  "limits"
+ ],
+ "cover": "cover",
+ "sections": {
+  "s1": {
+   "description": "The recommendation and the evidence",
+   "start": "cover"
+  },
+  "s2": {
+   "description": "Operations, risks, what did not hold and next steps",
+   "start": "operations"
+  },
+  "s3": {
+   "description": "Appendix: assumptions, decision log, validation, limits",
+   "start": "assump"
+  }
+ },
+ "faces": {
+  "inter": {
+   "family": "Inter",
+   "href": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+  },
+  "space-grotesk": {
+   "family": "Space Grotesk",
+   "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap"
+  }
+ },
+ "designSystems": []
+}

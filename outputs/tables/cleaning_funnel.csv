@@ -1,8 +1,9 @@
-step,listings_remaining
-raw listings,6131
-entire home/apt only (investable whole units),5012
-drop hotel-like / serviced / hostel property types,4938
-minimum stay < 28 nights (true short-term),3563
-has a valid nightly price,3288
-"price $40-$2,000 per night (outlier trim)",3268
-purchasable asset class (condo/townhouse/house; drop suites & guesthouses),2579
+step,listings
+All listings in the 15 June 2026 file,6509
+Entire homes only (a fund buys whole units),5322
+Drop hotel-like listings,5249
+Nightly market: minimum stay under 28 nights,3826
+"Has a price quote between $40 and $2,000",3691
+"Buyable asset: apartment, townhouse or 3+ bedroom house",2219
+Shows both a City licence and a BC registration number,1981
+"Established: first review 12+ months before the scrape, and reviewed in the last year",1037

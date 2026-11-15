@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
-# Reproduces every number in the deck. Needs data/raw/insideairbnb/{listings,calendar,reviews}.csv.gz  (see README).
-set -e; cd "$(dirname "$0")/src"
-for f in 01_clean 02_worldcup_check 03_segments 04_validate 05_portfolio 06_ltr_and_scenarios 07_operating_cases; do echo "== $f"; python3 -I $f.py; done
+# Reproduces every number in the deck and the dashboard.
+# Needs Inside Airbnb Vancouver files under data/raw/insideairbnb/<date>/ (see README, "Data").
+set -e; cd "$(dirname "$0")"
+for f in 01_profile_clean 02_price_basis 03_seasonality 04_unit_economics 05_portfolio 06_validation 07_decisions 08_tests_not_held 09_exports; do
+  echo "== $f"; python3 -I src/$f.py > /dev/null; done
+python3 -I deliverables/build_dashboard.py
+python3 -I deliverables/build_deck.py
+python3 -I tests/check_numbers.py
