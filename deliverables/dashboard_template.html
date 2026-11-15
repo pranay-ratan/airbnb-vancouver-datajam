@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DDD Vancouver Investment Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Plan: a survey sheet. Cool paper plane, ruled panels, the map is the one bold element.
+     Charts use a validated palette: blue = the subject, orange = the comparison, aqua = third series. */
+  --plane:#f1f4f3; --surface:#fcfcfb; --ink:#0b1620; --ink2:#46515c; --muted:#757e86; --rule:#dce1de; --axis:#c1c8c5;
+  --accent:#2a78d6; --accent-strong:#1c5cab; --s2:#eb6834; --s3:#1baf7a; --neutral:#a9b2af; --soft:#e8ecea;
+  --seq1:#cde2fb; --seq2:#9ec5f4; --seq3:#6da7ec; --seq4:#3987e5; --seq5:#1c5cab; --nodata:#e6eae7;
+  --good:#006300; --crit:#c2332f; --note:#fff5dc; --note-ink:#5a4300;
+  --display:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --plane:#0c1013; --surface:#161a1d; --ink:#eef1ef; --ink2:#bfc6c3; --muted:#8a9391; --rule:#293034; --axis:#3a4246;
+    --accent:#3987e5; --accent-strong:#86b6ef; --s2:#d95926; --s3:#199e70; --neutral:#5f6866; --soft:#232a2d;
+    --seq1:#0d366b; --seq2:#184f95; --seq3:#256abf; --seq4:#3987e5; --seq5:#86b6ef; --nodata:#20262a;
+    --good:#0ca30c; --crit:#e66767; --note:#2b2617; --note-ink:#f1dfa8; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --plane:#0c1013; --surface:#161a1d; --ink:#eef1ef; --ink2:#bfc6c3; --muted:#8a9391; --rule:#293034; --axis:#3a4246;
+  --accent:#3987e5; --accent-strong:#86b6ef; --s2:#d95926; --s3:#199e70; --neutral:#5f6866; --soft:#232a2d;
+  --seq1:#0d366b; --seq2:#184f95; --seq3:#256abf; --seq4:#3987e5; --seq5:#86b6ef; --nodata:#20262a;
+  --good:#0ca30c; --crit:#e66767; --note:#2b2617; --note-ink:#f1dfa8; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--plane);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+a{color:var(--accent-strong)}
+h1,h2{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,4.2vw,46px);line-height:1.08;letter-spacing:-0.01em;max-width:22ch}
+h2{font-size:clamp(22px,2.6vw,30px);line-height:1.15}
+h3{font-size:15px;font-weight:600;margin:0}
+p{margin:0}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-strong)}
+header.hero{padding:44px 0 26px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;align-items:end}
+.lede{font-size:18px;color:var(--ink2);max-width:52ch;margin-top:16px}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.kpi b{font-size:34px;font-weight:600;line-height:1.05;letter-spacing:-0.01em}
+.kpi span{font-size:13px;color:var(--ink2);line-height:1.35}
+nav.bar{position:sticky;top:0;z-index:20;background:var(--plane);border-bottom:1px solid var(--rule)}
+nav.bar .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px}
+nav.bar a{flex:none;text-decoration:none;color:var(--ink2);font-weight:500;font-size:14px;padding:7px 12px;border-radius:999px}
+nav.bar a:hover{background:var(--soft);color:var(--ink)}
+nav.bar a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{display:flex;flex-direction:column;gap:22px;padding:22px 0 60px}
+section.panel{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:18px}
+.sec-head{display:flex;flex-direction:column;gap:6px}
+.sec-head p{color:var(--ink2);max-width:75ch}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:end;padding:12px 14px;background:var(--plane);border:1px solid var(--rule);border-radius:10px}
+.ctl{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink2);font-weight:500;max-width:100%;min-width:0}
+select,button{font:inherit;color:var(--ink)}
+select{background:var(--surface);border:1px solid var(--axis);border-radius:8px;padding:7px 28px 7px 10px;font-size:14px;max-width:100%}
+.seg{display:inline-flex;border:1px solid var(--axis);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;padding:7px 12px;font-size:14px;cursor:pointer;border-right:1px solid var(--axis)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff;font-weight:600}
+.seg button:disabled{color:var(--muted);cursor:not-allowed}
+.check{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--ink);font-weight:400;padding-bottom:6px}
+.check input{width:16px;height:16px;accent-color:var(--accent)}
+.btn{border:1px solid var(--axis);background:var(--surface);border-radius:8px;padding:7px 14px;font-size:14px;font-weight:500;cursor:pointer}
+.btn:hover{background:var(--soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.grid2{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:22px;align-items:start}
+.grid-even{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:start}
+.card{border:1px solid var(--rule);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card > p.cap{font-size:13px;color:var(--ink2)}
+.mapbox{position:relative}
+#mapsvg{width:100%;height:auto;display:block;touch-action:manipulation}
+#mapsvg path.hood{stroke:var(--surface);stroke-width:2.5;cursor:pointer;transition:fill .15s}
+#mapsvg path.hood:focus{outline:none}
+#mapsvg path.sel{fill:none;stroke:var(--ink);stroke-width:3;pointer-events:none}
+#mapsvg text{font-family:var(--body);font-size:21px;font-weight:600;pointer-events:none;paint-order:stroke;stroke:var(--surface);stroke-width:5px;stroke-linejoin:round;fill:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink2);align-items:center}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+.legend i.dot{width:9px;height:9px;border-radius:50%;vertical-align:0}
+.legend i.ring{width:9px;height:9px;border-radius:50%;background:transparent;border:1.5px solid var(--ink2);vertical-align:0}
+.stats{display:grid;grid-template-columns:1fr auto;gap:6px 14px;font-size:14px}
+.stats dt{color:var(--ink2)} .stats dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.bars{display:flex;flex-direction:column;gap:7px}
+.brow{display:grid;grid-template-columns:minmax(90px,38%) 1fr minmax(58px,auto);gap:10px;align-items:center;font-size:13.5px;border-radius:6px;padding:1px 0}
+.brow.click{cursor:pointer}
+.brow.click:hover .blabel{text-decoration:underline}
+.blabel{color:var(--ink);overflow-wrap:anywhere;line-height:1.25}
+.btrack{position:relative;height:16px}
+.btrack .zero{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--axis)}
+.bfill{position:absolute;top:0;height:16px;background:var(--accent);border-radius:0 4px 4px 0;min-width:1px}
+.bfill.neg{border-radius:4px 0 0 4px}
+.bfill.muted{background:var(--neutral)} .bfill.alt{background:var(--s2)} .bfill.third{background:var(--s3)}
+.bval{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.brow.total{border-top:1px solid var(--axis);padding-top:8px;margin-top:2px}
+.brow.total .blabel{font-weight:600}
+.cols{display:flex;align-items:flex-end;gap:2px;height:190px;border-bottom:1px solid var(--axis);padding-top:22px}
+.col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:0;position:relative}
+.col .cbar{width:100%;max-width:24px;background:var(--neutral);border-radius:4px 4px 0 0}
+.col .cbar.hot{background:var(--accent)} .col .cbar.alt{background:var(--s2)} .col .cbar.light{background:var(--seq2)}
+.col .cv{font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums;margin-bottom:3px;white-space:nowrap}
+.colx{display:flex;gap:2px;font-size:12px;color:var(--ink2);margin-top:5px}
+.colx span{flex:1;text-align:center;min-width:0;line-height:1.2}
+.grp{flex:1;display:flex;gap:16px;justify-content:center;align-items:flex-end;height:100%}
+.grp .col{flex:0 1 24px}
+.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px 20px}
+.sl{display:flex;flex-direction:column;gap:2px;font-size:13px;color:var(--ink2)}
+.sl output{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.sl .top{display:flex;justify-content:space-between;gap:8px}
+input[type=range]{width:100%;accent-color:var(--accent);margin:2px 0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tile{border:1px solid var(--rule);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;background:var(--plane)}
+.tile b{font-size:24px;font-weight:600;line-height:1.1}
+.tile span{font-size:12.5px;color:var(--ink2);line-height:1.3}
+.tile.neg b{color:var(--crit)}
+.note{background:var(--note);color:var(--note-ink);border-radius:8px;padding:10px 14px;font-size:14px}
+details.tbl{font-size:13px}
+details.tbl summary{cursor:pointer;color:var(--accent-strong);font-weight:500;width:max-content}
+.tblwrap{overflow-x:auto;margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;color:var(--ink2);font-size:12.5px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+#hist{width:100%;height:auto;display:block}
+#hist text{font-family:var(--body);font-size:12px;fill:var(--ink2)}
+#hist .hb{fill:var(--accent)} #hist .hb:hover,#hist .hb:focus{fill:var(--accent-strong);outline:none}
+.range{position:relative;height:16px}
+.range .rb{position:absolute;top:4px;height:8px;border-radius:4px;background:var(--seq2)}
+.range .rd{position:absolute;top:1px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--accent);border:2px solid var(--surface)}
+.range.hot .rb{background:var(--s2);opacity:.45} .range.hot .rd{background:var(--s2)}
+.switch{display:flex;gap:10px;align-items:flex-start}
+.switch input{width:18px;height:18px;margin-top:2px;accent-color:var(--accent);flex:none}
+.dec{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr);gap:8px 22px;padding:14px 0;border-bottom:1px solid var(--rule);font-size:14px}
+.dec h3{font-size:15px}
+.dec .k{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--soft);color:var(--ink2)}
+ul.plain{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;color:var(--ink2)}
+ul.plain b{color:var(--ink)}
+#tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--surface);border-radius:8px;padding:8px 11px;font-size:13px;line-height:1.35;max-width:270px;box-shadow:0 6px 20px rgba(0,0,0,.22)}
+#tip b{display:block;font-size:13.5px;margin-bottom:2px}
+#tip .r{display:flex;justify-content:space-between;gap:14px}
+#tip .r span:last-child{font-weight:600;font-variant-numeric:tabular-nums}
+footer{color:var(--muted);font-size:13px;padding:0 0 40px}
+@media (max-width: 860px){
+  .hero-grid,.grid2,.grid-even,.grid3{grid-template-columns:minmax(0,1fr)}
+  .dec{grid-template-columns:minmax(0,1fr)}
+  section.panel{padding:18px}
+}
+@media (max-width: 640px){
+  #mapsvg text{display:none}
+  #mapsvg text.on{display:block;font-size:50px;stroke-width:11px}
+}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} #mapsvg path.hood{transition:none}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="hero-grid">
+    <div>
+      <p class="eyebrow">DataJam 2026 · Recommendation to DDD's investment committee</p>
+      <h1 id="thesis"></h1>
+      <p class="lede" id="lede"></p>
+    </div>
+    <div class="kpis" id="kpis"></div>
+  </div>
+</div></header>
+
+<nav class="bar" aria-label="Sections"><div class="wrap">
+  <a href="#map">Map</a><a href="#unit">One unit</a><a href="#portfolio">Portfolio</a><a href="#evidence">Evidence</a><a href="#decisions">Decisions</a><a href="#method">Method</a>
+</div></nav>
+
+<main class="wrap">
+
+<section class="panel" id="map" aria-labelledby="map-h">
+  <div class="sec-head"><h2 id="map-h">Where: the downtown core earns the most per dollar</h2>
+  <p>Each neighbourhood is coloured by what its comparable listings earn. Pick a neighbourhood to see its numbers. Dots are comparable listings, shown without any host or listing details and snapped to a 30-metre grid.</p></div>
+  <div class="controls">
+    <label class="ctl" for="m-metric">Colour by<select id="m-metric">
+      <option value="yield">Net yield (2027 income / all-in cost)</option><option value="nights">Booked nights per year</option>
+      <option value="price">Nightly price, annualised</option><option value="count">Comparable listings</option><option value="long90">Homes at a 90-night minimum</option></select></label>
+    <div class="ctl">Property type<div class="seg" id="m-asset" role="group" aria-label="Property type"></div></div>
+    <label class="ctl" for="m-beds">Bedrooms<select id="m-beds"><option value="">Any</option><option value="1">1</option><option value="2">2</option><option value="3">3 or more</option></select></label>
+    <label class="check"><input type="checkbox" id="m-dots" checked> Comparable listings</label>
+    <label class="check"><input type="checkbox" id="m-long"> Homes at a 90-night minimum</label>
+  </div>
+  <div class="grid2">
+    <div class="mapbox">
+      <svg id="mapsvg" role="img" aria-label="Map of Vancouver neighbourhoods coloured by the selected measure"></svg>
+      <div class="legend" id="m-legend" style="margin-top:10px"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <div class="card"><h3 id="m-name"></h3><dl class="stats" id="m-stats"></dl><p class="cap" id="m-cap"></p></div>
+      <div class="card"><h3 id="m-rank-h"></h3><div class="bars" id="m-rank"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="unit" aria-labelledby="unit-h">
+  <div class="sec-head"><h2 id="unit-h">What: one unit, three ways to run it</h2>
+  <p>Let by the night all year, a core one-bedroom earns about what a plain lease earns. Nightly stays in the four peak months and furnished stays of 30 nights or more for the rest of the year earn more than either. Move the sliders to test it.</p></div>
+  <div class="controls">
+    <label class="ctl" for="u-hood">Neighbourhood<select id="u-hood"></select></label>
+    <div class="ctl">Property type<div class="seg" id="u-asset" role="group" aria-label="Property type"></div></div>
+    <label class="ctl" for="u-beds">Bedrooms<select id="u-beds"><option value="">Any</option><option value="1" selected>1</option><option value="2">2</option><option value="3">3 or more</option></select></label>
+    <div class="ctl">How it is run<div class="seg" id="u-mode" role="group" aria-label="How it is run"></div></div>
+    <label class="check"><input type="checkbox" id="u-tax"> Apply vacancy taxes to nightly-only</label>
+    <button class="btn" id="u-reset" type="button">Reset assumptions</button>
+  </div>
+  <div class="sliders" id="u-sliders"></div>
+  <div class="tiles" id="u-tiles"></div>
+  <div class="grid-even">
+    <div class="card"><h3 id="u-pl-h">Income and costs for the average unit</h3><div class="bars" id="u-pl"></div></div>
+    <div class="card"><h3>Yield under each way of running it</h3><div class="bars" id="u-modes"></div>
+      <p class="cap" id="u-modes-cap"></p></div>
+  </div>
+</section>
+
+<section class="panel" id="portfolio" aria-labelledby="pf-h">
+  <div class="sec-head"><h2 id="pf-h">How many: fourteen small units beat three large ones</h2>
+  <p>Each simulated portfolio is filled by drawing real comparable listings until the budget runs out. Every run then gets a market-wide demand shock, a price shock, unit-level noise and the City's licence-suspension rate. The page runs 2,000 portfolios in your browser, so its median sits within a few thousand dollars of the published figure.</p></div>
+  <div class="controls">
+    <label class="ctl" for="p-pool">Strategy<select id="p-pool"></select></label>
+    <div class="ctl">How it is run<div class="seg" id="p-mode" role="group" aria-label="How it is run"></div></div>
+    <label class="check"><input type="checkbox" id="p-tax"> Apply vacancy taxes to nightly-only</label>
+    <button class="btn primary" id="p-run" type="button">Run again</button>
+  </div>
+  <div class="sliders" id="p-sliders"></div>
+  <div class="tiles" id="p-tiles"></div>
+  <div class="grid-even">
+    <div class="card"><h3>Simulated 2027 net operating income</h3><svg id="hist" role="img" aria-label="Histogram of simulated 2027 net operating income"></svg>
+      <p class="cap" id="p-cap"></p></div>
+    <div class="card"><h3>Few large or many small: the range for each strategy</h3>
+      <div class="legend"><span><i style="background:var(--seq2);height:8px;border-radius:4px;width:22px"></i>8 in 10 simulated years</span><span><i class="dot" style="background:var(--accent)"></i>Median</span><span><i style="background:var(--s2);height:8px;border-radius:4px;width:22px;opacity:.45"></i>Recommended pool</span></div>
+      <div class="bars" id="p-strats"></div><p class="cap">All five are run by the night with vacancy taxes left out, so the property types are compared like for like at the budget chosen here.</p>
+      <details class="tbl"><summary>Table view</summary><div class="tblwrap" id="p-strats-t"></div></details></div>
+  </div>
+</section>
+
+<section class="panel" id="evidence" aria-labelledby="ev-h">
+  <div class="sec-head"><h2 id="ev-h">Evidence: what the snapshot hides until you compare it with others</h2>
+  <p>The June file is one day's scrape. Inside Airbnb's March and September files, from the same public page, show what that day distorts.</p></div>
+  <div class="grid3">
+    <div class="card"><h3>June prices were quoted for World Cup dates</h3><div id="e-wc"></div><p class="cap" id="e-wc-cap"></p></div>
+    <div class="card"><h3>Half the year's stays fall in four months</h3><div id="e-season"></div><p class="cap" id="e-season-cap"></p></div>
+    <div class="card"><h3>Prices swing across the year</h3><div id="e-index"></div><div class="legend"><span><i style="background:var(--accent)"></i>Measured on the same listings</span><span><i style="background:var(--seq2)"></i>Interpolated or assumed</span></div><p class="cap" id="e-index-cap"></p></div>
+  </div>
+  <div class="grid3">
+    <div class="card"><h3>One home in four sits at a 90-night minimum</h3><div id="e-supply"></div><div class="legend"><span><i style="background:var(--accent)"></i>Nightly market</span><span><i style="background:var(--s2)"></i>90-night minimum</span></div><p class="cap" id="e-supply-cap"></p></div>
+    <div class="card"><h3>New listings have not had a full year</h3><div id="e-age"></div><p class="cap" id="e-age-cap"></p></div>
+    <div class="card"><h3>Houses earn revenue, not profit</h3><div class="bars" id="e-asset"></div><div class="legend"><span><i style="background:var(--neutral)"></i>Guest revenue / cost</span><span><i style="background:var(--accent)"></i>Net income / cost</span></div><p class="cap" id="e-asset-cap"></p></div>
+  </div>
+</section>
+
+<section class="panel" id="decisions" aria-labelledby="dc-h">
+  <div class="sec-head"><h2 id="dc-h">Decisions: switch each one off and watch the number move</h2>
+  <p>Each choice below changed the answer. The switches undo a choice and recompute the yield of core one-bedroom apartments from the listing data in this page.</p></div>
+  <div class="tiles" id="d-tiles"></div>
+  <div class="controls" id="d-switches" style="flex-direction:column;align-items:stretch;gap:12px"></div>
+  <div id="d-list"></div>
+</section>
+
+<section class="panel" id="method" aria-labelledby="mt-h">
+  <div class="sec-head"><h2 id="mt-h">Method, checks and limits</h2>
+  <p>Every figure on this page comes from the scripts in the team's repository. The repository's README maps each number to the script that produces it.</p></div>
+  <div class="grid-even">
+    <div class="card"><h3>From 6,509 listings to the comparable set</h3><div class="bars" id="t-funnel"></div></div>
+    <div class="card"><h3>Checks we ran to try to break the result</h3><div class="tblwrap" id="t-valid"></div></div>
+  </div>
+  <div class="grid-even">
+    <div class="card"><h3>Assumptions</h3><div class="tblwrap" id="t-assume"></div></div>
+    <div class="card"><h3>What could be wrong</h3><ul class="plain" id="t-limits"></ul>
+      <h3 style="margin-top:8px">Use of AI</h3><p class="cap" style="color:var(--ink2);font-size:14px">Claude (Anthropic) wrote the pipeline, the simulation and this page under the team’s direction. The work is checked three ways in the repository: it reproduces Inside Airbnb’s own revenue and occupancy figures, it re-runs on the September snapshot, and a test compares every published number with the script output.</p>
+      <h3 style="margin-top:8px">Sources</h3><ul class="plain" id="t-sources"></ul></div>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap" id="foot"></div></footer>
+<div id="tip" hidden></div>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+(function(){
+'use strict';
+const D = JSON.parse(document.getElementById('data').textContent);
+const M = D.metrics, A = M.assumptions, PB = M.price_basis, S = M.seasonality, B = M.benchmarks, R = M.recommendation, V = M.validation, DEC = M.decisions;
+const HOODS = D.hoods, ANAME = ['condo','townhouse','house'], ALABEL = ['Apartments','Townhouses','Houses'];
+const H=2, AS=3, BD=4, PR=5, NI=6, LIC=7, EST=8, ACT=9;
+const CORE = new Set(HOODS.map((h,i)=>h.core?i:-1).filter(i=>i>=0));
+const $ = (s,el)=>(el||document).querySelector(s);
+const NS = 'http://www.w3.org/2000/svg';
+const sv = (tag,attrs,parent)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;};
+const el = (tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;};
+const num = v=>Math.round(v).toLocaleString('en-CA');
+const f$ = v=>(v<0?'−':'')+'$'+num(Math.abs(v));
+const fK = v=>(v<0?'−':'')+'$'+num(Math.abs(v)/1000)+'K';
+const fM = v=>'$'+(v/1e6).toFixed(1)+'M';
+const fP = (v,d)=>(v<0?'−':'')+(Math.abs(v)*100).toFixed(d==null?1:d)+'%';
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/* ---------------- tooltip ---------------- */
+const tip = $('#tip');
+function showTip(x,y,title,rows){
+  tip.replaceChildren();
+  if(title) tip.appendChild(el('b',null,title));
+  (rows||[]).forEach(r=>{const d=el('div','r');d.appendChild(el('span',null,r[0]));d.appendChild(el('span',null,r[1]));tip.appendChild(d);});
+  tip.hidden=false;
+  const w=tip.offsetWidth,h=tip.offsetHeight;
+  tip.style.left=Math.max(8,Math.min(window.innerWidth-w-8,x+14))+'px';
+  tip.style.top=Math.max(8,(y+h+22>window.innerHeight)?y-h-12:y+16)+'px';
+}
+function bindTip(node,fn){
+  node.setAttribute('tabindex','0');
+  node.addEventListener('pointermove',e=>{const t=fn();showTip(e.clientX,e.clientY,t[0],t[1]);});
+  node.addEventListener('pointerleave',()=>{tip.hidden=true;});
+  node.addEventListener('focus',()=>{const b=node.getBoundingClientRect(),t=fn();showTip(b.left+b.width/2,b.top+b.height/2,t[0],t[1]);});
+  node.addEventListener('blur',()=>{tip.hidden=true;});
+}
+
+/* ---------------- model (mirrors src/assumptions.py) ---------------- */
+const BASE = {priceMult:1,adrMult:1,occMult:1,airbnbFee:A.airbnb_fee,mgmtFee:A.mgmt_fee,firstYear:A.first_year_haircut,midRent:A.mid_rent['1'],midOcc:A.mid_occupancy,deflate:true,dtesEast:false,estOnly:true,licOnly:true};
+function bedFactor(a,b){
+  if(a===0) return b<=0?0.70:b===1?0.85:b===2?1.15:1.50;
+  if(a===1) return b<=2?0.90:b===3?1.00:1.15;
+  return b===3?0.90:b===4?1.00:b===5?1.10:1.25;
+}
+const ptt = p=>0.01*Math.min(p,2e5)+0.02*Math.min(Math.max(p-2e5,0),1.8e6)+0.03*Math.max(p-2e6,0)+0.02*Math.max(p-3e6,0);
+function econ(r,P){
+  const a=r[AS], b=r[BD]<0?1:Math.min(r[BD],6), an=ANAME[a], hood=HOODS[r[H]];   /* missing bedrooms are costed as one bedroom, as in add_costs() */
+  const zone=(P.dtesEast&&hood.name==='Downtown Eastside')?'E':hood.zone;
+  const purchase=B[zone+'_'+an]*bedFactor(a,b)*P.priceMult;
+  const furnish=A.furnish_base[an]+A.furnish_per_bed*b;
+  const allin=purchase+ptt(purchase)+A.legal_pct*purchase+furnish;
+  const strata=a===0?A.strata[String(Math.min(b,3))]:a===1?A.strata_townhouse:0;
+  const holding=strata+A.prop_tax*purchase+A.maint[an]*purchase;
+  const other=A.utilities[an]+A.insurance[an]+A.licences;
+  const adr=r[PR]/(P.deflate?PB.june_over_sept[an]:1)*(P.deflate?S.annual_price_level_vs_sept:1)*P.adrMult;
+  const nights=Math.min(r[NI]*P.occMult,330)*(1-P.firstYear);
+  return {purchase,furnish,allin,holding,other,fixed:holding+other,clean:A.clean_base+A.clean_per_bed*b,adr,nights,lb:Math.min(Math.max(b,1),2),vt:(A.eht+A.svt)*purchase};
+}
+function nightly(e,P){const guest=e.adr*e.nights,fee=guest*P.airbnbFee,pay=guest-fee,mg=pay*P.mgmtFee,cs=pay*A.supplies_pct+e.nights/A.stay_nights*e.clean;
+  return {guest,fee,pay,mg,cs,noi:pay-mg-cs-e.fixed,cost:e.allin};}
+function hybrid(e,P){const n=e.nights*S.peak_share,guest=e.adr*S.peak_adr_uplift*n,fee=guest*P.airbnbFee,pay=guest-fee,mg=pay*P.mgmtFee,cs=pay*A.supplies_pct+n/A.stay_nights*e.clean;
+  const rent=e.lb===1?P.midRent:P.midRent*A.mid_rent['2']/A.mid_rent['1'],mid=rent*A.mid_months*P.midOcc,mfee=mid*A.mid_mgmt,turn=A.mid_turnovers*A.mid_turn_cost;
+  return {guest,fee,pay,mg,cs,mid,mfee,turn,noi:pay-mg-cs+mid-mfee-turn-e.fixed,cost:e.allin};}
+function lease(e){const rent=A.lease_rent[String(e.lb)]*12,vac=rent*A.lease_vacancy,mg=(rent-vac)*A.lease_mgmt;
+  return {rent,vac,mg,noi:rent-vac-mg-e.holding-A.lease_insurance,cost:e.allin-e.furnish};}
+function pool(f,P){
+  P=P||BASE;
+  return D.listings.filter(r=>(P.licOnly?r[LIC]:true)&&(P.estOnly?r[EST]:r[ACT])&&(f.asset==null||r[AS]===f.asset)&&(f.hoods==null||f.hoods.has(r[H]))
+    &&(f.zone==null||HOODS[r[H]].zone===f.zone)&&(f.beds==null||(f.beds===3?r[BD]>=3:f.beds===12?(r[BD]===1||r[BD]===2):r[BD]===f.beds)));
+}
+function pooled(rows,P,mode,tax){
+  let noi=0,cost=0,agg={};
+  rows.forEach(r=>{const e=econ(r,P),m=mode==='lease'?lease(e):mode==='hybrid'?hybrid(e,P):nightly(e,P);
+    const t=(mode==='nightly'&&tax)?e.vt:0; noi+=m.noi-t; cost+=m.cost;
+    for(const k in m) agg[k]=(agg[k]||0)+m[k];
+    agg.holding=(agg.holding||0)+e.holding; agg.other=(agg.other||0)+e.other; agg.vt=(agg.vt||0)+t; agg.allin=(agg.allin||0)+e.allin;
+    agg.adr=(agg.adr||0)+e.adr; agg.nights=(agg.nights||0)+e.nights;});
+  const n=rows.length||1; for(const k in agg) agg[k]/=n;
+  return {n:rows.length,yield:cost?noi/cost:NaN,noi:noi/n,cost:cost/n,avg:agg};
+}
+const median = a=>{if(!a.length)return NaN;const s=a.slice().sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2;};
+const canLease = f=>f.asset===0&&(f.beds===1||f.beds===2||f.beds===12);
+
+/* ---------------- simulation (mirrors src/05_portfolio.py) ---------------- */
+function rng(seed){let a=seed>>>0;return ()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function simulate(rows,P,mode,o){
+  const u=rng(o.seed), nrm=()=>{let a=0;while(a===0)a=u();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*u());};
+  const k=rows.length, pS=M.profile.brief_city_counts.suspensions/M.profile.brief_city_counts.licences, vs=P.mgmtFee+A.supplies_pct;
+  const E=rows.map(r=>{const e=econ(r,P),n=nightly(e,P),rent=e.lb===1?P.midRent:P.midRent*A.mid_rent['2']/A.mid_rent['1'];
+    return {cost:mode==='lease'?e.allin-e.furnish:e.allin,pay:n.pay,cl:e.nights/A.stay_nights*e.clean,fixed:e.fixed,holding:e.holding,vt:e.vt,rent,lrent:A.lease_rent[String(e.lb)]};});
+  const out=[];
+  if(!k) return out;
+  for(let s=0;s<o.nsim;s++){
+    const sel=[];let spent=0,guard=0;
+    while(guard++<400){const i=Math.floor(u()*k);if(spent+E[i].cost>o.budget)break;sel.push(i);spent+=E[i].cost;}
+    const dm=Math.exp(nrm()*0.10),pm=Math.exp(nrm()*0.05),mm=Math.exp(nrm()*0.05);
+    let noi=0,missed=0;
+    sel.forEach(i=>{const x=E[i],d=dm*Math.exp(nrm()*0.15),sus=u()<pS?0.5:1;
+      if(mode==='nightly'){noi+=x.pay*d*pm*(1-o.erosion*S.jun_dec_share)*sus*(1-vs)-x.cl*d*sus-x.fixed-(o.tax?x.vt:0);}
+      else if(mode==='hybrid'){const occ=Math.min(1,Math.max(0.5,P.midOcc+nrm()*0.06)),miss=occ*A.mid_months*30.44<A.tenancy_days_required;if(miss)missed++;
+        noi+=x.pay*S.peak_share*S.peak_adr_uplift*d*pm*(1-o.erosion*S.peak_after_june_share)*sus*(1-vs)-x.cl*S.peak_share*d*sus
+            +x.rent*mm*A.mid_months*occ*(1-A.mid_mgmt)-A.mid_turnovers*A.mid_turn_cost-x.fixed-(miss?x.vt:0);}
+      else{noi+=x.lrent*mm*12*(1-A.lease_vacancy)*(1-A.lease_mgmt)-x.holding-A.lease_insurance;}});
+    out.push({noi,spent,n:sel.length,missed});
+  }
+  return out;
+}
+function describe(o){
+  if(!o.length) return null;
+  const q=(a,p)=>{const s=a.slice().sort((x,y)=>x-y);return s[Math.min(s.length-1,Math.floor(p*s.length))];};
+  const noi=o.map(x=>x.noi), y=o.map(x=>x.spent?x.noi/x.spent:0);
+  return {units:median(o.map(x=>x.n)),spent:median(o.map(x=>x.spent)),p10:q(noi,.1),p50:q(noi,.5),p90:q(noi,.9),y10:q(y,.1),y50:q(y,.5),y90:q(y,.9),
+    below:y.filter(v=>v<0.01).length/y.length,loss:noi.filter(v=>v<0).length/noi.length,missed:o.reduce((a,x)=>a+x.missed,0)/o.length,noi};
+}
+
+/* ---------------- small chart builders ---------------- */
+function barList(box,rows,opt){
+  opt=opt||{}; box.replaceChildren();
+  const vals=rows.map(r=>r.v).filter(v=>isFinite(v)), max=Math.max(opt.max||0,...vals,0), min=Math.min(opt.min||0,...vals,0), span=(max-min)||1, z=(0-min)/span*100;
+  rows.forEach(r=>{
+    const row=el('div','brow'+(r.total?' total':'')+(r.click?' click':''));
+    row.appendChild(el('span','blabel',r.label));
+    const tr=el('span','btrack'); if(min<0){const zl=el('span','zero');zl.style.left=z+'%';tr.appendChild(zl);}
+    if(isFinite(r.v)){const b=el('span','bfill'+(r.v<0?' neg':'')+(r.cls?' '+r.cls:''));const w=Math.abs(r.v)/span*100;b.style.width=w+'%';b.style.left=(r.v<0?z-w:z)+'%';tr.appendChild(b);}
+    row.appendChild(tr); row.appendChild(el('span','bval',r.text));
+    if(r.tip) bindTip(row,()=>r.tip);
+    if(r.click){row.setAttribute('role','button');row.addEventListener('click',r.click);row.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();r.click();}});if(!r.tip)row.setAttribute('tabindex','0');}
+    box.appendChild(row);
+  });
+}
+function colChart(box,cols,opt){
+  opt=opt||{}; box.replaceChildren();
+  const max=Math.max(...cols.flatMap(c=>c.series?c.series.map(s=>s.v):[c.v]))*1.02||1, wrap=el('div','cols'), xs=el('div','colx');
+  cols.forEach(c=>{
+    const mk=(s,parent)=>{const col=el('div','col');if(s.text)col.appendChild(el('span','cv',s.text));const b=el('div','cbar'+(s.cls?' '+s.cls:''));b.style.height=Math.max(1,s.v/max*100)+'%';col.appendChild(b);
+      bindTip(col,()=>[c.label,[[s.name||opt.name||'Value',s.tipText||s.text||String(s.v)]]]);parent.appendChild(col);};
+    if(c.series){const g=el('div','grp');c.series.forEach(s=>mk(s,g));wrap.appendChild(g);} else mk(c,wrap);
+    xs.appendChild(el('span',null,c.short||c.label));
+  });
+  box.appendChild(wrap); box.appendChild(xs);
+}
+function table(box,head,rows){
+  const t=el('table'),th=el('tr');head.forEach((h,i)=>{const c=el('th',i&&opt_num(rows,i)?'num':null,h);th.appendChild(c);});const hd=el('thead');hd.appendChild(th);t.appendChild(hd);
+  const tb=el('tbody');rows.forEach(r=>{const tr=el('tr');r.forEach((v,i)=>tr.appendChild(el('td',i&&opt_num(rows,i)?'num':null,v)));tb.appendChild(tr);});t.appendChild(tb);
+  box.replaceChildren(t);
+}
+const opt_num=(rows,i)=>rows.every(r=>/^[−$\d.,%+\-\s]*[KM%]?$/.test(String(r[i])));
+function segmented(box,options,value,onChange){
+  box.replaceChildren();
+  options.forEach(o=>{const b=el('button',null,o.label);b.type='button';b.dataset.v=o.value;b.setAttribute('aria-pressed',String(o.value===value));b.disabled=!!o.disabled;
+    b.addEventListener('click',()=>{[...box.children].forEach(c=>c.setAttribute('aria-pressed',String(c===b)));onChange(o.value);});box.appendChild(b);});
+}
+function slider(box,id,label,min,max,step,value,fmt,onInput){
+  const w=el('label','sl');w.setAttribute('for',id);const top=el('span','top');top.appendChild(el('span',null,label));const out=el('output',null,fmt(value));out.setAttribute('for',id);top.appendChild(out);
+  const inp=el('input');inp.type='range';inp.id=id;inp.min=min;inp.max=max;inp.step=step;inp.value=value;
+  inp.addEventListener('input',()=>{out.textContent=fmt(+inp.value);onInput(+inp.value);});
+  w.appendChild(top);w.appendChild(inp);box.appendChild(w);
+  return {set:v=>{inp.value=v;out.textContent=fmt(v);}};
+}
+function tiles(box,items){box.replaceChildren();items.forEach(t=>{const d=el('div','tile'+(t.neg?' neg':''));d.appendChild(el('b',null,t.v));d.appendChild(el('span',null,t.l));box.appendChild(d);});}
+
+/* ---------------- hero ---------------- */
+const alloc=R.allocation, hoodLabel=n=>n==='Downtown Eastside'?'Gastown/Chinatown':n;
+const pm=Object.fromEntries(M.portfolio_modes.map(r=>[r.label,r]));
+const NIGHT=pm['Nightly all year (vacancy taxes not applied)'], LEASE=pm['Unfurnished 12-month lease'], TAXED=pm['Nightly all year, with Empty Homes Tax and Speculation Tax'];
+$('#thesis').textContent='Buy '+R.units+' one-bedroom condos downtown. Let them by the night in summer and by the month the rest of the year.';
+$('#lede').textContent='Expected 2027 net operating income is '+fK(R.noi_p50)+' on '+fM(R.deployed)+' invested, a '+fP(R.yield_p50)+' yield. Eight simulated years in ten land between '+fK(R.noi_p10)+' and '+fK(R.noi_p90)+'.';
+[[String(R.units),'one-bedroom condos: '+Object.keys(alloc).map(k=>alloc[k]+' '+hoodLabel(k)).join(', ')],
+ [fK(R.noi_p50),'expected 2027 net operating income ('+fK(R.noi_p10)+' to '+fK(R.noi_p90)+')'],
+ [fP(R.yield_p50),'yield on all-in cost ('+fP(R.yield_p10)+' to '+fP(R.yield_p90)+')'],
+ ['+'+fK(R.noi_p50-NIGHT.noi_p50),'more than letting by the night all year, and +'+fK(R.noi_p50-LEASE.noi_p50)+' more than a plain lease']
+].forEach(k=>{const d=el('div','kpi');d.appendChild(el('b',null,k[0]));d.appendChild(el('span',null,k[1]));$('#kpis').appendChild(d);});
+$('#foot').textContent=M.credit+' Purchase prices: '+M.benchmark_source+'. Rents: liv.rent and CMHC. Built for SFU DSSS DataJam 2026.';
+
+/* ---------------- map ---------------- */
+const mapState={metric:'yield',asset:0,beds:null,sel:HOODS.findIndex(h=>h.name==='Downtown'),dots:true,long:false};
+const svgMap=$('#mapsvg'); svgMap.setAttribute('viewBox','0 0 '+D.width+' '+D.height);
+const gH=sv('g',{},svgMap), gD=sv('g',{},svgMap), gL=sv('g',{},svgMap), gS=sv('g',{},svgMap), gT=sv('g',{},svgMap);
+const hoodPaths=HOODS.map((h,i)=>{const p=sv('path',{d:h.path,class:'hood',role:'button','aria-label':h.name},gH);
+  p.addEventListener('click',()=>{mapState.sel=i;drawMap();});p.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();mapState.sel=i;drawMap();}});
+  bindTip(p,()=>hoodTip(i));return p;});
+const selPath=sv('path',{class:'sel'},gS);
+const MINN=15;
+const METRICS={
+  yield:{label:'Net yield',breaks:[0.005,0.010,0.015,0.020],fmt:v=>fP(v),get:s=>s.n>=MINN?s.yield:null},
+  nights:{label:'Booked nights per year',breaks:[75,100,125,150],fmt:v=>num(v),get:s=>s.n>=MINN?s.nights:null},
+  price:{label:'Nightly price',breaks:[300,375,450,550],fmt:v=>f$(v),get:s=>s.n>=MINN?s.price:null},
+  count:{label:'Comparable listings',breaks:[10,25,50,150],fmt:v=>num(v),get:s=>s.n},
+  long90:{label:'Homes at a 90-night minimum',breaks:[10,25,50,150],fmt:v=>num(v),get:(s,h)=>h.long90}
+};
+let hoodStats=[];
+function computeHoodStats(){
+  const f={asset:mapState.asset,beds:mapState.beds};
+  hoodStats=HOODS.map((h,i)=>{const rows=pool({asset:f.asset,beds:f.beds,hoods:new Set([i])});const p=pooled(rows,BASE,'nightly',false);
+    const es=rows.map(r=>econ(r,BASE));
+    return {n:rows.length,yield:p.yield,noi:p.noi,cost:p.cost,nights:median(rows.map(r=>r[NI])),price:median(es.map(e=>e.adr))};});
+}
+function hoodTip(i){const h=HOODS[i],s=hoodStats[i],rows=[['Comparable listings',num(s.n)]];
+  if(s.n>=MINN){rows.push(['Net yield',fP(s.yield)],['Nightly price',f$(s.price)],['Booked nights',num(s.nights)]);} else rows.push(['Too few to report','under '+MINN]);
+  rows.push(['90-night homes',num(h.long90)]);return [hoodLabel(h.name)==='Gastown/Chinatown'?'Downtown Eastside (Gastown, Chinatown)':h.name,rows];}
+function drawMap(){
+  const m=METRICS[mapState.metric], cls=v=>v==null||!isFinite(v)?'var(--nodata)':'var(--seq'+(1+m.breaks.filter(b=>v>=b).length)+')';
+  const vals=HOODS.map((h,i)=>m.get(hoodStats[i],h));
+  hoodPaths.forEach((p,i)=>p.setAttribute('fill',cls(vals[i])));
+  selPath.setAttribute('d',HOODS[mapState.sel].path);
+  gT.replaceChildren();
+  HOODS.forEach((h,i)=>{const v=vals[i];if(v==null||!isFinite(v)||h.area<9000)return;if(mapState.metric==='count'&&v<MINN)return;
+    const t=sv('text',{x:h.cx,y:h.cy+7,'text-anchor':'middle','class':i===mapState.sel?'on':''},gT);t.textContent=m.fmt(v);});
+  gD.replaceChildren(); gL.replaceChildren();
+  if(mapState.dots){const cols=['var(--accent)','var(--s2)','var(--s3)'];
+    pool({asset:mapState.asset,beds:mapState.beds}).forEach(r=>sv('circle',{cx:r[0],cy:r[1],r:2.6,fill:cols[r[AS]],'fill-opacity':.55,stroke:'var(--surface)','stroke-width':.6,'pointer-events':'none'},gD));}
+  if(mapState.long){D.long90.forEach(r=>sv('circle',{cx:r[0],cy:r[1],r:2.6,fill:'none',stroke:'var(--ink2)','stroke-width':1,'stroke-opacity':.7,'pointer-events':'none'},gL));}
+  const lg=$('#m-legend');lg.replaceChildren();
+  const labs=[('under '+m.fmt(m.breaks[0]))].concat(m.breaks.map((b,i)=>i<m.breaks.length-1?m.fmt(b)+' to '+m.fmt(m.breaks[i+1]):m.fmt(b)+' or more'));
+  lg.appendChild(el('span',null,m.label+':'));
+  labs.forEach((t,i)=>{const s=el('span');const sw=el('i');sw.style.background='var(--seq'+(i+1)+')';s.appendChild(sw);s.appendChild(document.createTextNode(t));lg.appendChild(s);});
+  const nd=el('span');const sw=el('i');sw.style.background='var(--nodata)';nd.appendChild(sw);nd.appendChild(document.createTextNode('under '+MINN+' listings'));lg.appendChild(nd);
+  if(mapState.dots){const s=el('span');const d=el('i','dot');d.style.background=['var(--accent)','var(--s2)','var(--s3)'][mapState.asset];s.appendChild(d);s.appendChild(document.createTextNode('comparable '+ALABEL[mapState.asset].toLowerCase().replace(/s$/,'')));lg.appendChild(s);}
+  if(mapState.long){const s=el('span');s.appendChild(el('i','ring'));s.appendChild(document.createTextNode('home at a 90-night minimum'));lg.appendChild(s);}
+  // side panel
+  const h=HOODS[mapState.sel], s=hoodStats[mapState.sel], st=$('#m-stats'); st.replaceChildren();
+  $('#m-name').textContent=(h.name==='Downtown Eastside'?'Downtown Eastside (Gastown, Chinatown)':h.name);
+  const add=(k,v)=>{st.appendChild(el('dt',null,k));st.appendChild(el('dd',null,v));};
+  const what=ALABEL[mapState.asset].toLowerCase()+(mapState.beds?(mapState.beds===3?', 3+ bedrooms':', '+mapState.beds+' bedroom'+(mapState.beds>1?'s':'')):'');
+  add('Comparable '+what,num(s.n));
+  if(s.n>=MINN){add('Net yield, nightly',fP(s.yield));add('Nightly price, annualised',f$(s.price));add('Booked nights per year',num(s.nights));add('All-in cost per unit',fK(s.cost));add('Net income per unit',fK(s.noi));}
+  add('Entire homes on the nightly market',num(h.nightly)); add('Homes at a 90-night minimum',num(h.long90));
+  $('#m-cap').textContent=s.n>=MINN?'Comparable means licensed, on the nightly market, and reviewed for at least 12 months.':'Fewer than '+MINN+' comparable listings here, so no yield is reported.';
+  // ranking
+  $('#m-rank-h').textContent='Neighbourhoods ranked by '+m.label.toLowerCase();
+  const rk=HOODS.map((hh,i)=>({i,v:vals[i],name:hoodLabel(hh.name)==='Gastown/Chinatown'?'Downtown Eastside':hh.name})).filter(r=>r.v!=null&&isFinite(r.v)&&(mapState.metric!=='count'||r.v>0)&&(mapState.metric!=='long90'||r.v>0)).sort((a,b)=>b.v-a.v).slice(0,10);
+  barList($('#m-rank'),rk.map(r=>({label:r.name,v:r.v,text:m.fmt(r.v),cls:r.i===mapState.sel?'':'muted',click:()=>{mapState.sel=r.i;drawMap();},tip:hoodTip(r.i)})));
+}
+segmented($('#m-asset'),ALABEL.map((l,i)=>({label:l,value:i})),0,v=>{mapState.asset=v;computeHoodStats();drawMap();});
+$('#m-metric').addEventListener('change',e=>{mapState.metric=e.target.value;drawMap();});
+$('#m-beds').addEventListener('change',e=>{mapState.beds=e.target.value?+e.target.value:null;computeHoodStats();drawMap();});
+$('#m-dots').addEventListener('change',e=>{mapState.dots=e.target.checked;drawMap();});
+$('#m-long').addEventListener('change',e=>{mapState.long=e.target.checked;drawMap();});
+
+/* ---------------- one unit ---------------- */
+const U={hood:'core',asset:0,beds:1,mode:'hybrid',tax:false,P:Object.assign({},BASE)};
+const uSel=$('#u-hood');
+[['core','Core: Downtown, West End, Gastown/Chinatown'],['all','All of Vancouver']].concat(HOODS.map((h,i)=>[String(i),h.name])).forEach(o=>{const op=el('option',null,o[1]);op.value=o[0];uSel.appendChild(op);});
+const uFilter=()=>({asset:U.asset,beds:U.beds,hoods:U.hood==='core'?CORE:U.hood==='all'?null:new Set([+U.hood])});
+const MODES=[{label:'By the night',value:'nightly'},{label:'Hybrid',value:'hybrid'},{label:'Lease',value:'lease'}];
+function drawUnit(){
+  const f=uFilter(), ok=canLease(f)&&(U.hood==='core'||CORE.has(+U.hood));
+  if(!ok&&U.mode!=='nightly') U.mode='nightly';
+  segmented($('#u-mode'),MODES.map(m=>Object.assign({},m,{disabled:!ok&&m.value!=='nightly'})),U.mode,v=>{U.mode=v;drawUnit();});
+  const rows=pool(f,U.P), p=pooled(rows,U.P,U.mode,U.tax), a=p.avg;
+  if(!rows.length){tiles($('#u-tiles'),[{v:'0',l:'comparable listings match this choice'}]);$('#u-pl').replaceChildren();$('#u-modes').replaceChildren();return;}
+  tiles($('#u-tiles'),[{v:fK(p.noi),l:'net operating income per unit, 2027',neg:p.noi<0},{v:fP(p.yield),l:'yield on all-in cost',neg:p.yield<0},{v:fK(p.cost),l:'capital per unit, all-in'},
+    {v:f$(a.adr),l:'average nightly price, annualised'},{v:num(a.nights),l:'average booked nights a year, after the first-year haircut'},{v:num(p.n),l:'comparable listings behind this'}]);
+  let pl;
+  if(U.mode==='lease') pl=[['Rent, 12 months',a.rent],['Vacancy',-a.vac],['Manager',-a.mg],['Strata, property tax, upkeep',-a.holding],['Insurance',-A.lease_insurance]];
+  else if(U.mode==='hybrid') pl=[['Nightly guest revenue, four peak months',a.guest],['Furnished rent, other eight months',a.mid],['Airbnb fee',-a.fee],['Managers',-(a.mg+a.mfee)],['Cleaning, supplies, turnovers',-(a.cs+a.turn)],['Strata, property tax, upkeep',-a.holding],['Utilities, insurance, licences',-a.other]];
+  else {pl=[['Guest revenue',a.guest],['Airbnb fee',-a.fee],['Manager',-a.mg],['Cleaning and supplies',-a.cs],['Strata, property tax, upkeep',-a.holding],['Utilities, insurance, licences',-a.other]];if(U.tax)pl.push(['Empty Homes Tax and Speculation Tax',-a.vt]);}
+  const max=Math.max(...pl.map(r=>Math.abs(r[1])),Math.abs(p.noi));
+  barList($('#u-pl'),pl.map(r=>({label:r[0],v:Math.abs(r[1]),text:f$(r[1]),cls:r[1]<0?'muted':''})).concat([{label:'Net operating income',v:Math.abs(p.noi),text:f$(p.noi),cls:p.noi<0?'alt':'',total:true}]),{max});
+  const ms=[['By the night all year',pooled(rows,U.P,'nightly',false).yield,U.mode==='nightly'&&!U.tax]];
+  ms.push(['By the night, with vacancy taxes',pooled(rows,U.P,'nightly',true).yield,U.mode==='nightly'&&U.tax]);
+  if(ok){ms.push(['Plain 12-month lease',pooled(rows,U.P,'lease',false).yield,U.mode==='lease']);ms.push(['Hybrid: nightly '+R.nightly_months+', furnished '+R.furnished_months,pooled(rows,U.P,'hybrid',false).yield,U.mode==='hybrid']);}
+  barList($('#u-modes'),ms.map(r=>({label:r[0],v:r[1],text:fP(r[1]),cls:r[2]?'':'muted'})));
+  $('#u-modes-cap').textContent=ok?'A home let only by the night counts as vacant for Vancouver’s Empty Homes Tax ('+fP(A.eht,0)+') and BC’s Speculation and Vacancy Tax ('+fP(A.svt,0)+'). Six months of 30-night-plus tenancies clears both. These are averages before the simulation’s shocks; the portfolio section adds licence suspensions and missed tenancy tests.':'Lease and furnished rents are benchmarked only for one- and two-bedroom apartments in the core, so only nightly operation is shown here.';
+}
+const uSl=$('#u-sliders'), uCtl={};
+const pct=v=>(v>0?'+':v<0?'−':'')+Math.abs(Math.round(v*100))+'%';
+uCtl.priceMult=slider(uSl,'u-s-price','Purchase price vs benchmark',-0.3,0.3,0.01,0,pct,v=>{U.P.priceMult=1+v;drawUnit();});
+uCtl.adrMult=slider(uSl,'u-s-adr','Nightly price',-0.3,0.3,0.01,0,pct,v=>{U.P.adrMult=1+v;drawUnit();});
+uCtl.occMult=slider(uSl,'u-s-occ','Booked nights',-0.4,0.4,0.01,0,pct,v=>{U.P.occMult=1+v;drawUnit();});
+uCtl.mgmtFee=slider(uSl,'u-s-mgmt','Manager fee, nightly',0.10,0.30,0.01,BASE.mgmtFee,v=>Math.round(v*100)+'%',v=>{U.P.mgmtFee=v;drawUnit();});
+uCtl.airbnbFee=slider(uSl,'u-s-fee','Airbnb service fee',0.03,0.18,0.005,BASE.airbnbFee,v=>(v*100).toFixed(1)+'%',v=>{U.P.airbnbFee=v;drawUnit();});
+uCtl.firstYear=slider(uSl,'u-s-fy','First-year haircut',0,0.30,0.01,BASE.firstYear,v=>Math.round(v*100)+'%',v=>{U.P.firstYear=v;drawUnit();});
+uCtl.midRent=slider(uSl,'u-s-rent','Furnished monthly rent',2000,4500,50,BASE.midRent,v=>f$(v),v=>{U.P.midRent=v;drawUnit();});
+uCtl.midOcc=slider(uSl,'u-s-mocc','Off-season months let',0.6,1,0.01,BASE.midOcc,v=>Math.round(v*100)+'%',v=>{U.P.midOcc=v;drawUnit();});
+segmented($('#u-asset'),ALABEL.map((l,i)=>({label:l,value:i})),0,v=>{U.asset=v;if(v===2&&(U.beds===1||U.beds===2)){U.beds=3;$('#u-beds').value='3';}drawUnit();});
+uSel.addEventListener('change',e=>{U.hood=e.target.value;drawUnit();});
+$('#u-beds').addEventListener('change',e=>{U.beds=e.target.value?+e.target.value:null;drawUnit();});
+$('#u-tax').addEventListener('change',e=>{U.tax=e.target.checked;drawUnit();});
+$('#u-reset').addEventListener('click',()=>{U.P=Object.assign({},BASE);uCtl.priceMult.set(0);uCtl.adrMult.set(0);uCtl.occMult.set(0);uCtl.mgmtFee.set(BASE.mgmtFee);uCtl.airbnbFee.set(BASE.airbnbFee);uCtl.firstYear.set(BASE.firstYear);uCtl.midRent.set(BASE.midRent);uCtl.midOcc.set(BASE.midOcc);drawUnit();});
+
+/* ---------------- portfolio ---------------- */
+const POOLS=[
+ {id:'core1',label:'Core one-bedroom apartments (recommended)',f:{asset:0,beds:1,hoods:CORE},lease:true},
+ {id:'core12',label:'Core one- and two-bedroom apartments',f:{asset:0,beds:12,hoods:CORE},lease:true},
+ {id:'condo',label:'Apartments, all of Vancouver',f:{asset:0}},
+ {id:'houseE',label:'Houses, east side',f:{asset:2,zone:'E'}},
+ {id:'houseW',label:'Houses, west side (few large)',f:{asset:2,zone:'W'}}];
+const PF={pool:'core1',mode:'hybrid',tax:false,budget:M.budget,erosion:0,seed:2026};
+const pSel=$('#p-pool'); POOLS.forEach(p=>{const o=el('option',null,p.label);o.value=p.id;pSel.appendChild(o);});
+function drawHist(desc){
+  const svg=$('#hist'), W=560, Hh=250, mL=8, mR=8, mT=34, mB=30; svg.setAttribute('viewBox','0 0 '+W+' '+Hh); svg.replaceChildren();
+  const v=desc.noi, lo=Math.min(...v), hi=Math.max(...v), nb=28, bw=(hi-lo)/nb||1, bins=new Array(nb).fill(0);
+  v.forEach(x=>bins[Math.min(nb-1,Math.floor((x-lo)/bw))]++);
+  const mx=Math.max(...bins), x=val=>mL+(val-lo)/(hi-lo||1)*(W-mL-mR), cw=(W-mL-mR)/nb;
+  sv('line',{x1:mL,x2:W-mR,y1:Hh-mB,y2:Hh-mB,stroke:'var(--axis)'},svg);
+  bins.forEach((c,i)=>{const h=c/mx*(Hh-mT-mB), r=sv('rect',{class:'hb',x:mL+i*cw+1,y:Hh-mB-h,width:Math.max(1,cw-2),height:h,rx:2},svg);
+    bindTip(r,()=>[fK(lo+i*bw)+' to '+fK(lo+(i+1)*bw),[['Simulated years',num(c)],['Share',fP(c/v.length)]]]);});
+  [['p10','10th percentile',desc.p10],['p50','Median',desc.p50],['p90','90th percentile',desc.p90]].forEach((m,i)=>{
+    sv('line',{x1:x(m[2]),x2:x(m[2]),y1:mT-6,y2:Hh-mB,stroke:'var(--ink)','stroke-width':i===1?2:1},svg);
+    const t=sv('text',{x:x(m[2]),y:i===1?12:26,'text-anchor':i===0?'end':i===2?'start':'middle','font-weight':600},svg);t.textContent=fK(m[2]);t.style.fill='var(--ink)';});
+  if(lo<0&&hi>0){const t=sv('text',{x:x(0),y:Hh-mB+16,'text-anchor':'middle'},svg);t.textContent='$0';sv('line',{x1:x(0),x2:x(0),y1:Hh-mB,y2:Hh-mB+5,stroke:'var(--axis)'},svg);}
+  const a=sv('text',{x:mL,y:Hh-6,'text-anchor':'start'},svg);a.textContent=fK(lo);const b=sv('text',{x:W-mR,y:Hh-6,'text-anchor':'end'},svg);b.textContent=fK(hi);
+}
+function drawPortfolio(){
+  const pdef=POOLS.find(p=>p.id===PF.pool); if(!pdef.lease&&PF.mode!=='nightly') PF.mode='nightly';
+  segmented($('#p-mode'),MODES.map(m=>Object.assign({},m,{disabled:!pdef.lease&&m.value!=='nightly'})),PF.mode,v=>{PF.mode=v;drawPortfolio();});
+  const rows=pool(pdef.f), d=describe(simulate(rows,BASE,PF.mode,{seed:PF.seed,nsim:2000,budget:PF.budget,erosion:PF.erosion,tax:PF.tax}));
+  if(!d){tiles($('#p-tiles'),[{v:'0',l:'units fit this budget'}]);return;}
+  const t=[{v:String(d.units),l:'units bought, '+fM(d.spent)+' deployed'},{v:fK(d.p50),l:'median 2027 net operating income',neg:d.p50<0},{v:fK(d.p10)+' to '+fK(d.p90),l:'range, 8 simulated years in 10'},
+    {v:fP(d.y50),l:'median yield on capital deployed',neg:d.y50<0},{v:fP(d.below,0),l:'chance the yield is under 1%',neg:d.below>0.25}];
+  if(PF.mode==='hybrid') t.push({v:d.missed.toFixed(1),l:'units per portfolio that miss the six-month tenancy test'});
+  tiles($('#p-tiles'),t); drawHist(d);
+  $('#p-cap').textContent='2,000 simulated portfolios drawn from '+num(rows.length)+' comparable listings. Lines mark the 10th percentile, the median and the 90th percentile.'+(PF.erosion?' Nightly revenue after 1 June is cut by '+fP(PF.erosion,0)+' to mimic a Vancouver opt-out.':'')+' Opt-out slider: if all '+num(M.profile.core_apartments_90plus)+' core apartments now at a 90-night minimum switched to nightly and demand stayed flat, revenue per listing would fall '+fP(M.portfolio_modes[0].optout_worst_erosion,0)+'.';
+  const res=POOLS.map(p=>({p,d:describe(simulate(pool(p.f),BASE,'nightly',{seed:PF.seed+7,nsim:1500,budget:PF.budget,erosion:0,tax:false}))})).filter(r=>r.d);
+  const lo=Math.min(0,...res.map(r=>r.d.p10)), hi=Math.max(...res.map(r=>r.d.p90)), span=hi-lo||1, box=$('#p-strats'); box.replaceChildren();
+  res.forEach(r=>{const row=el('div','brow');row.appendChild(el('span','blabel',r.p.label.replace(' (recommended)','').replace(' (few large)','')+' · '+r.d.units+' units'));
+    const tr=el('span','range'+(r.p.id==='core1'?' hot':''));const z=el('span','zero');z.style.cssText='position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--axis);left:'+((0-lo)/span*100)+'%';tr.appendChild(z);
+    const rb=el('span','rb');rb.style.left=((r.d.p10-lo)/span*100)+'%';rb.style.width=((r.d.p90-r.d.p10)/span*100)+'%';tr.appendChild(rb);
+    const rd=el('span','rd');rd.style.left=((r.d.p50-lo)/span*100)+'%';tr.appendChild(rd);row.appendChild(tr);row.appendChild(el('span','bval',fK(r.d.p50)));
+    bindTip(row,()=>[r.p.label,[['Units',String(r.d.units)],['Median income',fK(r.d.p50)],['Range',fK(r.d.p10)+' to '+fK(r.d.p90)],['Median yield',fP(r.d.y50)],['Chance yield under 1%',fP(r.d.below,0)]]]);box.appendChild(row);});
+  table($('#p-strats-t'),['Strategy','Units','Median income','10th pct','90th pct','Yield','Chance under 1%'],res.map(r=>[r.p.label,String(r.d.units),fK(r.d.p50),fK(r.d.p10),fK(r.d.p90),fP(r.d.y50),fP(r.d.below,0)]));
+}
+const pSl=$('#p-sliders');
+slider(pSl,'p-s-budget','Budget',5e6,20e6,1e6,PF.budget,v=>fM(v),v=>{PF.budget=v;drawPortfolio();});
+slider(pSl,'p-s-ero','Opt-out: nightly revenue lost after 1 June',0,0.4,0.01,0,v=>Math.round(v*100)+'%',v=>{PF.erosion=v;drawPortfolio();});
+pSel.addEventListener('change',e=>{PF.pool=e.target.value;PF.mode=POOLS.find(p=>p.id===PF.pool).lease?'hybrid':'nightly';drawPortfolio();});
+$('#p-tax').addEventListener('change',e=>{PF.tax=e.target.checked;drawPortfolio();});
+$('#p-run').addEventListener('click',()=>{PF.seed=Math.floor(Math.random()*1e9);drawPortfolio();});
+
+/* ---------------- evidence ---------------- */
+(function(){
+  const wk=M.price_ratios.filter(r=>r.segment.indexOf('June quote for the week of')===0);
+  colChart($('#e-wc'),wk.map(r=>{const d=new Date(r.segment.slice(-10)+'T12:00:00');const lab=d.getDate()+' '+MONTHS[d.getMonth()];
+    return {label:'Stays in the week of '+lab+' ('+num(r.listings)+' listings)',short:lab,v:r.median_ratio-1,text:'+'+Math.round((r.median_ratio-1)*100)+'%',cls:r.median_ratio>1.2?'hot':''};}),{name:'June quote vs September'});
+  $('#e-wc-cap').textContent='The same '+num(PB.n_same_listing)+' listings cost '+Math.round((PB.june_over_sept_all-1)*100)+'% more in the June file than in September, and up to '+Math.round((PB.peak_week_ratio-1)*100)+'% more for match weeks. We price units at the September level.';
+  const peak=new Set(S.peak_months);
+  colChart($('#e-season'),MONTHS.map((m,i)=>({label:m,short:m[0],v:S.month_share[String(i+1)],text:peak.has(i+1)?String(Math.round(S.month_share[String(i+1)]*100)):'',tipText:fP(S.month_share[String(i+1)]),cls:peak.has(i+1)?'hot':''})),{name:'Share of the year’s stays'});
+  $('#e-season-cap').textContent='Percent of a year’s stays by month. '+R.nightly_months+' hold '+fP(S.peak_share,0)+' of a year’s stays ('+num(S.reviews_in_window)+' review dates, established listings). Outside those months a nightly unit is booked about '+fP(V.v7_off_season_nightly_occupancy,0)+' of nights.';
+  const measured=new Set([3,6,7,8,9]);
+  colChart($('#e-index'),MONTHS.map((m,i)=>{const v=S.price_index_sept_100[String(i+1)];return {label:m,short:m[0],v:v,text:measured.has(i+1)?String(Math.round(v*100)):'',tipText:Math.round(v*100)+' (September = 100)',cls:measured.has(i+1)?'hot':'light'};}),{name:'Price index'});
+  $('#e-index-cap').textContent='Nightly price index, September = 100. March quotes run '+Math.round((1-PB.march_over_sept)*100)+'% below September on the same listings; late-summer quotes '+Math.round((PB.post_cup_summer_ratio-1)*100)+'% above. The December file has no prices, so winter is held at the March level.';
+  const sup=M.profile.supply_by_snapshot, keys=Object.keys(sup).sort();
+  colChart($('#e-supply'),keys.map(k=>{const d=new Date(k+'T12:00:00');const lab=MONTHS[d.getMonth()]+' '+String(d.getFullYear()).slice(2);
+    return {label:'Snapshot of '+k,short:lab,series:[{v:sup[k].nightly,name:'Nightly market',text:num(sup[k].nightly),cls:'hot'},{v:sup[k]['90plus'],name:'90-night minimum',text:num(sup[k]['90plus']),cls:'alt'}]};}));
+  $('#e-supply-cap').textContent=fP(M.profile.share_90plus_entire,0)+' of entire homes in the June file require a 90-night stay, the legal threshold. In the core there are '+num(M.profile.core_apartments_90plus)+' such apartments against '+num(M.profile.core_apartments_nightly)+' on the nightly market. They are the supply that returns if Vancouver opts out.';
+  colChart($('#e-age'),M.listing_age.map(r=>({label:r.age_m+' months since first review ('+num(r.listings)+' listings)',short:r.age_m,v:r.median_nights,text:num(r.median_nights),cls:(r.age_m==='12-24'||r.age_m==='24+')?'hot':''})),{name:'Median booked nights, last 12 months'});
+  $('#e-age-cap').textContent=fP(V.v6_share_under_12_months,0)+' of core apartment listings were under a year old in June, many opened for the World Cup. Their last 12 months is not a full year, so we benchmark on listings with 12 months or more.';
+  const rows=[];['condo','townhouse','house'].forEach((a,i)=>{const x=M.assets[a];rows.push({label:ALABEL[i]+' · revenue',v:x.revenue_yield,text:fP(x.revenue_yield),cls:'muted'});rows.push({label:ALABEL[i]+' · net income',v:x.net_yield,text:fP(x.net_yield)});});
+  barList($('#e-asset'),rows);
+  $('#e-asset-cap').textContent='A typical house costs '+fM(M.assets.house.median_allin_cost)+' all-in and '+fP(M.assets.house.share_losing_money,0)+' of them lose money once property tax and upkeep are paid. For apartments it is '+fP(M.assets.condo.share_losing_money,0)+'.';
+})();
+
+/* ---------------- decisions ---------------- */
+const DS=Object.assign({},BASE);
+function drawDecisions(){
+  const rows=pool({asset:0,beds:1,hoods:CORE},DS), n=pooled(rows,DS,'nightly',false), h=pooled(rows,DS,'hybrid',false);
+  const b0=DEC.base;
+  const d=(a,b)=>{const x=(a-b)*100;return Math.abs(x)<0.005?'no change from the base case':(x>0?'+':'−')+Math.abs(x).toFixed(1)+' points vs the base case';};
+  tiles($('#d-tiles'),[{v:fP(n.yield),l:'core one-bedroom yield, by the night · '+d(n.yield,b0.nightly_yield)},{v:fP(h.yield),l:'recommended hybrid plan · '+d(h.yield,b0.hybrid_yield)},
+    {v:num(rows.length),l:'comparable listings'},{v:num(median(rows.map(r=>r[NI]))),l:'median booked nights'}]);
+}
+[['deflate','Price units at the September level, not at June’s World Cup quotes',true],
+ ['estOnly','Benchmark only on listings with 12 months of history',true],
+ ['licOnly','Benchmark only on listings showing both licence numbers',true],
+ ['fee155','Charge Airbnb’s 15.5% host fee, not the old 3%',true],
+ ['dtesWest','Price Gastown and Chinatown at the West-side benchmark',true]].forEach(s=>{
+  const lab=el('label','switch');const inp=el('input');inp.type='checkbox';inp.checked=true;inp.id='d-'+s[0];lab.setAttribute('for',inp.id);lab.appendChild(inp);lab.appendChild(el('span',null,s[1]));
+  inp.addEventListener('change',()=>{if(s[0]==='fee155')DS.airbnbFee=inp.checked?A.airbnb_fee:0.03;else if(s[0]==='dtesWest')DS.dtesEast=!inp.checked;else DS[s[0]]=inp.checked;drawDecisions();});
+  $('#d-switches').appendChild(lab);});
+(function(){
+  const g=k=>DEC[k], pc=v=>fP(v), st=Object.fromEntries(M.strategies.map(r=>[r.label,r])), five=pm['Hybrid with a five-month nightly season (tested, not chosen)'];
+  const items=[
+   ['Price basis','June quotes divided by '+PB.june_over_sept.condo.toFixed(2)+', the same-listing June-to-September ratio','The June scrape quoted stays during the World Cup. The same listings cost '+Math.round((PB.june_over_sept_all-1)*100)+'% more in June than in September, and '+Math.round((PB.peak_week_ratio-1)*100)+'% more for match weeks. Alternative: take the price field as given.','Core one-bedroom yield falls from '+pc(g('price_as_quoted').nightly_yield)+' to '+pc(g('base').nightly_yield)+'.'],
+   ['Comparable set','Licensed listings with 12 months of history','Inside Airbnb’s occupancy is reviews in the last 12 months times six nights. A listing opened in March has no such year. Alternative: every reviewed listing.','Median nights rise from '+num(g('all_ages').median_nights)+' to '+num(g('base').median_nights)+'; yield from '+pc(g('all_ages').nightly_yield)+' to '+pc(g('base').nightly_yield)+'.'],
+   ['Return metric','2027 net operating income over all-in cost','Revenue per dollar ignores property tax, strata and upkeep, which scale with price. Alternative: revenue yield.','Houses fall from '+pc(M.assets.house.revenue_yield)+' to '+pc(M.assets.house.net_yield)+'; apartments from '+pc(M.assets.condo.revenue_yield)+' to '+pc(M.assets.condo.net_yield)+'. Houses are out.'],
+   ['Portfolio shape',R.units+' one-bedroom apartments, not a few houses','5,000 simulated portfolios per strategy. Alternatives: west-side houses, east-side houses, apartments city-wide.','Chance of a yield under 1%: '+fP(st['Few large: west-side houses'].prob_yield_below_1pct,0)+' for west-side houses, '+fP(st['Core one-bedroom apartments'].prob_yield_below_1pct,0)+' for core one-bedrooms.'],
+   ['Operating calendar','Nightly '+R.nightly_months+', furnished 30-night-plus stays '+R.furnished_months,'A unit let only by the night counts as vacant for the Empty Homes Tax and the Speculation and Vacancy Tax, about '+fK(TAXED.noi_p50-NIGHT.noi_p50).replace('−','')+' a year across the portfolio. Off-season nights are only '+fP(V.v7_off_season_nightly_occupancy,0)+' booked. Alternatives: nightly all year, a lease, a five-month nightly season.','Income '+fK(R.noi_p50)+' against '+fK(NIGHT.noi_p50)+' nightly and '+fK(LEASE.noi_p50)+' leased. A fifth nightly month leaves '+five.units_missing_tenancy_test.toFixed(1)+' of '+R.units+' units short of the six-month test.'],
+   ['Platform fee','Airbnb’s 15.5% host fee on the quoted price','Since late 2025 the quoted price is what the guest pays and Airbnb takes 15.5% from the host. Alternative: the old 3% host fee.','Yield '+pc(g('fee_3pct').nightly_yield)+' with a 3% fee, '+pc(g('base').nightly_yield)+' with 15.5%.'],
+   ['Houses','Only homes with three or more bedrooms count as houses','A smaller “entire home” cannot be told apart from a suite, and a suite cannot be bought alone. '+num(g('small_entire_homes_dropped'))+' small homes and '+num(g('suites_dropped'))+' suites were set aside.','House yield '+pc(g('houses_3plus_bedrooms').nightly_yield)+' on real houses, '+pc(g('houses_all_entire_homes').nightly_yield)+' if every entire home is priced as a house.'],
+   ['Gastown and Chinatown','Priced at the West-side apartment benchmark','Inside Airbnb files these towers under Downtown Eastside, but they trade like downtown. Alternative: East-side benchmark.','Their yield is '+pc(g('dtes_west_price').nightly_yield)+', not '+pc(g('dtes_east_price').nightly_yield)+'.']];
+  const box=$('#d-list');
+  items.forEach((it,i)=>{const r=el('div','dec');
+    const a=el('div');a.appendChild(el('p','k','Decision '+(i+1)+' · '+it[0]));a.appendChild(el('h3',null,it[1]));
+    const b=el('div');b.appendChild(el('p','k','Why'));b.appendChild(el('p',null,it[2]));
+    const c=el('div');c.appendChild(el('p','k','What changed'));c.appendChild(el('p',null,it[3]));
+    r.appendChild(a);r.appendChild(b);r.appendChild(c);box.appendChild(r);});
+})();
+
+/* ---------------- method ---------------- */
+(function(){
+  barList($('#t-funnel'),M.funnel.map((r,i)=>({label:r.step,v:r.listings,text:num(r.listings),cls:i===M.funnel.length-1?'':'muted'})));
+  table($('#t-valid'),['Check','Result'],[
+   ['Our revenue arithmetic against Inside Airbnb’s estimate','Correlation '+V.v1_revenue_corr.toFixed(2)],
+   ['The occupancy field is reviews × 2 × 3 nights, capped at 255','Reproduced for '+fP(V.v2_occupancy_formula_match,1)+' of listings; '+fP(V.v2_share_at_cap,0)+' sit at the cap'],
+   ['Forward calendar, 15 June to 31 August','Estimate implies '+fP(V.v3_median_estimated_summer_occupancy,0)+' of nights; '+fP(V.v3_median_summer_unavailable,0)+' were already booked or blocked'],
+   ['Split sample, 300 random halves','Top three segments beat the average on the other half '+fP(V.v4_top3_beat_average_share,0)+' of the time'],
+   ['Same pipeline on the 17 September snapshot','Core one-bedroom yield '+fP(V.v5_core1_yield_sept)+' against '+fP(V.v5_core1_yield_june)+'; segment ranking correlation '+V.v5_rank_correlation_june_vs_sept.toFixed(2)],
+   ['First-year listings','Median '+num(V.v6_nights_9_12_months)+' nights at 9 to 12 months old against '+num(V.v6_nights_12_plus_months)+' for established ones']]);
+  const st=A.strata;
+  table($('#t-assume'),['Item','Value','Source'],[
+   ['Purchase price','West: apartment '+fK(B.W_condo)+', house '+fM(B.W_house)+'. East: '+fK(B.E_condo)+', '+fM(B.E_house)+'. One-bedroom at 85% of the apartment benchmark',M.benchmark_source],
+   ['Nightly price','June quote ÷ '+PB.june_over_sept.condo.toFixed(2)+', then × '+S.annual_price_level_vs_sept.toFixed(2)+' for the year','Inside Airbnb, June and September 2026'],
+   ['Booked nights','Inside Airbnb estimate, 12 months to June 2026, less '+fP(A.first_year_haircut,0)+' in year one','Inside Airbnb'],
+   ['Airbnb fee',fP(A.airbnb_fee),'Airbnb host-only fee, in force since October 2025'],
+   ['Manager, cleaning',fP(A.mgmt_fee,0)+' of payout; $'+(A.clean_base+A.clean_per_bed)+' per stay for a one-bedroom','Market range, tested 15% to 25%'],
+   ['Strata, tax, upkeep',f$(st['1'])+' strata; '+fP(A.prop_tax,2)+' property tax; '+fP(A.maint.condo,1)+' upkeep','City of Vancouver 2026 tax rates; our estimate for strata'],
+   ['Licences',f$(A.licences)+' a year','City licence $1,108 plus BC registry $450'],
+   ['Furnished rent',f$(A.mid_rent['1'])+' a month, let '+fP(A.mid_occupancy,0)+' of '+A.mid_months+' months','liv.rent furnished one-bedroom asking rents, August 2026'],
+   ['Lease benchmark',f$(A.lease_rent['1'])+' a month, '+fP(A.lease_vacancy,1)+' vacancy','liv.rent August 2026; CMHC 2025'],
+   ['Vacancy taxes','Empty Homes Tax '+fP(A.eht,0)+' plus Speculation and Vacancy Tax '+fP(A.svt,0)+' of assessed value','City of Vancouver; Province of BC']]);
+  ['The licence flag comes from free text on each listing. It is an estimate, not a compliance finding.','Occupancy and revenue are Inside Airbnb estimates built from review counts. They are not reported figures.',
+   'Purchase prices are area benchmarks scaled by bedrooms, not building-level prices. Paying 20% more takes the yield from '+fP(M.sensitivity[0].base_yield)+' to '+fP(M.sensitivity.find(r=>r.driver.indexOf('Purchase')===0).downside_yield)+'.','Furnished rent and off-season occupancy are assumptions. At 75% occupancy the plan still yields '+fP(M.sensitivity.find(r=>r.driver.indexOf('Off-season')===0).downside_yield)+'.',
+   'The vacancy-tax reading is ours and needs confirming with tax counsel before any purchase.','Many strata corporations ban stays under 30 nights. Each building must be checked before an offer.','The yield counts income only. Greater Vancouver REALTORS put the apartment benchmark 5.9% lower in October 2026 than a year earlier. A similar fall in 2027 would cost about twice the year’s income.']
+   .forEach(t=>$('#t-limits').appendChild(el('li',null,t)));
+  [['Inside Airbnb, Get the Data (Vancouver snapshots)','https://insideairbnb.com/get-the-data/'],['Greater Vancouver REALTORS monthly statistics, August 2026','https://members.gvrealtors.ca/news/GVR-Stats-Package-August-2026.pdf'],
+   ['City of Vancouver, Empty Homes Tax','https://vancouver.ca/home-property-development/will-your-home-be-taxed.aspx'],['Province of BC, Speculation and Vacancy Tax rates','https://www2.gov.bc.ca/gov/content/taxes/speculation-vacancy-tax/how-tax-works/tax-rates'],
+   ['City of Vancouver, short-term rental licence','https://vancouver.ca/doing-business/short-term-rental-business-licence-requirements.aspx'],['CMHC Rental Market Report','https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research/market-reports/rental-market-reports-major-centres'],
+   ['Airbnb, service fee change','https://www.airbnb.com/resources/hosting-homes/a/simplifying-airbnb-service-fees-746']]
+   .forEach(s=>{const li=el('li');const a=el('a',null,s[0]);a.href=s[1];a.rel='noopener';li.appendChild(a);$('#t-sources').appendChild(li);});
+})();
+
+computeHoodStats(); drawMap(); drawUnit(); drawPortfolio(); drawDecisions();
+window.__lab={pooled,pool,BASE,CORE,simulate,describe,DS};
+})();
+</script>
+</body>
+</html>

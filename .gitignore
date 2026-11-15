@@ -1,5 +1,6 @@
-data/raw/insideairbnb/*.gz
+data/raw/insideairbnb/*/*.gz
 data/raw/insideairbnb/*.geojson
 data/processed/
+_old/
 __pycache__/
 *.pyc

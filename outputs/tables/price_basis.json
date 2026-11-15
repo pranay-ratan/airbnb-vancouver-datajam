@@ -1,0 +1,19 @@
+{
+ "measured": true,
+ "june_over_sept": {
+  "condo": 1.141896,
+  "townhouse": 1.136529,
+  "house": 1.136529
+ },
+ "june_over_sept_all": 1.16213,
+ "june_over_sept_core_condo": 1.141687,
+ "n_same_listing": 2865,
+ "peak_week_ratio": 1.37457,
+ "first_week_ratio": 1.114614,
+ "post_cup_summer_ratio": 1.14119,
+ "post_cup_summer_n": 199,
+ "march_over_sept": 0.878521,
+ "n_march": 661,
+ "median_price_june_nightly": 415.0,
+ "median_price_sept_nightly": 348.5
+}

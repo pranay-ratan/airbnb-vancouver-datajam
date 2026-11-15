@@ -1,0 +1,6 @@
+test,listings,revenue_yield,net_yield
+"Houses (3+ bedrooms), west side",97,0.026709332902739094,0.0015554449826584733
+"Houses (3+ bedrooms), east side",143,0.04015892547744173,0.006113026501473804
+Houses if stays run 50% longer than Inside Airbnb assumes,240,0.04232261579834201,0.009053486638396911
+"East-side house + suite + laneway home, three listings on one lot",465,0.06634212196752926,0.018250410307261968
+Core one-bedroom apartments (for comparison),321,0.07709243797296772,0.022858476333432003

@@ -1,0 +1,54 @@
+{
+ "pool": "core one-bedroom apartments",
+ "pool_listings": 321,
+ "superhost": {
+  "listings": 217,
+  "estimated_nights": 168.0,
+  "reviews_last_year": 28.0,
+  "summer_nights_unavailable": 0.61039,
+  "net_yield": 0.027071
+ },
+ "not_superhost": {
+  "listings": 104,
+  "estimated_nights": 132.0,
+  "reviews_last_year": 21.5,
+  "summer_nights_unavailable": 0.623377,
+  "net_yield": 0.014068
+ },
+ "min_one_night": {
+  "listings": 189,
+  "estimated_nights": 180.0,
+  "reviews_last_year": 30.0,
+  "summer_nights_unavailable": 0.662338,
+  "net_yield": 0.026822
+ },
+ "min_two_nights": {
+  "listings": 109,
+  "estimated_nights": 138.0,
+  "reviews_last_year": 23.0,
+  "summer_nights_unavailable": 0.545455,
+  "net_yield": 0.018339
+ },
+ "rank_corr_estimate_vs_calendar": 0.064962,
+ "rank_corr_listings": 1037,
+ "five_month_season": {
+  "noi_p50": 190654.828525,
+  "units_missing_tenancy_test": 3.8678,
+  "recommended_noi_p50": 269952.726928,
+  "recommended_units_missing": 0.137
+ },
+ "house_suite_laneway": {
+  "net_yield": 0.01825,
+  "core_one_bedroom_yield": 0.022858
+ },
+ "two_bedroom": {
+  "hybrid_yield": 0.026084,
+  "one_bedroom_hybrid_yield": 0.028529
+ },
+ "mount_pleasant": {
+  "listings": 48,
+  "net_yield": 0.022545,
+  "lo": 0.011657,
+  "hi": 0.034274
+ }
+}
