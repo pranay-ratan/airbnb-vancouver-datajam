@@ -8,44 +8,46 @@
  "title": "DDD Vancouver: $10M STR Investment Pitch (DataJam 2026)",
  "order": [
   "cover",
+  "problem",
   "recommendation",
-  "data",
+  "funnel",
+  "houses",
   "where",
   "price",
-  "houses",
   "operations",
+  "map-risk",
+  "map-plan",
   "risks",
   "tested",
   "next",
+  "close",
+  "data",
   "assump",
   "log1",
   "log2",
   "valid",
-  "limits"
+  "limits",
+  "sources"
  ],
  "cover": "cover",
  "sections": {
   "s1": {
-   "description": "The recommendation and the evidence",
+   "description": "The answer and the evidence",
    "start": "cover"
   },
   "s2": {
-   "description": "Operations, risks, what did not hold and next steps",
-   "start": "operations"
+   "description": "Risk, honest checks and next steps",
+   "start": "map-risk"
   },
   "s3": {
-   "description": "Appendix: assumptions, decision log, validation, limits",
-   "start": "assump"
+   "description": "Backup slides for Q&A",
+   "start": "data"
   }
  },
  "faces": {
-  "inter": {
-   "family": "Inter",
-   "href": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
-  },
-  "space-grotesk": {
-   "family": "Space Grotesk",
-   "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&display=swap"
+  "plus-jakarta-sans": {
+   "family": "Plus Jakarta Sans",
+   "href": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
   }
  },
  "designSystems": []

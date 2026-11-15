@@ -21,7 +21,19 @@ check(abs(R["noi_p50"] - 269952.73) < 1000, f"headline NOI near the published fi
 check(R["units"] == 14 and R["deployed"] <= 10_000_000, "units and budget respected")
 check(R["noi_p10"] < R["noi_p50"] < R["noi_p90"], "range brackets the median")
 check(M["validation"]["v1_revenue_corr"] > 0.99 and M["validation"]["v2_occupancy_formula_match"] > 0.99, "Inside Airbnb revenue and occupancy formulas reproduced")
+pitch_path = ROOT / "outputs/pitch/index.html"
+pitch = pitch_path.read_text(encoding="utf-8") if pitch_path.exists() else ""
+check(bool(pitch), "the interactive pitch is built (outputs/pitch/index.html)")
+check(M["credit"] in pitch, "the pitch carries the Inside Airbnb credit line")
+check("__DATA__" not in pitch and "__MODEL__" not in pitch, "the pitch template placeholders were filled in")
+check("function simulate(" in pitch, "the pitch runs the same simulation as src/05_portfolio.py")
+tour = ROOT / "outputs/pitch/room_tour.mp4"
+check("room_tour.mp4" in pitch and tour.exists() and tour.stat().st_size < 20e6, "the 3D room tour video is built and under the 20 MB artifact limit")
+scene = (ROOT / "deliverables/room_tour/scene.html").read_text()
+check("window.__CFG" in scene, "the 3D tour reads its numbers from metrics.json, not hard-coded text")
 for name in ["listing_url", "host_name", "host_url", "picture_url", '"license"']:
-    check(name not in dash and name not in (ROOT / "outputs/dashboard_data.json").read_text(), f"no '{name}' field in dashboard or its data")
+    data = (ROOT / "outputs/dashboard_data.json").read_text()
+    check(name not in dash and name not in data and name not in pitch, f"no '{name}' field in the pitch, dashboard or data")
 check(not re.search(r"\b\d{2}-\d{5,6}\b", deck), "no licence numbers on slides")
+check(not re.search(r"\b\d{2}-\d{5,6}\b", pitch), "no licence numbers in the pitch")
 sys.exit(1 if fails else 0)
