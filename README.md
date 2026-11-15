@@ -6,7 +6,7 @@ Data: Inside Airbnb, Vancouver, 15 June 2026, CC BY 4.0. No host names, listing 
 
 ## Reproduce
 1. Download from https://insideairbnb.com/get-the-data/ (Vancouver) into `data/raw/insideairbnb/<date>/` : `listings.csv.gz`, `calendar.csv.gz`, `reviews.csv.gz` for `2026-06-15` (the brief's dataset) and `2026-09-17`; `listings.csv.gz` for `2025-12-14` and `2026-03-21`; `neighbourhoods.geojson` in `data/raw/insideairbnb/`.
-2. `pip install -r requirements.txt` then `./run_all.sh` (runs 9 scripts, builds the dashboard and deck, runs the tests).
+2. `pip install -r requirements.txt` then `./run_all.sh` (runs 9 scripts, builds the dashboard, the deck and the interactive pitch, runs the tests).
 
 ## Trace any number
 | Number on a slide | Script | Output |
@@ -19,9 +19,17 @@ Data: Inside Airbnb, Vancouver, 15 June 2026, CC BY 4.0. No host names, listing 
 | Validation checks | `src/06_validation.py` | `validation.json`, `snapshot_retest.csv`, `listing_age.csv` |
 | Decision-log numbers | `src/07_decisions.py` | `decisions.json` |
 | "Tested, did not hold" | `src/08_tests_not_held.py` | `tests_not_held.json` |
-| Everything quoted in the deck and dashboard | `src/09_exports.py` | `outputs/metrics.json`, `outputs/dashboard_data.json` |
+| Everything quoted in the pitch, deck and dashboard | `src/09_exports.py` | `outputs/metrics.json`, `outputs/dashboard_data.json` |
 
-`deliverables/build_deck.py` reads only `metrics.json`, so each slide figure comes from the table above. `deliverables/dashboard_template.html` runs the same unit economics and a Monte Carlo in the browser (`outputs/dashboard/index.html`).
+## Deliverables in this repo
+| What | Built by | Output |
+|---|---|---|
+| **Interactive pitch** (presented live: zoomable map, month toggles, opt-out slider, in-browser Monte Carlo) | `deliverables/build_pitch.py` + `pitch_template.html` | `outputs/pitch/index.html` |
+| Slide deck (same analysis, static; exports to .pptx) | `deliverables/build_deck.py` | `deliverables/deck/project/` |
+| Dashboard (deep dive) | `deliverables/build_dashboard.py` | `outputs/dashboard/index.html` |
+| Talk script and rubric map | — | `docs/talk_script.md`, `docs/rubric_check.md` |
+
+Each builder reads only `metrics.json`, so every figure on a slide comes from the table above. The pitch and the dashboard re-run the same unit economics and Monte Carlo in the browser: `build_pitch.py` lifts that JavaScript verbatim out of `dashboard_template.html`, which mirrors `src/04_unit_economics.py` and `src/05_portfolio.py`.
 
 ## Method in brief
 Comparable listings: entire, licensed (City licence and BC registration both shown), nightly market, apartment/townhouse/3+ bedroom house, first review 12+ months before the scrape. June quotes are divided by the same-listing June/September ratio (the June file quotes World Cup weeks). Costs: Greater Vancouver REALTORS benchmark prices (Aug 2026), strata, property tax, upkeep, 15.5% Airbnb fee, manager and cleaning. Portfolios are filled with real comparable listings until $10M runs out, with demand, price, unit and licence-suspension shocks.

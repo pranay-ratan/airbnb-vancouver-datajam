@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two Calendars — DDD Vancouver pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F4EC; --card:#FFFFFF; --ink:#0E1B33; --navy:#0B1F3A; --emerald:#087A5D; --mint:#12B886;
+  --coral:#C9301A; --gold:#F5B700; --slate:#4A5872; --line:#E3DDCF; --grey:#B4BCCB; --soft:#D8F3EA;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:#121A26;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);overflow:hidden}
+#fit{position:fixed;inset:0}
+#stage{width:1920px;height:1080px;position:absolute;left:50%;top:50%;transform-origin:center center;background:var(--paper);overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.45)}
+.slide{position:absolute;inset:0;padding:96px 112px 128px;display:flex;flex-direction:column;gap:26px;
+  opacity:0;visibility:hidden;transform:translateX(70px) scale(.98);
+  transition:opacity .40s ease,transform .55s cubic-bezier(.22,.9,.24,1),visibility 0s linear .55s}
+.slide.prev{transform:translateX(-70px) scale(.98)}
+.slide.on{opacity:1;visibility:visible;transform:none;transition:opacity .40s ease,transform .55s cubic-bezier(.22,.9,.24,1),visibility 0s}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.slide.on>*{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+.slide.on>*:nth-child(1){animation-delay:.10s}.slide.on>*:nth-child(2){animation-delay:.16s}
+.slide.on>*:nth-child(3){animation-delay:.22s}.slide.on>*:nth-child(4){animation-delay:.28s}
+.slide.on>*:nth-child(5){animation-delay:.34s}.slide.on>*:nth-child(6){animation-delay:.40s}
+.slide.on>*:nth-child(n+7){animation-delay:.46s}
+.slide.on>svg,.slide.on>.foot,.slide.on>.nostagger{animation:none}
+@keyframes twk{0%,100%{opacity:.22}50%{opacity:1}}
+.tw{animation-name:twk;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+.slide.dark{background:var(--navy);color:#fff}
+.eyebrow{font-size:25px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--emerald)}
+.dark .eyebrow{color:var(--mint)}
+h1{font-size:98px;font-weight:800;line-height:1.05;letter-spacing:-1.5px}
+h2{font-size:66px;font-weight:800;line-height:1.08;letter-spacing:-1px}
+h3{font-size:34px;font-weight:800}
+.sub{font-size:30px;color:var(--slate);font-weight:500}
+.dark .sub{color:#A8C0DA}
+.big{font-size:112px;font-weight:800;line-height:1;letter-spacing:-2px;font-variant-numeric:tabular-nums}
+.row{display:flex;gap:22px}
+.col{display:flex;flex-direction:column;gap:14px}
+.grow{flex:1}
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:26px 30px;display:flex;flex-direction:column;gap:10px}
+.pill{display:inline-flex;align-items:center;gap:10px;font-size:25px;font-weight:600;background:var(--card);
+  border:1px solid var(--line);border-left:7px solid var(--slate);padding:12px 22px}
+.pill.bad{background:#FDE4DE;border-color:#F3C8BE;border-left-color:var(--coral);color:var(--coral)}
+.pill.good{background:var(--soft);border-color:#B7E4D4;border-left-color:var(--emerald);color:var(--emerald)}
+.note{font-size:23px;color:var(--slate);line-height:1.35}
+.foot{position:absolute;left:112px;right:112px;bottom:56px;display:flex;justify-content:space-between;font-size:21px;color:var(--slate)}
+.dark .foot{color:#8FA8C4}
+.hint{font-size:22px;font-weight:700;color:var(--emerald);display:flex;align-items:center;gap:9px}
+.hint::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--emerald);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.5)}}
+/* controls */
+button{font:inherit;cursor:pointer}
+.seg{display:inline-flex;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:5px;gap:4px}
+.seg button{border:0;background:transparent;border-radius:999px;padding:11px 22px;font-size:24px;font-weight:700;color:var(--slate)}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.sl{display:flex;flex-direction:column;gap:8px;min-width:330px}
+.sl .top{display:flex;justify-content:space-between;font-size:24px;font-weight:700}
+.sl output{font-variant-numeric:tabular-nums;color:var(--emerald)}
+input[type=range]{width:100%;height:34px;background:transparent;-webkit-appearance:none;appearance:none}
+input[type=range]::-webkit-slider-runnable-track{height:12px;border-radius:6px;background:var(--line)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;margin-top:-11px;border-radius:50%;background:var(--emerald);border:4px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+input[type=range]::-moz-range-track{height:12px;border-radius:6px;background:var(--line)}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--emerald);border:4px solid #fff}
+.btn{border:2px solid var(--ink);background:var(--ink);color:#fff;border-radius:999px;padding:13px 26px;font-size:24px;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink)}
+/* bars */
+.bars{display:flex;flex-direction:column;gap:13px}
+.brow{display:flex;align-items:center;gap:16px;font-size:26px}
+.brow .lab{width:430px;text-align:right;line-height:1.2;flex:none}
+.brow .track{flex:1;height:42px;position:relative;background:#EDEAE1;border-radius:9px;overflow:hidden}
+.brow .fill{position:absolute;top:0;bottom:0;background:var(--emerald);border-radius:9px;transition:left .45s cubic-bezier(.2,.8,.2,1),width .45s cubic-bezier(.2,.8,.2,1),background .25s}
+.brow .fill.grey{background:var(--grey)} .brow .fill.bad{background:var(--coral)} .brow .fill.gold{background:var(--gold)}
+.brow .val{width:170px;font-weight:800;font-variant-numeric:tabular-nums;flex:none}
+.brow.hl .lab{font-weight:800}
+.cols{display:flex;align-items:flex-end;gap:8px;height:300px}
+.colw{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;flex:1;height:100%;cursor:default}
+.colw .bar{width:100%;max-width:84px;background:var(--grey);border-radius:8px 8px 0 0;transition:height .5s cubic-bezier(.2,.8,.2,1),background .2s}
+.colw.on .bar{background:var(--emerald)}
+.colw .cx{font-size:22px;color:var(--slate)} .colw .cv{font-size:22px;font-weight:800;opacity:0;transition:opacity .15s}
+.colw:hover .cv,.colw.on .cv{opacity:1}
+.colw.click{cursor:pointer} .colw.click:hover .bar{filter:brightness(1.08)}
+/* map */
+.maprow{display:flex;gap:30px;align-items:flex-start}
+#mapwrap{position:relative;width:930px;flex:none}
+#mapsvg{width:930px;height:676px;display:block}
+.hood{stroke:#FFFFFF;stroke-width:3;cursor:pointer;transition:fill .25s,opacity .2s}
+.hood:hover{opacity:.82}
+.hood.sel{stroke:var(--ink);stroke-width:6}
+.dot{fill:var(--navy);opacity:.45;pointer-events:none}
+.panel{flex:1;display:flex;flex-direction:column;gap:14px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:22px;color:var(--slate);align-items:center}
+.legend i{width:24px;height:24px;border-radius:6px;display:inline-block;margin-right:7px;vertical-align:-4px}
+.kv{display:flex;justify-content:space-between;font-size:24px;padding:5px 0;border-bottom:1px solid var(--line)}
+.kv b{font-variant-numeric:tabular-nums}
+#tip{position:fixed;z-index:50;background:var(--navy);color:#fff;border-radius:12px;padding:12px 15px;font-size:20px;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:330px}
+#tip b{display:block;margin-bottom:5px;font-size:22px}
+#tip .r{display:flex;justify-content:space-between;gap:20px;opacity:.9}
+/* histogram */
+#hist{width:100%;height:230px}
+.hbar{fill:var(--emerald)} .hbar.out{fill:var(--grey)}
+/* table */
+table{width:100%;border-collapse:collapse;font-size:24px}
+th{text-align:left;background:var(--emerald);color:#fff;padding:12px 14px;font-weight:700}
+td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+ul{padding-left:26px;display:flex;flex-direction:column;gap:11px;font-size:26px;line-height:1.3}
+/* nav */
+#nav{position:fixed;left:0;right:0;bottom:0;height:54px;display:flex;align-items:center;justify-content:center;gap:16px;background:rgba(10,16,26,.86);color:#fff;font-size:15px;z-index:40}
+#nav button{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:5px 12px;font-size:14px}
+#dots{display:flex;gap:6px}
+#dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer}
+#dots span.on{background:var(--mint);transform:scale(1.25)}
+#dots span.bk{background:rgba(245,183,0,.35)} #dots span.bk.on{background:var(--gold)}
+#sid{opacity:.7;font-variant-numeric:tabular-nums}
+#clock{font-variant-numeric:tabular-nums;min-width:48px;text-align:center;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,.12)}
+#clock.warn{background:rgba(245,183,0,.9);color:#12262B;font-weight:700}
+#clock.over{background:var(--coral);color:#fff;font-weight:700}
+.vis{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<div id="fit"><div id="stage"></div></div>
+<div id="tip" hidden></div>
+<div id="nav">
+  <button id="prev" aria-label="Previous slide">←</button>
+  <div id="dots"></div>
+  <button id="next" aria-label="Next slide">→</button>
+  <span id="sid"></span>
+  <span id="clock" title="Elapsed time. Starts when you leave the cover.">0:00</span>
+  <button id="full">Full screen</button>
+  <span style="opacity:.6">← → move · B backup · F full screen · click the timer to reset</span>
+</div>
+<script type="application/json" id="data">__DATA__</script>
+<script>
+(function(){
+'use strict';
+const D = JSON.parse(document.getElementById('data').textContent);
+const M = D.metrics, A = M.assumptions, PB = M.price_basis, S = M.seasonality, B = M.benchmarks, R = M.recommendation, V = M.validation, DEC = M.decisions, T = M.tested;
+const HOODS = D.hoods, ANAME = ['condo','townhouse','house'];
+const H=2, AS=3, BD=4, PR=5, NI=6, LIC=7, EST=8, ACT=9;
+const CORE = new Set(HOODS.map((h,i)=>h.core?i:-1).filter(i=>i>=0));
+const NS='http://www.w3.org/2000/svg';
+const sv=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const num=v=>Math.round(v).toLocaleString('en-CA');
+const f$=v=>(v<0?'−':'')+'$'+num(Math.abs(v));
+const fK=v=>(v<0?'−':'')+'$'+num(Math.abs(v)/1000)+'K';
+const fM=v=>'$'+(v/1e6).toFixed(1)+'M';
+const fP=(v,d)=>(v<0?'−':'')+(Math.abs(v)*100).toFixed(d==null?1:d)+'%';
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const PMODE=Object.fromEntries(M.portfolio_modes.map(r=>[r.label,r]));
+const NIGHT=PMODE['Nightly all year (vacancy taxes not applied)'], LEASEM=PMODE['Unfurnished 12-month lease'],
+      TAXED=PMODE['Nightly all year, with Empty Homes Tax and Speculation Tax'], HYB=PMODE['Hybrid (recommended)'];
+const OPT=M.portfolio_modes.filter(r=>r.label.indexOf('Hybrid, opt-out')===0);
+const NOPT20=PMODE['Nightly, opt-out cuts nightly revenue 20%'];
+const STRAT=Object.fromEntries(M.strategies.map(r=>[r.label,r]));
+const SEG=Object.fromEntries(M.segments.map(r=>[r.neighbourhood_cleansed+'|'+r.asset,r]));
+const SENS=Object.fromEntries(M.sensitivity.map(r=>[r.driver.split(' ').slice(0,2).join(' '),r]));
+const hoodLabel=n=>n==='Downtown Eastside'?'Gastown & Chinatown':n;
+
+/* ---------- tiny DOM helper ---------- */
+function h(tag,opt,kids){
+  const e=document.createElement(tag); opt=opt||{};
+  if(typeof opt==='string') opt={cls:opt};
+  if(opt.cls)e.className=opt.cls;
+  if(opt.text!=null)e.textContent=opt.text;
+  if(opt.html!=null)e.innerHTML=opt.html;
+  if(opt.style)e.setAttribute('style',opt.style);
+  for(const k in opt.attr||{})e.setAttribute(k,opt.attr[k]);
+  if(opt.on)for(const k in opt.on)e.addEventListener(k,opt.on[k]);
+  (kids||opt.kids||[]).forEach(c=>c&&e.appendChild(c));
+  return e;
+}
+const tip=document.getElementById('tip');
+function showTip(x,y,title,rows){
+  tip.replaceChildren();
+  if(title)tip.appendChild(h('b',{text:title}));
+  (rows||[]).forEach(r=>tip.appendChild(h('div','r',[h('span',{text:r[0]}),h('span',{text:r[1]})])));
+  tip.hidden=false;
+  const w=tip.offsetWidth,ht=tip.offsetHeight;
+  tip.style.left=Math.max(8,Math.min(innerWidth-w-8,x+16))+'px';
+  tip.style.top=Math.max(8,(y+ht+24>innerHeight)?y-ht-14:y+18)+'px';
+}
+function bindTip(node,fn){
+  node.addEventListener('pointermove',e=>{const t=fn();if(t)showTip(e.clientX,e.clientY,t[0],t[1]);});
+  node.addEventListener('pointerleave',()=>{tip.hidden=true;});
+}
+__MODEL__
+
+/* ---------- original artwork (all drawn here; no third-party logos) ---------- */
+function fromHTML(str){const d=document.createElement('div');d.innerHTML=str.trim();return d.firstElementChild;}
+function mark(w,light){
+  const ink=light?'#FFFFFF':'#0E1B33', navy=light?'#13324F':'#0B1F3A';
+  return fromHTML('<svg viewBox="0 0 132 100" width="'+w+'" height="'+(w*100/132)+'" aria-label="Team Two Calendars mark">'+
+    '<rect x="62" y="20" width="58" height="66" rx="13" fill="'+navy+'"/>'+
+    '<path d="M62 33h58v40a13 13 0 0 1-13 13H75a13 13 0 0 1-13-13Z" fill="'+navy+'"/>'+
+    '<rect x="62" y="20" width="58" height="15" rx="7.5" fill="#2C4C6E"/>'+
+    '<path d="M105 62a12 12 0 1 1-12-12 9.5 9.5 0 0 0 12 12Z" fill="#F5B700"/>'+
+    '<rect x="12" y="14" width="58" height="66" rx="13" fill="#087A5D"/>'+
+    '<rect x="12" y="14" width="58" height="15" rx="7.5" fill="#0FA87C"/>'+
+    '<circle cx="41" cy="54" r="10" fill="#F5B700"/>'+
+    '<g stroke="#F5B700" stroke-width="3.4" stroke-linecap="round">'+
+    '<path d="M41 36v-5M41 77v-5M23 54h-5M64 54h-5M28.3 41.3l-3.5-3.5M57.2 70.2l-3.5-3.5M28.3 66.7l-3.5 3.5M57.2 37.8l-3.5 3.5"/></g>'+
+    '<rect x="24" y="6" width="7" height="15" rx="3.5" fill="'+ink+'"/>'+
+    '<rect x="51" y="6" width="7" height="15" rx="3.5" fill="'+ink+'"/></svg>');
+}
+function wordmark(size,light){
+  const box=h('div',{style:'display:flex;align-items:center;gap:14px'});
+  box.appendChild(mark(size));
+  box.appendChild(h('div',{style:'display:flex;flex-direction:column;line-height:1.05'},[
+    h('span',{style:'font-size:'+(size*0.33)+'px;font-weight:800;letter-spacing:-0.5px;color:'+(light?'#fff':'var(--ink)'),text:'TWO'}),
+    h('span',{style:'font-size:'+(size*0.33)+'px;font-weight:800;letter-spacing:-0.5px;color:var(--emerald)',text:'CALENDARS'})]));
+  return box;
+}
+function skyline(){
+  const B=[[0,120],[70,170],[128,96],[186,210],[250,150],[300,250],[372,130],[430,186],[490,110],[540,230],[612,160],[666,120],[720,200],[790,140],[846,176],[900,104],[952,240],[1024,150],[1080,190],[1140,120],[1200,220],[1272,140],[1330,170],[1390,110],[1444,200],[1516,150],[1572,120],[1626,230],[1698,160],[1756,110],[1812,186],[1870,140]];
+  let b='', win='';
+  B.forEach(([x,ht],i)=>{
+    const w=i%3===0?54:i%3===1?44:38, top=300-ht;
+    b+='<rect x="'+x+'" y="'+top+'" width="'+w+'" height="'+ht+'" rx="3" fill="#0B1F3A"/>';
+    if(i%4===2)b+='<path d="M'+x+' '+top+' L'+(x+w/2)+' '+(top-26)+' L'+(x+w)+' '+top+' Z" fill="#0B1F3A"/>';
+    for(let r=0;r<Math.floor(ht/34);r++)for(let c=0;c<2;c++)
+      if((i+r+c)%3!==0){
+        const lit=(i*7+r*3+c)%3===0, dur=(2.6+((i+r*2+c)%7)*0.55).toFixed(2), del=(((i*5+r*3+c*2)%13)*0.42).toFixed(2);
+        win+='<rect x="'+(x+9+c*20)+'" y="'+(top+16+r*32)+'" width="9" height="13" rx="2" fill="'+((i+r)%5===0?'#F5B700':'#12B886')+'"'
+           +(lit?' class="tw" style="animation-duration:'+dur+'s;animation-delay:'+del+'s"':' opacity="'+((i+r+c)%4===0?0.95:0.5)+'"')+'/>';
+      }
+  });
+  const mtn='<path d="M0 300 L150 140 L250 215 L390 70 L520 215 L640 150 L760 300 Z" fill="#22425F" opacity="0.55"/>'+
+            '<path d="M1180 300 L1320 120 L1430 210 L1560 95 L1700 215 L1800 160 L1920 300 Z" fill="#22425F" opacity="0.55"/>';
+  return fromHTML('<svg viewBox="0 0 1920 300" width="1920" height="300" aria-label="Illustration of a city skyline at dusk" style="position:absolute;left:0;bottom:96px">'+mtn+b+win+'</svg>');
+}
+const ICON={
+  pin:'M24 4a14 14 0 0 0-14 14c0 10 14 26 14 26s14-16 14-26A14 14 0 0 0 24 4Zm0 19a5.5 5.5 0 1 1 5.5-5.5A5.5 5.5 0 0 1 24 23Z',
+  stack:'M6 14h36v7H6Zm0 12h36v7H6Zm0 12h36v7H6Z',
+  cal:'M10 8h28a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4Zm-4 12h36M16 4v8M32 4v8',
+  shield:'M24 4 42 11v14c0 11-7.5 18-18 21C13.5 43 6 36 6 25V11Z',
+  tag:'M24 6a18 18 0 1 0 0 36 18 18 0 0 0 0-36Zm0 7v22M19 20h7a4 4 0 0 1 0 8h-4a4 4 0 0 0 0 8h7',
+  scale:'M24 6v34M10 40h28M14 12h20M8 30 14 14l6 16a6 6 0 0 1-12 0Zm20 0 6-16 6 16a6 6 0 0 1-12 0Z'
+};
+function icon(name,color,size){
+  return fromHTML('<svg viewBox="0 0 48 48" width="'+(size||48)+'" height="'+(size||48)+'" aria-hidden="true" fill="none" stroke="'+color+'" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"><path d="'+ICON[name]+'"/></svg>');
+}
+
+function animView(svg,to,ms,done){
+  const from=(svg.getAttribute('viewBox')||'').split(/\s+/).map(Number);
+  if(from.length!==4){svg.setAttribute('viewBox',to.join(' '));if(done)done();return;}
+  const t0=performance.now();
+  (function step(t){
+    const p=Math.min(1,(t-t0)/(ms||850)), e=p<0.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+    svg.setAttribute('viewBox',from.map((f,i)=>(f+(to[i]-f)*e).toFixed(2)).join(' '));
+    if(p<1)requestAnimationFrame(step); else if(done)done();
+  })(performance.now());
+}
+function boxOf(node,pad,aspect){
+  const b=node.getBBox();
+  let x=b.x-pad, y=b.y-pad, w=b.width+pad*2, hgt=b.height+pad*2;
+  if(w/hgt<aspect){const nw=hgt*aspect;x-=(nw-w)/2;w=nw;} else {const nh=w/aspect;y-=(nh-hgt)/2;hgt=nh;}
+  return [x,y,w,hgt];
+}
+
+/* ---------- shared widgets ---------- */
+function barList(box,rows){
+  box.replaceChildren();
+  const vals=rows.map(r=>r.v).filter(isFinite);
+  const max=Math.max(0,...vals), min=Math.min(0,...vals), span=(max-min)||1, z=(0-min)/span*100;
+  rows.forEach(r=>{
+    const fill=h('span','fill'+(r.cls?' '+r.cls:''));
+    const w=Math.abs(r.v)/span*100;
+    fill.style.width=w+'%'; fill.style.left=(r.v<0?z-w:z)+'%';
+    const row=h('div','brow'+(r.hl?' hl':''),[h('span',{cls:'lab',text:r.label}),h('span','track',[fill]),h('span',{cls:'val',text:r.text})]);
+    if(r.tip)bindTip(row,()=>r.tip);
+    box.appendChild(row);
+  });
+  return box;
+}
+function seg(options,value,onChange){
+  const box=h('div','seg');
+  options.forEach(o=>{
+    const b=h('button',{text:o.label,attr:{type:'button','aria-pressed':String(o.value===value)}});
+    b.addEventListener('click',()=>{[...box.children].forEach(c=>c.setAttribute('aria-pressed',String(c===b)));onChange(o.value);});
+    box.appendChild(b);
+  });
+  return box;
+}
+function slider(label,min,max,step,value,fmt,onInput){
+  const out=h('output',{text:fmt(value)});
+  const inp=h('input',{attr:{type:'range',min:min,max:max,step:step,value:value,'aria-label':label}});
+  inp.addEventListener('input',()=>{out.textContent=fmt(+inp.value);onInput(+inp.value);});
+  return h('label','sl',[h('span','top',[h('span',{text:label}),out]),inp]);
+}
+function kv(k,v,strong){return h('div','kv',[h('span',{text:k}),h('b',{text:v,style:strong?'color:var(--emerald)':''})]);}
+function counter(node,to,fmt,ms){
+  const t0=performance.now(), from=0;
+  function step(t){const p=Math.min(1,(t-t0)/(ms||900)), e=1-Math.pow(1-p,3);
+    node.textContent=fmt(from+(to-from)*e); if(p<1)requestAnimationFrame(step);}
+  requestAnimationFrame(step);
+}
+
+/* ---------- slide scaffolding ---------- */
+const stage=document.getElementById('stage');
+const SLIDES=[];
+function slide(def){SLIDES.push(def);}
+function foot(i,n){return h('div','foot',[h('span',{text:M.credit}),h('span',{text:i<n?((i+1)+' / '+n):'Backup'})]);}
+
+/* ===================== 1. cover ===================== */
+slide({id:'cover',backup:false,build(s){
+  const wave=sv('svg',{viewBox:'0 0 1920 240',style:'position:absolute;left:0;bottom:0;width:1920px;height:240px'},s);
+  const p1=sv('path',{d:'M-960 90 c240 -70 720 70 960 0 c240 -70 720 70 960 0 c240 -70 720 70 960 0 c240 -70 720 70 960 0 L2880 240 L-960 240 Z',fill:'#12B886'},wave);
+  sv('animateTransform',{attributeName:'transform',type:'translate',values:'0 0;-480 0;0 0',dur:'18s',repeatCount:'indefinite'},p1);
+  const p2=sv('path',{d:'M-960 140 c240 60 720 -60 960 0 c240 60 720 -60 960 0 c240 60 720 -60 960 0 c240 60 720 -60 960 0 L2880 240 L-960 240 Z',fill:'#0B1F3A'},wave);
+  sv('animateTransform',{attributeName:'transform',type:'translate',values:'0 0;480 0;0 0',dur:'13s',repeatCount:'indefinite'},p2);
+  s.insertBefore(skyline(),wave);
+  s.append(
+    h('div',{style:'position:absolute;right:112px;top:84px'},[wordmark(84)]),
+    h('p','eyebrow',[document.createTextNode('SFU DSSS DataJam 2026 · DDD investment committee')]),
+    h('h1',{html:'Buy '+R.units+' condos downtown.<br>Run each on two calendars.'}),
+    h('p',{cls:'sub',style:'color:var(--emerald);font-weight:700',text:'$10M CAD into Vancouver short-term rental property'}),
+    h('p',{style:'font-size:34px;font-weight:800',text:'Team Two Calendars'}),
+    h('p',{cls:'note',style:'font-size:26px',text:'Chitransh Motwani · Divya Kapoor · Pranay Ratan'}),
+    h('div',{cls:'foot',style:'color:#fff'},[h('span',{text:M.credit})])
+  );
+}});
+
+/* ===================== 2. the problem ===================== */
+slide({id:'problem',build(s){
+  const Q=[['pin','Where',num(M.profile.rows)+' listings. They do not earn alike.'],
+           ['stack','How many, what kind','A few houses, or many condos.'],
+           ['cal','How to run them','Nightly, a lease, or both.']];
+  s.append(
+    h('p',{cls:'eyebrow',text:'The problem'}),
+    h('h2',{text:'DDD has $10M and three open questions.'}),
+    h('p',{cls:'sub',text:'Income in 2027, from one public snapshot of the market.'}),
+    h('div',{cls:'row',style:'gap:24px;margin-top:8px'},Q.map(([ic,t,d])=>
+      h('div',{cls:'card grow'},[icon(ic,'#087A5D',52),h('h3',{text:t}),h('p',{cls:'note',style:'font-size:25px',text:d})]))),
+    h('div',{cls:'row',style:'gap:16px;flex-wrap:wrap'},[
+      h('p',{cls:'pill',text:'Principal residence only, licence required'}),
+      h('p',{cls:'pill bad',text:'Empty six months: '+fP(A.eht,0)+' + '+fP(A.svt,0)+' of value in tax'})]),
+    h('p',{cls:'note',style:'font-size:27px;color:var(--emerald);font-weight:700',text:'We answer all three.'})
+  );
+}});
+
+/* ===================== 3. recommendation ===================== */
+slide({id:'recommendation',build(s){
+  const noi=h('p',{cls:'big',style:'color:var(--emerald)',text:'—'});
+  const yld=h('p',{cls:'big',text:'—'});
+  const dep=h('p',{cls:'big',style:'color:var(--coral)',text:'—'});
+  const scrubLabel=h('p',{cls:'note',style:'font-size:26px'});
+  const marker=h('div',{style:'position:absolute;top:-10px;width:8px;height:62px;border-radius:4px;background:var(--ink);transition:left .12s'});
+  const track=h('div',{style:'position:relative;height:42px;border-radius:21px;background:linear-gradient(90deg,#FDE4DE,#D8F3EA,#12B886);'},[marker]);
+  function setScrub(p){
+    const v=p<=50 ? R.noi_p10+(R.noi_p50-R.noi_p10)*(p/50) : R.noi_p50+(R.noi_p90-R.noi_p50)*((p-50)/50);
+    marker.style.left='calc('+p+'% - 4px)';
+    scrubLabel.textContent='At the '+Math.round(p<=50?10+p*0.8:50+(p-50)*0.8)+'th percentile of 5,000 simulated years: '+fK(v)+' net operating income.';
+  }
+  s.append(
+    h('p',{cls:'eyebrow',text:'The recommendation'}),
+    h('h2',{text:'Buy '+R.units+' one-bedroom condos downtown.'}),
+    h('div','row',[
+      h('div',{cls:'card grow'},[noi,h('p',{cls:'note',text:'expected 2027 net operating income'})]),
+      h('div',{cls:'card grow'},[yld,h('p',{cls:'note',text:'return on all-in cost'})]),
+      h('div',{cls:'card grow'},[dep,h('p',{cls:'note',text:Object.keys(R.allocation).map(k=>R.allocation[k]+' '+hoodLabel(k)).join(' · ')})])
+    ]),
+    h('div',{cls:'card',style:'gap:16px'},[
+      h('p',{style:'font-size:26px;font-weight:700',text:'Drag to walk the distribution'}),
+      track,
+      h('input',{attr:{type:'range',min:0,max:100,value:50,'aria-label':'Percentile of simulated years'},on:{input:e=>setScrub(+e.target.value)}}),
+      scrubLabel
+    ]),
+    h('div',{cls:'row',style:'gap:16px'},[h('p',{cls:'pill good',text:'Nightly stays, '+R.nightly_months}),h('p',{cls:'pill',text:'Furnished stays of 30+ nights, '+R.furnished_months})])
+  );
+  setScrub(50);
+  s.enter=()=>{counter(noi,R.noi_p50,fK);counter(yld,R.yield_p50,v=>fP(v));counter(dep,R.deployed,fM);};
+}});
+
+/* ===================== 3. funnel ===================== */
+slide({id:'funnel',build(s){
+  const F=M.funnel, box=h('div','bars'), why=h('p',{cls:'note',style:'font-size:27px;min-height:70px'});
+  const REASON={0:'Every listing in the 15 June 2026 file.',1:'Private rooms and shared rooms are not an investable asset here.',
+    2:'Without a licence number in the listing text we cannot treat it as a legal short-term rental.',
+    3:'A listing with no review in the last year is not trading.',
+    4:'Inside Airbnb estimates nights from review counts, so a listing opened this spring has no full year to estimate from.'};
+  function draw(sel){
+    barList(box,F.map((f,i)=>({label:f.step,v:f.listings,text:num(f.listings),cls:i===F.length-1?'gold':(i===sel?'':'grey'),hl:i===sel,
+      tip:[f.step,[['Listings',num(f.listings)],['Share of start',fP(f.listings/F[0].listings,0)]]]})));
+    [...box.children].forEach((row,i)=>{row.style.cursor='pointer';row.addEventListener('click',()=>{draw(i);why.textContent=REASON[i]||'';});});
+  }
+  draw(F.length-1); why.textContent='Click a step.';
+  s.append(h('p',{cls:'eyebrow',text:'The data · click a step'}),
+    h('h2',{text:'We kept '+num(M.profile.comps)+' of '+num(M.profile.rows)+' listings.'}),
+    box, why);
+}});
+
+/* ===================== 4. strategies (live simulation) ===================== */
+slide({id:'houses',build(s){
+  const box=h('div','bars'), status=h('p',{cls:'note',style:'font-size:25px'});
+  const POOLS=[
+    {label:'3 west-side houses',f:{asset:2,beds:3,zone:'W'},mode:'nightly'},
+    {label:'6 east-side houses',f:{asset:2,beds:3,zone:'E'},mode:'nightly'},
+    {label:'12 apartments, city-wide',f:{asset:0,beds:12},mode:'hybrid'},
+    {label:'12 core 1–2 bedrooms',f:{asset:0,beds:12,hoods:CORE},mode:'hybrid'},
+    {label:'14 core one-bedrooms',f:{asset:0,beds:1,hoods:CORE},mode:'hybrid',hl:true}
+  ];
+  const PRE=[STRAT['Few large: west-side houses'],STRAT['Houses, east side'],STRAT['Many small: apartments city-wide'],STRAT['Core 1-2 bedroom apartments'],STRAT['Core one-bedroom apartments']];
+  function render(res){
+    barList(box,POOLS.map((p,i)=>({label:p.label,v:res[i].p50,text:fK(res[i].p50),cls:p.hl?'':(i<2?'bad':'grey'),hl:p.hl,
+      tip:[p.label,[['Expected NOI',fK(res[i].p50)],['1 year in 10 below',fK(res[i].p10)],['Chance of under 1% yield',fP(res[i].below,0)],['Units bought',num(res[i].units)]]]})));
+  }
+  render(PRE.map(r=>({p50:r.noi_p50,p10:r.noi_p10,below:r.prob_yield_below_1pct,units:r.units})));
+  const run=h('button',{cls:'btn',text:'Re-run the simulation',on:{click(){
+    status.textContent='Drawing portfolios…';
+    setTimeout(()=>{
+      const t0=performance.now();
+      const res=POOLS.map(p=>describe(simulate(pool(p.f),BASE,p.mode,{seed:(Math.random()*1e9)|0,nsim:600,budget:M.budget,erosion:0,tax:false})));
+      render(res);
+      status.textContent='600 fresh portfolios per strategy, drawn in '+Math.round(performance.now()-t0)+' ms. The ranking does not move.';
+    },30);
+  }}});
+  s.append(h('p',{cls:'eyebrow',text:'Few big or many small?'}),
+    h('h2',{text:'Houses look big. They earn almost nothing.'}),
+    h('p',{cls:'sub',text:'Expected 2027 income, $10M portfolio'}),
+    box,
+    h('div',{cls:'row',style:'align-items:center;gap:18px'},[run,status]),
+    h('div','row',[h('p',{cls:'pill bad',text:'Houses '+fP(M.assets.house.net_yield)+' · '+fP(M.assets.house.share_losing_money,0)+' lose money'}),
+                   h('p',{cls:'pill good',text:'Condos '+fP(M.assets.condo.net_yield)})])
+  );
+}});
+
+/* ===================== 5. interactive map ===================== */
+slide({id:'map',build(s){
+  const state={layer:'yield',sel:HOODS.findIndex(x=>x.name==='Downtown'),dots:false,zoomed:false};
+  const svg=sv('svg',{id:'mapsvg',viewBox:'0 0 '+D.width+' '+D.height,role:'img','aria-label':'Map of Vancouver neighbourhoods'});
+  const gH=sv('g',{},svg), gD=sv('g',{},svg);
+  const RAMP={
+    yield:{title:'Net yield on cost, apartments',steps:[[0.005,'#D9E6F7'],[0.01,'#A8C4EA'],[0.015,'#6E9BDC'],[0.02,'#3E6FC4'],[9,'#17408B']],
+      val:x=>(x.condo_comps||0)>=15?x.condo_yield:null,fmt:v=>fP(v),labels:['<0.5%','0.5–1%','1–1.5%','1.5–2%','2%+']},
+    supply:{title:'Share of entire homes at a 90-night minimum',steps:[[0.2,'#FDE4DE'],[0.35,'#F9B7A8'],[0.5,'#EE7B62'],[0.65,'#C9301A'],[9,'#7A1608']],
+      val:x=>(x.nightly+x.long90)>=20?x.long90/(x.nightly+x.long90):null,fmt:v=>fP(v,0),labels:['<20%','20–35%','35–50%','50–65%','65%+']},
+    plan:{title:'Where the '+R.units+' units go',steps:null,val:x=>R.allocation[x.name]||null,fmt:v=>v+' units',labels:[]}
+  };
+  function colour(x){
+    const r=RAMP[state.layer], v=r.val(x);
+    if(v==null)return '#E7E4DB';
+    if(state.layer==='plan')return v>=9?'#087A5D':v>=4?'#12B886':'#8FE0C6';
+    for(const[t,c]of r.steps)if(v<t)return c;
+    return '#E7E4DB';
+  }
+  const paths=HOODS.map((x,i)=>{
+    const p=sv('path',{d:x.path,class:'hood',tabindex:'0','aria-label':x.name},gH); p.style.fill='#E7E4DB';
+    p.addEventListener('click',()=>select(i));
+    p.addEventListener('focus',()=>select(i));
+    bindTip(p,()=>{
+      const r=RAMP[state.layer],v=r.val(x);
+      return [hoodLabel(x.name),[[r.title,v==null?'too few listings':r.fmt(v)],['Comparable listings',num(x.comps)],['Median nights',isFinite(x.median_nights)?num(x.median_nights):'—']]];
+    });
+    return p;
+  });
+  D.listings.forEach(r=>{if(r[AS]===0&&r[LIC]&&r[EST])sv('circle',{cx:r[0],cy:r[1],r:2.6,class:'dot'},gD);});
+  gD.setAttribute('opacity','0');
+  const panelTitle=h('h3',{text:''}), panelBig=h('p',{cls:'big',style:'font-size:86px;color:var(--emerald)'}), panelNote=h('p','note');
+  const rows=h('div','col'), legend=h('div','legend'), layerTitle=h('p',{cls:'sub',style:'font-size:26px;font-weight:700'});
+  function drawLegend(){
+    legend.replaceChildren();
+    const r=RAMP[state.layer];
+    if(state.layer==='plan'){
+      [['9 units','#087A5D'],['4 units','#12B886'],['1 unit','#8FE0C6'],['not bought','#E7E4DB']].forEach(([t,c])=>
+        legend.appendChild(h('span',{html:'<i style="background:'+c+'"></i>'+t})));
+    }else{
+      r.steps.forEach(([,c],i)=>legend.appendChild(h('span',{html:'<i style="background:'+c+'"></i>'+r.labels[i]})));
+      legend.appendChild(h('span',{html:'<i style="background:#E7E4DB"></i>too few'}));
+    }
+  }
+  const FULL=[0,0,D.width,D.height];
+  function zoomHood(i){
+    animView(svg,boxOf(paths[i],34,D.width/D.height),820);
+    zoomBtn.textContent='Zoom back out'; state.zoomed=true;
+  }
+  function zoomOut(){animView(svg,FULL,760);zoomBtn.textContent='Zoom into the selection';state.zoomed=false;}
+  function select(i){
+    state.sel=i; const x=HOODS[i], r=RAMP[state.layer], v=r.val(x);
+    if(state.zoomed)zoomHood(i);
+    paths.forEach((p,j)=>p.classList.toggle('sel',j===i));
+    panelTitle.textContent=hoodLabel(x.name);
+    panelBig.textContent=v==null?'—':r.fmt(v);
+    panelBig.style.color=state.layer==='supply'?'var(--coral)':'var(--emerald)';
+    panelNote.textContent=v==null?'Fewer than 15 comparable apartments here, so we do not price a purchase off it.':r.title+'.';
+    rows.replaceChildren(
+      kv('Comparable listings',num(x.comps)),
+      kv('On the nightly market',num(x.nightly)),
+      kv('At a 90-night minimum',num(x.long90)),
+      kv('Median booked nights',isFinite(x.median_nights)?num(x.median_nights):'—'),
+      kv('Units we buy here',String(R.allocation[x.name]||0),!!R.allocation[x.name])
+    );
+  }
+  function paint(){
+    paths.forEach((p,i)=>{p.style.fill=colour(HOODS[i]);});
+    layerTitle.textContent=RAMP[state.layer].title;
+    drawLegend(); select(state.sel);
+  }
+  const switcher=seg([{label:'Yield',value:'yield'},{label:'90-night supply',value:'supply'},{label:'Our plan',value:'plan'}],'yield',v=>{state.layer=v;paint();});
+  const zoomBtn=h('button',{cls:'btn',text:'Zoom into the selection',on:{click(){state.zoomed?zoomOut():zoomHood(state.sel);}}});
+  const dotBtn=h('button',{cls:'btn ghost',text:'Show the listings',on:{click(e){
+    state.dots=!state.dots; gD.setAttribute('opacity',state.dots?'1':'0');
+    e.target.textContent=state.dots?'Hide the listings':'Show the listings';
+  }}});
+  s.append(h('p',{cls:'eyebrow',text:'Where · hover, click, zoom in'}),
+    h('h2',{text:'Downtown earns the most per dollar.'}),
+    h('div','maprow',[
+      h('div',{attr:{id:'mapwrap'}},[svg]),
+      h('div','panel',[
+        h('div',{cls:'row',style:'align-items:center;gap:14px;flex-wrap:wrap'},[switcher,zoomBtn,dotBtn]),
+        layerTitle,
+        h('div',{cls:'card',style:'gap:6px'},[panelTitle,panelBig,panelNote,rows]),
+        legend
+      ])
+    ]));
+  paint();
+}});
+
+/* ===================== 6. price ===================== */
+slide({id:'price',build(s){
+  const vals=Object.fromEntries(M.price_ratios.filter(r=>r.comparison==='June / September').map(r=>[r.segment,r.median_ratio]));
+  const WK=[['15 Jun','06-15'],['22 Jun','06-22'],['29 Jun','06-29'],['6 Jul','07-06'],['13 Jul','07-13'],['20 Jul','07-20']]
+    .map(([l,d])=>[l,vals['June quote for the week of 2026-'+d]]).filter(x=>isFinite(x[1]));
+  const cols=h('div',{cls:'cols',style:'height:430px;width:820px;flex:none'});
+  WK.forEach(([l,v])=>{
+    const bar=h('div','bar'); bar.style.height='0%'; bar.style.background=v>1.3?'var(--coral)':'var(--grey)';
+    const w=h('div','colw',[h('span',{cls:'cv',text:'+'+((v-1)*100).toFixed(0)+'%'}),bar,h('span',{cls:'cx',text:l})]);
+    bindTip(w,()=>['Check-in week of '+l,[['June quote vs September',v.toFixed(3)+'×'],['Premium','+'+((v-1)*100).toFixed(0)+'%']]]);
+    w._bar=bar; w._v=v; cols.appendChild(w);
+  });
+  s.append(h('p',{cls:'eyebrow',text:'Finding 1 · hover a bar'}),
+    h('h2',{text:'June prices were World Cup prices.'}),
+    h('p',{cls:'sub',text:'June vs September quote, same '+num(PB.n_same_listing)+' listings, by check-in week'}),
+    h('div',{cls:'row',style:'align-items:flex-start;gap:50px;margin-top:10px'},[cols,
+      h('div',{cls:'card grow'},[h('p',{cls:'big',style:'color:var(--coral)',text:'+'+((PB.june_over_sept_all-1)*100).toFixed(0)+'%'}),
+        h('p','note',[document.createTextNode('for the same listings in June than in September, and up to +'+((PB.peak_week_ratio-1)*100).toFixed(0)+'% in match weeks')]),
+        h('p',{cls:'note',style:'color:var(--emerald);font-weight:700;font-size:26px',text:'Decision 1: June quotes ÷ '+PB.june_over_sept.condo.toFixed(2)})])]));
+  s.enter=()=>{[...cols.children].forEach((w,i)=>setTimeout(()=>{w._bar.style.height=Math.min(100,(w._v-1)*100*2.3)+'%';},80+i*90));};
+  s.leave=()=>{[...cols.children].forEach(w=>{w._bar.style.height='0%';});};
+}});
+
+/* ===================== one unit, up close (zoom) ===================== */
+slide({id:'unit',build(s){
+  const rows=pool({asset:0,beds:1,hoods:CORE});
+  const mn=median(rows.map(r=>r[NI])), mp=median(rows.map(r=>r[PR]));
+  let pick=rows[0], best=1e9;
+  rows.forEach(r=>{const d=Math.abs(r[NI]-mn)/mn+Math.abs(r[PR]-mp)/mp;
+    if(HOODS[r[H]].name==='Downtown'&&d<best){best=d;pick=r;}});
+  const e=econ(pick,BASE), m=hybrid(e,BASE), hood=HOODS[pick[H]];
+  const W=760, HT=556, ASP=W/HT, FULL=[0,0,D.width,D.height];
+  const CLOSE=[pick[0]-66,pick[1]-66/ASP,132,132/ASP];
+  const svg=sv('svg',{viewBox:FULL.join(' '),width:W,height:HT,role:'img',
+    'aria-label':'Map zooming from the whole city into one comparable listing downtown'});
+  HOODS.forEach(x=>sv('path',{d:x.path,fill:x.name===hood.name?'#CFE9DF':'#E7E4DB',stroke:'#FFFFFF','stroke-width':3},svg));
+  const gd=sv('g',{},svg);
+  D.listings.forEach(r=>{if(r[AS]===0&&r[LIC]&&r[EST]&&r[H]===pick[H])sv('circle',{cx:r[0],cy:r[1],r:2.4,fill:'#0E1B33','fill-opacity':0.35},gd);});
+  const ring=sv('circle',{cx:pick[0],cy:pick[1],r:6,fill:'none',stroke:'#C9301A','stroke-width':2.4},svg);
+  sv('animate',{attributeName:'r',values:'6;26;6',dur:'2.6s',repeatCount:'indefinite'},ring);
+  sv('animate',{attributeName:'opacity',values:'1;0;1',dur:'2.6s',repeatCount:'indefinite'},ring);
+  sv('circle',{cx:pick[0],cy:pick[1],r:5.5,fill:'#C9301A',stroke:'#FFFFFF','stroke-width':2},svg);
+  const bars=h('div','bars');
+  barList(bars,[
+    {label:'Nightly stays, '+R.nightly_months,v:m.guest,text:f$(m.guest),tip:['Nightly income',[['Rate after rescaling',f$(e.adr*S.peak_adr_uplift)],['Nights in season',num(e.nights*S.peak_share)]]]},
+    {label:'Furnished stays, '+R.furnished_months,v:m.mid,text:f$(m.mid),cls:'gold'},
+    {label:'Airbnb fee ('+fP(A.airbnb_fee)+')',v:-m.fee,text:f$(-m.fee),cls:'bad'},
+    {label:'Management',v:-(m.mg+m.mfee),text:f$(-(m.mg+m.mfee)),cls:'bad'},
+    {label:'Cleaning, supplies, turnovers',v:-(m.cs+m.turn),text:f$(-(m.cs+m.turn)),cls:'bad'},
+    {label:'Strata, property tax, upkeep, insurance',v:-e.fixed,text:f$(-e.fixed),cls:'bad'},
+    {label:'Net operating income',v:m.noi,text:f$(m.noi),hl:true}
+  ]);
+  const zb=h('button',{cls:'btn',text:'Zoom to the unit',on:{click(){
+    const atCity=(svg.getAttribute('viewBox')===FULL.join(' ')||+svg.getAttribute('viewBox').split(' ')[2]>400);
+    animView(svg,atCity?CLOSE:FULL,1100);
+    zb.textContent=atCity?'Back to the city':'Zoom to the unit';
+  }}});
+  s.append(h('p',{cls:'eyebrow',text:'One unit · watch it zoom in'}),
+    h('h2',{text:'What one of the '+R.units+' actually earns.'}),
+    h('div',{cls:'row',style:'gap:36px;align-items:flex-start'},[
+      h('div',{style:'width:'+W+'px;flex:none;display:flex;flex-direction:column;gap:14px'},[svg,zb]),
+      h('div',{cls:'col grow',style:'gap:16px'},[
+        h('div',{cls:'card',style:'gap:8px'},[
+          h('p',{style:'font-size:30px;font-weight:800',text:'A comparable one-bedroom apartment in '+hoodLabel(hood.name)}),
+          h('p',{cls:'note',style:'font-size:24px',text:num(pick[NI])+' nights · '+f$(e.adr)+' a night · '+f$(e.allin)+' all-in'}),
+          h('p',{cls:'note',style:'font-size:22px',text:'One listing from the public file. No host, link or licence number.'})]),
+        bars,
+        h('div',{cls:'row',style:'gap:16px'},[
+          h('p',{cls:'pill good',text:fP(m.noi/e.allin)+' yield on all-in cost'}),
+          h('p',{cls:'pill',text:'× '+R.units+' = '+fK(m.noi*R.units)})])
+      ])
+    ]));
+  s.enter=()=>{svg.setAttribute('viewBox',FULL.join(' '));zb.textContent='Back to the city';setTimeout(()=>animView(svg,CLOSE,1500),520);};
+  s.leave=()=>{svg.setAttribute('viewBox',FULL.join(' '));zb.textContent='Zoom to the unit';};
+}});
+
+/* ===================== 7. calendars (click the months) ===================== */
+slide({id:'calendar',build(s){
+  const rows=pool({asset:0,beds:1,hoods:CORE});
+  const chosen=new Set(S.peak_months);
+  const cols=h('div',{cls:'cols',style:'height:300px;max-width:1020px'});
+  const out=h('p',{cls:'big',style:'font-size:92px;color:var(--emerald)'});
+  const warn=h('p',{cls:'note',style:'font-size:25px;min-height:64px'});
+  const bars=h('div','bars');
+  function seasonNOI(){
+    let share=0; chosen.forEach(m=>{share+=S.month_share[String(m)];});
+    const midMonths=12-chosen.size, uplift=S.peak_adr_uplift;
+    let noi=0,cost=0;
+    rows.forEach(r=>{
+      const e=econ(r,BASE);
+      const n=e.nights*share, guest=e.adr*uplift*n, pay=guest*(1-BASE.airbnbFee);
+      const mg=pay*BASE.mgmtFee, cs=pay*A.supplies_pct+n/A.stay_nights*e.clean;
+      const rent=e.lb===1?BASE.midRent:BASE.midRent*A.mid_rent['2']/A.mid_rent['1'];
+      const mid=rent*midMonths*BASE.midOcc, mfee=mid*A.mid_mgmt, turn=A.mid_turnovers*A.mid_turn_cost;
+      const misses=midMonths*30.44*BASE.midOcc<A.tenancy_days_required;
+      noi+=pay-mg-cs+mid-mfee-turn-e.fixed-(misses?e.vt:0);
+      cost+=e.allin;
+    });
+    const per=noi/rows.length;
+    return {total:per*R.units,share:share,midMonths:midMonths,misses:midMonths*30.44*BASE.midOcc<A.tenancy_days_required};
+  }
+  function refresh(){
+    const r=seasonNOI();
+    out.textContent=fK(r.total);
+    out.style.color=r.misses?'var(--coral)':'var(--emerald)';
+    warn.textContent=r.misses
+      ? r.midMonths+' furnished months: under the six-month test, so both vacancy taxes apply.'
+      : r.midMonths+' furnished months clear the six-month test. '+fP(r.share,0)+' of a year’s stays.';
+    barList(bars,[
+      {label:'Nightly all year',v:NIGHT.noi_p50,text:fK(NIGHT.noi_p50),cls:'grey'},
+      {label:'Nightly, with vacancy taxes',v:TAXED.noi_p50,text:fK(TAXED.noi_p50),cls:'bad'},
+      {label:'12-month lease',v:LEASEM.noi_p50,text:fK(LEASEM.noi_p50),cls:'grey'},
+      {label:'Your calendar',v:r.total,text:fK(r.total),cls:r.misses?'bad':'',hl:true}
+    ]);
+    [...cols.children].forEach((w,i)=>w.classList.toggle('on',chosen.has(i+1)));
+  }
+  MONTHS.forEach((mn,i)=>{
+    const m=i+1, bar=h('div','bar');
+    bar.style.height=(S.month_share[String(m)]*100*6.3)+'%';
+    const w=h('div','colw click',[h('span',{cls:'cv',text:fP(S.month_share[String(m)],0)}),bar,h('span',{cls:'cx',text:mn})]);
+    w.addEventListener('click',()=>{chosen.has(m)?chosen.delete(m):chosen.add(m);refresh();});
+    bindTip(w,()=>[mn,[['Share of a year’s stays',fP(S.month_share[String(m)],1)],['In your nightly season',chosen.has(m)?'yes':'no']]]);
+    cols.appendChild(w);
+  });
+  s.append(h('p',{cls:'eyebrow',text:'How to run it · click the months'}),
+    h('h2',{text:'Renting by the night all year invites a tax bill.'}),
+    h('div',{cls:'row',style:'gap:46px;align-items:flex-start'},[
+      h('div',{cls:'col grow'},[h('p',{cls:'sub',style:'font-size:25px',text:'Share of a year’s stays. Green months are let nightly.'}),cols,bars]),
+      h('div',{cls:'card',style:'width:520px;flex:none'},[h('p',{cls:'note',style:'font-size:25px',text:'Expected 2027 net operating income, '+R.units+' units'}),out,warn])
+    ]));
+  refresh();
+}});
+
+/* ===================== 8. risk slider ===================== */
+slide({id:'risk',build(s){
+  const rows=pool({asset:0,beds:1,hoods:CORE});
+  const bars=h('div','bars'), caption=h('p',{cls:'note',style:'font-size:26px;min-height:70px'});
+  let timer=null;
+  function run(er){
+    const hyb=describe(simulate(rows,BASE,'hybrid',{seed:7,nsim:400,budget:M.budget,erosion:er,tax:false}));
+    const ngt=describe(simulate(rows,BASE,'nightly',{seed:7,nsim:400,budget:M.budget,erosion:er,tax:false}));
+    barList(bars,[
+      {label:'Two calendars (our plan)',v:hyb.p50,text:fK(hyb.p50),hl:true,tip:['Two calendars',[['Expected NOI',fK(hyb.p50)],['1 in 10 below',fK(hyb.p10)],['Units short of the 6-month test',hyb.missed.toFixed(1)]]]},
+      {label:'Nightly only',v:ngt.p50,text:fK(ngt.p50),cls:'bad',tip:['Nightly only',[['Expected NOI',fK(ngt.p50)],['1 in 10 below',fK(ngt.p10)]]]},
+      {label:'12-month lease',v:LEASEM.noi_p50,text:fK(LEASEM.noi_p50),cls:'grey'}
+    ]);
+    caption.textContent=er===0
+      ? 'Live re-run of 400 portfolios. Drag the slider.'
+      : 'Nightly revenue −'+fP(er,0)+': two calendars hold '+fK(hyb.p50)+', nightly-only '+fK(ngt.p50)+'.';
+  }
+  s.append(h('p',{cls:'eyebrow',text:'Biggest risk · drag the slider'}),
+    h('h2',{text:'A rule change could add supply. We priced it.'}),
+    h('p',{cls:'sub',text:'Kelowna opted out of the principal-residence rule on 1 June 2026. Vancouver could follow.'}),
+    h('div',{cls:'card',style:'gap:18px'},[
+      slider('Nightly revenue per listing falls by',0,40,1,0,v=>v+'%',v=>{clearTimeout(timer);timer=setTimeout(()=>run(v/100),110);}),
+      bars, caption
+    ]));
+  run(0);
+}});
+
+/* ===================== risks and mitigation ===================== */
+slide({id:'mitigation',build(s){
+  const CARDS=[
+    ['shield','Vancouver opts out',fK(OPT[1].noi_p50),'at 20% less nightly revenue. Nightly-only: '+fK(NOPT20.noi_p50),
+     'Eight furnished months sit outside the nightly market.'],
+    ['tag','We pay too much',fP(SENS['Purchase price'].downside_yield),'at 20% above benchmark, from '+fP(SENS['Purchase price'].base_yield),
+     'An offer ceiling, and a year of real bookings per seller.'],
+    ['scale','Our tax reading is wrong','−'+fK(Math.abs(TAXED.noi_p50)),'a year if a unit misses the six-month test',
+     'Counsel signs off before the first offer.']];
+  s.append(h('p',{cls:'eyebrow',text:'Risks and mitigation'}),
+    h('h2',{text:'Three things could break it.'}),
+    h('p',{cls:'sub',text:'Each has a number and a plan.'}),
+    h('div',{cls:'row',style:'gap:24px'},CARDS.map(([ic,t,big,sub,mit])=>
+      h('div',{cls:'card grow'},[
+        h('div',{cls:'row',style:'align-items:center;gap:14px'},[icon(ic,'#C9301A',44),h('h3',{style:'color:var(--coral)',text:t})]),
+        h('p',{style:'font-size:62px;font-weight:800;line-height:1',text:big}),
+        h('p',{cls:'note',style:'font-size:24px',text:sub}),
+        h('p',{style:'font-size:24px;line-height:1.3;color:var(--emerald);font-weight:700',text:mit})]))),
+    h('p',{cls:'note',text:'Also: strata bylaws, and capital value — this yield counts income only.'}));
+}});
+
+/* ===================== 10. tested, didn't hold ===================== */
+slide({id:'tested',build(s){
+  const DROP=[
+    ['Superhost premium',num(T.superhost.estimated_nights)+' vs '+num(T.not_superhost.estimated_nights)+' nights','That estimate is reviews × 6, and the forward calendar shows no gap: it measures reviews, not bookings. Left out.'],
+    ['One-night minimum','no clean pattern','Estimated nights favoured it, but the calendar did not agree, so we do not rely on it.'],
+    ['Five nightly months',T.five_month?'':'','A fifth month leaves '+(PMODE[Object.keys(PMODE).find(k=>k.indexOf('five-month')>=0)].units_missing_tenancy_test).toFixed(1)+' of '+R.units+' units short of the six-month tenancy test.'],
+    ['Two-bedrooms',fP(T.two_bedroom.hybrid_yield)+' vs '+fP(T.two_bedroom.one_bedroom_hybrid_yield),'More rent, but the extra purchase price and costs more than eat it.'],
+    ['House with suite and laneway',fP(T.house_suite_laneway.net_yield),'The best house structure we could build still lands under a core condo.']
+  ];
+  const detail=h('p',{cls:'note',style:'font-size:27px;min-height:92px'});
+  const list=h('div','col');
+  DROP.forEach(([t,v,why],i)=>{
+    const card=h('div',{cls:'card',style:'flex-direction:row;align-items:center;gap:18px;cursor:pointer;padding:16px 24px'},[
+      h('span',{style:'width:44px;height:44px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:25px;display:flex;align-items:center;justify-content:center;flex:none',text:'✕'}),
+      h('span',{style:'font-size:28px;font-weight:700',text:t}),
+      h('span',{cls:'note',style:'font-size:24px;margin-left:auto',text:v})
+    ]);
+    card.addEventListener('click',()=>{detail.textContent=why;[...list.children].forEach(c=>c.style.borderColor='var(--line)');card.style.borderColor='var(--coral)';});
+    list.appendChild(card);
+  });
+  detail.textContent='Click any one to hear what we found.';
+  const held=h('div','col');
+  [[fP(V.v5_core1_yield_sept)+' vs '+fP(V.v5_core1_yield_june),'core yield on the September snapshot against June'],
+   [fP(V.v2_occupancy_formula_match,1),'of listings: Inside Airbnb’s own occupancy formula reproduced'],
+   [fP(V.v4_top3_beat_average_share,0),'of 300 split samples: the top segments stayed on top']]
+   .forEach(([a,b])=>held.appendChild(h('div','card',[h('p',{style:'font-size:48px;font-weight:800;color:var(--emerald)',text:a}),h('p',{cls:'note',text:b})])));
+  s.append(h('p',{cls:'eyebrow',text:'Honest checks · click a card'}),
+    h('h2',{text:'We tested these. They didn’t hold.'}),
+    h('div',{cls:'row',style:'gap:40px;align-items:flex-start'},[
+      h('div',{cls:'col grow'},[list,detail]),
+      h('div',{cls:'col',style:'width:560px;flex:none'},[h('p',{cls:'eyebrow',text:'What held up'}),held])
+    ]));
+}});
+
+/* ===================== 11. next steps ===================== */
+slide({id:'next',build(s){
+  const STEPS=[['1','Before buying',['Written tax advice on the six-month tenancy test','Screen each building: strata bylaws, licence, 12 months of real bookings']],
+    ['2','By 1 January 2027',['Furnish and register each unit','Line up furnished tenants for September to April']],
+    ['3','How we will know',['About '+num(R.unit_nights*S.peak_share)+' booked nights a unit in May to August','The 28 February opt-out deadline and the published vacancy rate']]];
+  s.append(h('p',{cls:'eyebrow',text:'Next steps'}),h('h2',{text:'What DDD does first.'}),
+    h('div',{cls:'row',style:'gap:24px'},STEPS.map(([n,t,items])=>
+      h('div',{cls:'card grow'},[h('p',{style:'font-size:58px;font-weight:800;color:var(--emerald)',text:n}),h('h3',{text:t}),
+        h('ul',{},items.map(i=>h('li',{text:i})))]))),
+    h('p',{cls:'note',style:'font-size:27px;color:var(--emerald);font-weight:700',text:'We re-run the pipeline on each new snapshot.'}));
+}});
+
+/* ===================== 12. close ===================== */
+slide({id:'close',dark:true,build(s){
+  s.append(h('p',{cls:'eyebrow',text:'The ask'}),
+    h('h1',{text:'Approve '+R.units+' condos downtown, subject to counsel’s sign-off.'}),
+    h('p',{cls:'sub',style:'color:var(--mint);font-weight:700;font-size:34px',text:fK(R.noi_p50)+' expected in 2027 on '+fM(R.deployed)+', with the risks priced in.'}),
+    h('p',{cls:'note',style:'color:#CFE4F2;max-width:1500px;font-size:26px',text:'Built with Claude under our direction, checked three ways. The tax reading is ours and needs counsel.'}));
+}});
+
+/* ===================== backup: every assumption is a slider ===================== */
+slide({id:'econ',backup:true,build(s){
+  const rows=pool({asset:0,beds:1,hoods:CORE});
+  const P=Object.assign({},BASE);
+  const yldOut=h('p',{cls:'big',style:'font-size:96px;color:var(--emerald)'}), noiOut=h('p',{cls:'big',style:'font-size:62px'});
+  const lines=h('div','col');
+  const svg=sv('svg',{id:'hist',viewBox:'0 0 600 230','aria-label':'Distribution of simulated portfolio income'});
+  const histNote=h('p',{cls:'note',style:'font-size:23px'});
+  function drawHist(){
+    const o=describe(simulate(rows,P,'hybrid',{seed:(Math.random()*1e9)|0,nsim:500,budget:M.budget,erosion:0,tax:false}));
+    svg.replaceChildren();
+    const vals=o.noi, lo=Math.min(...vals), hi=Math.max(...vals), bins=26, c=new Array(bins).fill(0);
+    vals.forEach(v=>{c[Math.min(bins-1,Math.floor((v-lo)/((hi-lo)||1)*bins))]++;});
+    const mx=Math.max(...c);
+    c.forEach((n,i)=>{const hgt=n/mx*195, x=i*(600/bins);
+      sv('rect',{x:x+1.5,y:200-hgt,width:600/bins-3,height:hgt,class:'hbar'+((lo+(i+0.5)*(hi-lo)/bins)<o.p10?' out':''),rx:3},svg);});
+    sv('line',{x1:(o.p50-lo)/((hi-lo)||1)*600,x2:(o.p50-lo)/((hi-lo)||1)*600,y1:0,y2:206,stroke:'#0E1B33','stroke-width':3},svg);
+    histNote.textContent='500 simulated years with these settings: expected '+fK(o.p50)+', 1 in 10 below '+fK(o.p10)+', 1 in 10 above '+fK(o.p90)+'. Chance of under 1% yield: '+fP(o.below,0)+'.';
+  }
+  function refresh(){
+    const r=pooled(rows,P,'hybrid',false);
+    yldOut.textContent=fP(r.yield);
+    noiOut.textContent=fK(r.noi*R.units)+' across '+R.units+' units';
+    lines.replaceChildren(
+      kv('All-in cost per unit',f$(r.avg.allin)),
+      kv('Nightly rate after rescaling',f$(r.avg.adr)),
+      kv('Booked nights a year',num(r.avg.nights)),
+      kv('Airbnb fee ('+fP(P.airbnbFee)+') and management',f$(r.avg.fee+r.avg.mg)),
+      kv('Furnished months income',f$(r.avg.mid)),
+      kv('Property tax, strata, upkeep, insurance',f$(r.avg.holding+r.avg.other)),
+      kv('Net operating income per unit',f$(r.noi),true)
+    );
+  }
+  s.append(h('p',{cls:'eyebrow',text:'The unit · move the sliders'}),
+    h('h2',{text:'Every assumption is one slider away.'}),
+    h('div',{cls:'row',style:'gap:34px;align-items:flex-start'},[
+      h('div',{cls:'card',style:'width:620px;flex:none;gap:16px'},[
+        slider('Purchase price',0.8,1.3,0.01,1,v=>(v>=1?'+':'−')+Math.abs(Math.round((v-1)*100))+'%',v=>{P.priceMult=v;refresh();}),
+        slider('Booked nights',0.6,1.2,0.01,1,v=>(v>=1?'+':'−')+Math.abs(Math.round((v-1)*100))+'%',v=>{P.occMult=v;refresh();}),
+        slider('Nightly rate',0.7,1.3,0.01,1,v=>(v>=1?'+':'−')+Math.abs(Math.round((v-1)*100))+'%',v=>{P.adrMult=v;refresh();}),
+        slider('Furnished rent a month',2000,5000,50,A.mid_rent['1'],v=>'$'+num(v),v=>{P.midRent=v;refresh();}),
+        h('button',{cls:'btn',text:'Run 500 simulated years',on:{click:drawHist}}),
+        svg, histNote
+      ]),
+      h('div',{cls:'col grow'},[
+        h('div',{cls:'card'},[h('p',{cls:'note',style:'font-size:25px',text:'Yield on all-in cost ('+rows.length+' comparables)'}),yldOut,noiOut]),
+        h('div',{cls:'card'},[h('p',{cls:'note',style:'font-size:25px',text:'Average unit, a year'}),lines]),
+        h('p',{cls:'note',text:'Core one-bedroom pool, same model as the repo.'})
+      ])
+    ]));
+  refresh(); drawHist();
+}});
+
+/* ===================== backup ===================== */
+slide({id:'assumptions',backup:true,build(s){
+  const RW=[['Purchase price','Apartment benchmark '+fK(B.W_condo)+' west, '+fK(B.E_condo)+' east; one-bedroom at 85%',M.benchmark_source],
+    ['Nightly price','June quote ÷ '+PB.june_over_sept.condo.toFixed(2)+', × '+S.annual_price_level_vs_sept.toFixed(2)+' for the year','Inside Airbnb, June and September'],
+    ['Booked nights',num(R.unit_nights)+' a year, less '+fP(A.first_year_haircut,0)+' in year one','Inside Airbnb estimate'],
+    ['Fees and costs','Airbnb '+fP(A.airbnb_fee)+'; manager '+fP(A.mgmt_fee,0)+'; '+f$(A.strata['1'])+' strata; '+fP(A.prop_tax,2)+' property tax; '+fP(A.maint.condo,1)+' upkeep','Airbnb; City of Vancouver; our estimate'],
+    ['Furnished stays',f$(A.mid_rent['1'])+' a month, let '+fP(A.mid_occupancy,0)+' of '+A.mid_months+' months','liv.rent furnished asking rents'],
+    ['Vacancy taxes','Empty Homes Tax '+fP(A.eht,0)+' plus Speculation and Vacancy Tax '+fP(A.svt,0)+' of assessed value','City of Vancouver; Province of BC'],
+    ['Lease benchmark',f$(A.lease_rent['1'])+' a month, '+fP(A.lease_vacancy)+' vacancy','liv.rent; CMHC']];
+  const t=h('table',{},[h('thead',{},[h('tr',{},['Item','Value','Source'].map(x=>h('th',{text:x})))]),
+    h('tbody',{},RW.map(r=>h('tr',{},r.map(c=>h('td',{text:c})))))]);
+  s.append(h('p',{cls:'eyebrow',text:'Backup'}),h('h2',{text:'Key assumptions.'}),t);
+}});
+slide({id:'log',backup:true,build(s){
+  const L=[['1. Price basis: June quotes ÷ '+PB.june_over_sept.condo.toFixed(2),'Same '+num(PB.n_same_listing)+' listings cost '+((PB.june_over_sept_all-1)*100).toFixed(0)+'% more in June. Alternative: take the price as given','Core yield '+fP(DEC.price_as_quoted.nightly_yield)+' → '+fP(DEC.base.nightly_yield)],
+    ['2. Comparable set: licensed, 12 months of history','Nights estimate is reviews × 6. Alternative: every reviewed listing ('+num(DEC.all_ages.listings)+')','Median nights '+num(DEC.all_ages.median_nights)+' → '+num(DEC.base.median_nights)],
+    ['3. Return metric: 2027 NOI over all-in cost','Revenue per dollar ignores tax, strata and upkeep. Alternative: revenue yield','Houses '+fP(M.assets.house.revenue_yield)+' → '+fP(M.assets.house.net_yield)],
+    ['4. Portfolio shape: '+R.units+' one-bedroom condos','5,000 simulated portfolios per strategy. Alternatives: houses, apartments city-wide','P(yield under 1%): '+fP(STRAT['Few large: west-side houses'].prob_yield_below_1pct,0)+' → '+fP(STRAT['Core one-bedroom apartments'].prob_yield_below_1pct,0)],
+    ['5. Calendar: nightly May–August, furnished the rest','Vacancy taxes make nightly-only a loss. Alternatives: nightly all year, lease, five-month season',fK(HYB.noi_p50)+' vs '+fK(NIGHT.noi_p50)+' nightly, '+fK(LEASEM.noi_p50)+' lease'],
+    ['6. Airbnb fee '+fP(A.airbnb_fee)+', not 3%','Since late 2025 the quoted price is what the guest pays','Core yield '+fP(DEC.fee_3pct.nightly_yield)+' → '+fP(DEC.base.nightly_yield)],
+    ['7. Only 3+ bedroom homes are houses','A smaller entire home cannot be told from a suite','House yield '+fP(DEC.houses_3plus_bedrooms.nightly_yield)+', not '+fP(DEC.houses_all_entire_homes.nightly_yield)],
+    ['8. Gastown/Chinatown at the west-side price','Filed under Downtown Eastside; they trade like downtown','Yield '+fP(DEC.dtes_west_price.nightly_yield)+', not '+fP(DEC.dtes_east_price.nightly_yield)]];
+  s.append(h('p',{cls:'eyebrow',text:'Backup'}),h('h2',{text:'Decision log.'}),
+    h('table',{style:'font-size:21px'},[h('thead',{},[h('tr',{},['Decision','Why (evidence or alternatives)','What changed'].map(x=>h('th',{text:x})))]),
+      h('tbody',{},L.map(r=>h('tr',{},r.map(c=>h('td',{text:c})))))]));
+}});
+slide({id:'validation',backup:true,build(s){
+  const rt=Object.fromEntries(M.snapshot_retest.map(r=>[r.segment,r])), c1=rt['Core one-bedroom apartments'];
+  const RW=[['Our revenue arithmetic vs Inside Airbnb’s estimate','Correlation '+V.v1_revenue_corr.toFixed(2)],
+    ['Inside Airbnb’s occupancy field','Reproduced for '+fP(V.v2_occupancy_formula_match,1)+' of listings'],
+    ['Same pipeline on the September snapshot','Core one-bedroom yield '+fP(c1.sept_yield)+' vs '+fP(c1.june_yield)+'; segment ranking correlation '+V.v5_rank_correlation_june_vs_sept.toFixed(2)+' across '+V.v5_segments_compared+' segments'],
+    ['Split sample, 300 random halves','Top three segments beat the average on the other half '+fP(V.v4_top3_beat_average_share,0)+' of the time'],
+    ['Forward calendar, 15 June to 31 August','Estimate implies '+fP(V.v3_median_estimated_summer_occupancy,0)+' of nights; '+fP(V.v3_median_summer_unavailable,0)+' already booked or blocked. Plausibility only'],
+    ['First-year listings','Median '+num(V.v6_nights_9_12_months)+' nights at 9–12 months vs '+num(V.v6_nights_12_plus_months)+' for established ones']];
+  s.append(h('p',{cls:'eyebrow',text:'Backup'}),h('h2',{text:'How we checked the result.'}),
+    h('table',{},[h('thead',{},[h('tr',{},['Check','Result'].map(x=>h('th',{text:x})))]),h('tbody',{},RW.map(r=>h('tr',{},r.map(c=>h('td',{text:c})))))]));
+}});
+slide({id:'limits',backup:true,build(s){
+  s.append(h('p',{cls:'eyebrow',text:'Backup'}),h('h2',{text:'Limits, sources and use of AI.'}),
+    h('div',{cls:'row',style:'gap:46px'},[
+      h('div',{cls:'col grow'},[h('h3',{text:'Limits'}),h('ul',{style:'font-size:24px'},[
+        'One day’s scrape: quotes, listings and licences as of 15 June 2026',
+        'Licence status comes from free text: an estimate, not a compliance finding',
+        'Occupancy and revenue are Inside Airbnb estimates from review counts',
+        'Purchase prices are area benchmarks, not building prices',
+        'Furnished rent and off-season occupancy are our assumptions',
+        'The tax and tenancy reading is ours and needs counsel'].map(t=>h('li',{text:t})))]),
+      h('div',{cls:'col grow'},[h('h3',{text:'Sources'}),h('ul',{style:'font-size:24px'},[
+        'Inside Airbnb, Get the Data (Vancouver), 15 June 2026, CC BY 4.0',
+        M.benchmark_source,
+        'City of Vancouver: Empty Homes Tax; short-term rental licence',
+        'Province of BC: Speculation and Vacancy Tax rates',
+        'CMHC Rental Market Report; liv.rent asking rents',
+        'Airbnb: service fee change'].map(t=>h('li',{text:t})))])
+    ]),
+    h('p',{cls:'note',style:'font-size:25px',text:'Use of AI: Claude (Anthropic) wrote the pipeline, this page and the slide text under the team’s direction. We checked it by reproducing Inside Airbnb’s formulas, re-running on the September snapshot, and a test that compares every published number with the script output. Every member of the team can defend each decision in the log.'}));
+}});
+
+/* ---------- build + navigate ---------- */
+const nMain=SLIDES.filter(s=>!s.backup).length;
+SLIDES.forEach((def,i)=>{
+  const s=document.createElement('section');
+  s.className='slide'+(def.dark?' dark':'');
+  s.id='s-'+def.id;
+  def.build(s);
+  if(s.enter)def.enter=s.enter; if(s.leave)def.leave=s.leave;
+  if(def.id!=='cover'){
+    s.appendChild(foot(i,nMain));
+    const m=h('div',{style:'position:absolute;right:112px;top:84px;opacity:'+(def.dark?'0.9':'0.75')});
+    m.appendChild(mark(52,def.dark)); s.appendChild(m);
+  }
+  def.node=s; stage.appendChild(s);
+});
+let cur=0;
+const dots=document.getElementById('dots'), sid=document.getElementById('sid');
+SLIDES.forEach((def,i)=>{
+  const d=h('span',{cls:def.backup?'bk':'',attr:{title:def.id}});
+  d.addEventListener('click',()=>go(i)); dots.appendChild(d);
+});
+function go(i){
+  i=Math.max(0,Math.min(SLIDES.length-1,i));
+  if(i===cur&&SLIDES[cur].node.classList.contains('on'))return;
+  const back=i<cur, old=SLIDES[cur].node, nw=SLIDES[i].node;
+  if(SLIDES[cur].leave)SLIDES[cur].leave();
+  old.classList.remove('on'); old.classList.toggle('prev',!back);
+  nw.classList.toggle('prev',back);
+  void nw.offsetWidth;
+  cur=i;
+  nw.classList.add('on');
+  if(SLIDES[cur].enter)SLIDES[cur].enter();
+  if(t0===null&&cur>0)t0=Date.now();
+  [...dots.children].forEach((d,j)=>d.classList.toggle('on',j===cur));
+  sid.textContent=(cur<nMain?(cur+1)+' / '+nMain:'backup');
+  tip.hidden=true;
+  location.hash=SLIDES[cur].id;
+}
+const clock=document.getElementById('clock');
+let t0=null;
+setInterval(()=>{
+  if(t0===null)return;
+  const sec=Math.floor((Date.now()-t0)/1000);
+  clock.textContent=Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
+  clock.classList.toggle('warn',sec>=390&&sec<420);
+  clock.classList.toggle('over',sec>=420);
+},500);
+clock.addEventListener('click',()=>{t0=null;clock.textContent='0:00';clock.className='';});
+
+document.getElementById('prev').addEventListener('click',()=>go(cur-1));
+document.getElementById('next').addEventListener('click',()=>go(cur+1));
+document.getElementById('full').addEventListener('click',()=>{
+  if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+});
+addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(cur+1);}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1);}
+  else if(e.key==='Home')go(0);
+  else if(e.key==='End')go(nMain-1);
+  else if(e.key==='b'||e.key==='B')go(nMain);
+  else if(e.key==='f'||e.key==='F')document.getElementById('full').click();
+});
+function fit(){
+  const k=Math.min(innerWidth/1920,(innerHeight-54)/1080);
+  stage.style.transform='translate(-50%,-50%) scale('+k+')';
+  stage.style.top='calc(50% - 27px)';
+}
+addEventListener('resize',fit); fit();
+const start=SLIDES.findIndex(s=>s.id===location.hash.slice(1));
+go(start>=0?start:0);
+})();
+</script>
+</body>
+</html>
