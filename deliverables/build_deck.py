@@ -1,6 +1,6 @@
 """Builds the pitch deck (Slides artifact files) and the talk script from outputs/metrics.json and outputs/map/neighbourhoods.json.
 Every number on a slide or in the script is read from metrics.json, so the deck cannot drift from the pipeline.
-Writes deliverables/deck/project/deck.json, deliverables/deck/project/slides/<id>.html, docs/talk_script.md
+Writes deliverables/deck/project/deck.json, deliverables/deck/project/slides/<id>.html, docs/deck_notes.md
 Run: python3 -I deliverables/build_deck.py
 """
 import json, pathlib
@@ -73,7 +73,7 @@ def pin_txt(x, y, w, t, fs=28, weight=500, color=INK, extra="", build=None):
 
 def mark(w, ink=INK):
     hh = w * 100 / 132
-    return (f'<svg width="{w:.0f}" height="{hh:.0f}" viewBox="0 0 132 100" aria-label="Team Two Calendars mark">'
+    return (f'<svg width="{w:.0f}" height="{hh:.0f}" viewBox="0 0 132 100" aria-label="Team Pandas mark">'
             f'<rect x="62" y="20" width="58" height="66" rx="13" fill="#0B1F3A"/>'
             f'<rect x="62" y="20" width="58" height="15" rx="7" fill="#2C4C6E"/>'
             f'<path d="M105 62a12 12 0 1 1-12-12 9.5 9.5 0 0 0 12 12Z" fill="{AMBER}"/>'
@@ -195,12 +195,12 @@ sec("cover", "Cover", "0:00–0:15",
     eyebrow("SFU DSSS DataJam 2026 · DDD investment committee") +
     f'<h1 style="font-family:{HF};font-size:104px;font-weight:800;line-height:1.04;color:{INK}">Buy {R["units"]} condos downtown.<br>Run each on two calendars.</h1>' +
     f'<p style="font-size:38px;font-weight:600;color:{TEAL}">$10M CAD into Vancouver short-term rental property</p>' +
-    f'<p style="font-size:34px;font-weight:800;color:{INK}">Team Two Calendars</p><p style="font-size:28px;color:{SLATE}">Chitransh Motwani · Divya Kapoor · Pranay Ratan</p>' + wave +
+    f'<p style="font-size:34px;font-weight:800;color:{INK}">Team Pandas</p><p style="font-size:28px;color:{SLATE}">Chitransh Motwani · Divya Kapoor · Pranay Ratan</p>' + wave +
     f'<div style="position:absolute;left:1440px;top:128px;display:flex;align-items:center;gap:16px">{mark(96)}'
-    f'<div style="display:flex;flex-direction:column"><p style="font-size:34px;font-weight:800;color:{INK};line-height:1.05">TWO</p>'
-    f'<p style="font-size:34px;font-weight:800;color:{TEAL};line-height:1.05">CALENDARS</p></div></div>' +
+    f'<div style="display:flex;flex-direction:column"><p style="font-size:34px;font-weight:800;color:{INK};line-height:1.05">TEAM</p>'
+    f'<p style="font-size:34px;font-weight:800;color:{TEAL};line-height:1.05">PANDAS</p></div></div>' +
     f'<p style="position:absolute;left:128px;bottom:48px;width:1450px;font-size:24px;color:#FFFFFF">{CREDIT}</p>',
-    f"Good morning. We're Team Two Calendars: Chitransh, Divya and Pranay. DDD asked where to put ten million dollars of short-term rental money. Our answer is {R['units']} small condos downtown, each run on two calendars. We'll show you the answer, the number, and why you can believe it.",
+    f"Good morning. We're Team Pandas: Chitransh, Divya and Pranay. DDD asked where to put ten million dollars of short-term rental money. Our answer is {R['units']} small condos downtown, each run on two calendars. We'll show you the answer, the number, and why you can believe it.",
     footer=False, gap=36)
 
 sec("problem", "The problem", "0:15–0:40",
@@ -458,7 +458,7 @@ for _s in slides:
 
 # ============================================================== write
 TOTAL = len(slides)
-md = ["# Talk script: DDD Vancouver pitch (about 8 minutes)\n", "Click once per map pin on slides 4, 7 and 8. About 140 words a minute; trim the Q&A-style detail if you have 7. Backup slides 13–19 are for Q&A.\n"]
+md = ["# Speaker notes for the static deck (the pitch script is docs/talk_script.md)\n", "Click once per map pin on slides 4, 7 and 8. About 140 words a minute; trim the Q&A-style detail if you have 7. Backup slides 13–19 are for Q&A.\n"]
 for i, s in enumerate(slides, 1):
     foot = ""
     if s["footer"]:
@@ -470,7 +470,7 @@ for i, s in enumerate(slides, 1):
             f'{s["inner"]}{foot}<aside>{s["when"]}. {s["notes"]}</aside></section>')
     (OUT / "slides" / f'{s["id"]}.html').write_text(html, encoding="utf-8")
     md.append(f'## {i}. {s["title"]} ({s["when"]})\n\n{s["notes"]}\n')
-(ROOT / "docs").mkdir(exist_ok=True); (ROOT / "docs/talk_script.md").write_text("\n".join(md), encoding="utf-8")
+(ROOT / "docs").mkdir(exist_ok=True); (ROOT / "docs/deck_notes.md").write_text("\n".join(md), encoding="utf-8")
 order = [s["id"] for s in slides]
 idx = {"v": 4, "createdOnFiles": {"v": 1, "at": "2026-11-12T13:30:00Z"}, "lists": "css",
        "title": "DDD Vancouver: $10M STR Investment Pitch (DataJam 2026)", "order": order, "cover": "cover",

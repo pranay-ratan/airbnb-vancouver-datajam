@@ -7,4 +7,5 @@ for f in 01_profile_clean 02_price_basis 03_seasonality 04_unit_economics 05_por
 python3 -I deliverables/build_dashboard.py
 python3 -I deliverables/build_deck.py
 python3 -I deliverables/build_pitch.py
+python3 -I deliverables/build_script.py
 python3 -I tests/check_numbers.py

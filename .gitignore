@@ -4,3 +4,6 @@ data/processed/
 _old/
 __pycache__/
 *.pyc
+
+deliverables/room_tour/node_modules/
+deliverables/room_tour/frames/

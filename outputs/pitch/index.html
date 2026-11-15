@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Two Calendars — DDD Vancouver pitch</title>
+<title>Team Pandas — DDD Vancouver pitch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -78,6 +78,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .brow .fill.grey{background:var(--grey)} .brow .fill.bad{background:var(--coral)} .brow .fill.gold{background:var(--gold)}
 .brow .val{width:170px;font-weight:800;font-variant-numeric:tabular-nums;flex:none}
 .brow.hl .lab{font-weight:800}
+.bars.tight{gap:14px}.tight .brow{font-size:22px}.tight .brow .lab{width:640px}.tight .brow .track{height:38px}.tight .brow .val{width:120px}
 .cols{display:flex;align-items:flex-end;gap:8px;height:300px}
 .colw{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;flex:1;height:100%;cursor:default}
 .colw .bar{width:100%;max-width:84px;background:var(--grey);border-radius:8px 8px 0 0;transition:height .5s cubic-bezier(.2,.8,.2,1),background .2s}
@@ -272,26 +273,24 @@ function describe(o){
 /* ---------- original artwork (all drawn here; no third-party logos) ---------- */
 function fromHTML(str){const d=document.createElement('div');d.innerHTML=str.trim();return d.firstElementChild;}
 function mark(w,light){
-  const ink=light?'#FFFFFF':'#0E1B33', navy=light?'#13324F':'#0B1F3A';
-  return fromHTML('<svg viewBox="0 0 132 100" width="'+w+'" height="'+(w*100/132)+'" aria-label="Team Two Calendars mark">'+
-    '<rect x="62" y="20" width="58" height="66" rx="13" fill="'+navy+'"/>'+
-    '<path d="M62 33h58v40a13 13 0 0 1-13 13H75a13 13 0 0 1-13-13Z" fill="'+navy+'"/>'+
-    '<rect x="62" y="20" width="58" height="15" rx="7.5" fill="#2C4C6E"/>'+
-    '<path d="M105 62a12 12 0 1 1-12-12 9.5 9.5 0 0 0 12 12Z" fill="#F5B700"/>'+
-    '<rect x="12" y="14" width="58" height="66" rx="13" fill="#087A5D"/>'+
-    '<rect x="12" y="14" width="58" height="15" rx="7.5" fill="#0FA87C"/>'+
-    '<circle cx="41" cy="54" r="10" fill="#F5B700"/>'+
-    '<g stroke="#F5B700" stroke-width="3.4" stroke-linecap="round">'+
-    '<path d="M41 36v-5M41 77v-5M23 54h-5M64 54h-5M28.3 41.3l-3.5-3.5M57.2 70.2l-3.5-3.5M28.3 66.7l-3.5 3.5M57.2 37.8l-3.5 3.5"/></g>'+
-    '<rect x="24" y="6" width="7" height="15" rx="3.5" fill="'+ink+'"/>'+
-    '<rect x="51" y="6" width="7" height="15" rx="3.5" fill="'+ink+'"/></svg>');
+  const ink='#0E1B33', ring=light?'#FFFFFF':'none';
+  return fromHTML('<svg viewBox="0 0 100 100" width="'+w+'" height="'+w+'" aria-label="Team Pandas mark">'+
+    '<circle cx="22" cy="24" r="15" fill="'+ink+'" stroke="'+ring+'" stroke-width="3"/>'+
+    '<circle cx="78" cy="24" r="15" fill="'+ink+'" stroke="'+ring+'" stroke-width="3"/>'+
+    '<circle cx="50" cy="56" r="38" fill="#FFFFFF" stroke="'+ink+'" stroke-width="4"/>'+
+    '<ellipse cx="34" cy="52" rx="10" ry="13" transform="rotate(22 34 52)" fill="'+ink+'"/>'+
+    '<ellipse cx="66" cy="52" rx="10" ry="13" transform="rotate(-22 66 52)" fill="'+ink+'"/>'+
+    '<circle cx="36" cy="50" r="4" fill="#FFFFFF"/><circle cx="64" cy="50" r="4" fill="#FFFFFF"/>'+
+    '<ellipse cx="50" cy="68" rx="6" ry="4.2" fill="'+ink+'"/>'+
+    '<path d="M50 72v5M50 77c-3 4-8 4-10 1M50 77c3 4 8 4 10 1" fill="none" stroke="'+ink+'" stroke-width="2.6" stroke-linecap="round"/>'+
+    '<path d="M78 70c9-3 15 2 16 10-8 2-15-1-16-10Z" fill="#12B886" stroke="#087A5D" stroke-width="2"/></svg>');
 }
 function wordmark(size,light){
   const box=h('div',{style:'display:flex;align-items:center;gap:14px'});
   box.appendChild(mark(size));
   box.appendChild(h('div',{style:'display:flex;flex-direction:column;line-height:1.05'},[
-    h('span',{style:'font-size:'+(size*0.33)+'px;font-weight:800;letter-spacing:-0.5px;color:'+(light?'#fff':'var(--ink)'),text:'TWO'}),
-    h('span',{style:'font-size:'+(size*0.33)+'px;font-weight:800;letter-spacing:-0.5px;color:var(--emerald)',text:'CALENDARS'})]));
+    h('span',{style:'font-size:'+(size*0.26)+'px;font-weight:700;letter-spacing:3px;color:'+(light?'#fff':'var(--slate)'),text:'TEAM'}),
+    h('span',{style:'font-size:'+(size*0.42)+'px;font-weight:800;letter-spacing:-0.5px;color:var(--emerald)',text:'PANDAS'})]));
   return box;
 }
 function skyline(){
@@ -313,6 +312,11 @@ function skyline(){
   return fromHTML('<svg viewBox="0 0 1920 300" width="1920" height="300" aria-label="Illustration of a city skyline at dusk" style="position:absolute;left:0;bottom:96px">'+mtn+b+win+'</svg>');
 }
 const ICON={
+  db:'M8 12c0-5 32-5 32 0v24c0 5-32 5-32 0ZM8 12c0 5 32 5 32 0M8 24c0 5 32 5 32 0',
+  filter:'M6 8h36L28 26v14l-8-4V26Z',
+  calc:'M12 6h24a3 3 0 0 1 3 3v30a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3Zm4 7h16v7H16ZM17 28h0M24 28h0M31 28h0M17 35h0M24 35h0M31 35h0',
+  dice:'M10 10h28v28H10ZM18 18h0M30 30h0M24 24h0M30 18h0M18 30h0',
+  check:'M24 6a18 18 0 1 0 0 36 18 18 0 0 0 0-36Zm-8 18 6 6 11-12',
   pin:'M24 4a14 14 0 0 0-14 14c0 10 14 26 14 26s14-16 14-26A14 14 0 0 0 24 4Zm0 19a5.5 5.5 0 1 1 5.5-5.5A5.5 5.5 0 0 1 24 23Z',
   stack:'M6 14h36v7H6Zm0 12h36v7H6Zm0 12h36v7H6Z',
   cal:'M10 8h28a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V12a4 4 0 0 1 4-4Zm-4 12h36M16 4v8M32 4v8',
@@ -398,7 +402,7 @@ slide({id:'cover',backup:false,build(s){
     h('p','eyebrow',[document.createTextNode('SFU DSSS DataJam 2026 · DDD investment committee')]),
     h('h1',{html:'Buy '+R.units+' condos downtown.<br>Run each on two calendars.'}),
     h('p',{cls:'sub',style:'color:var(--emerald);font-weight:700',text:'$10M CAD into Vancouver short-term rental property'}),
-    h('p',{style:'font-size:34px;font-weight:800',text:'Team Two Calendars'}),
+    h('p',{style:'font-size:34px;font-weight:800',text:'Team Pandas'}),
     h('p',{cls:'note',style:'font-size:26px',text:'Chitransh Motwani · Divya Kapoor · Pranay Ratan'}),
     h('div',{cls:'foot',style:'color:#fff'},[h('span',{text:M.credit})])
   );
@@ -406,18 +410,18 @@ slide({id:'cover',backup:false,build(s){
 
 /* ===================== 2. the problem ===================== */
 slide({id:'problem',build(s){
-  const Q=[['pin','Where',num(M.profile.rows)+' listings. They do not earn alike.'],
+  const Q=[['pin','Where',num(M.profile.rows)+' listings in the city. They do not earn alike.'],
            ['stack','How many, what kind','A few houses, or many condos.'],
            ['cal','How to run them','Nightly, a lease, or both.']];
   s.append(
     h('p',{cls:'eyebrow',text:'The problem'}),
     h('h2',{text:'DDD has $10M and three open questions.'}),
-    h('p',{cls:'sub',text:'Income in 2027, from one public snapshot of the market.'}),
+    h('p',{cls:'sub',text:'A fund has $10M to buy homes and rent them out. We decide what to buy.'}),
     h('div',{cls:'row',style:'gap:24px;margin-top:8px'},Q.map(([ic,t,d])=>
       h('div',{cls:'card grow'},[icon(ic,'#087A5D',52),h('h3',{text:t}),h('p',{cls:'note',style:'font-size:25px',text:d})]))),
     h('div',{cls:'row',style:'gap:16px;flex-wrap:wrap'},[
-      h('p',{cls:'pill',text:'Principal residence only, licence required'}),
-      h('p',{cls:'pill bad',text:'Empty six months: '+fP(A.eht,0)+' + '+fP(A.svt,0)+' of value in tax'})]),
+      h('p',{cls:'pill',text:'You may only rent out the home you live in. Licence required.'}),
+      h('p',{cls:'pill bad',text:'Leave it empty six months: '+fP(A.eht+A.svt,0)+' of the home\u2019s value in tax, every year'})]),
     h('p',{cls:'note',style:'font-size:27px;color:var(--emerald);font-weight:700',text:'We answer all three.'})
   );
 }});
@@ -433,23 +437,23 @@ slide({id:'recommendation',build(s){
   function setScrub(p){
     const v=p<=50 ? R.noi_p10+(R.noi_p50-R.noi_p10)*(p/50) : R.noi_p50+(R.noi_p90-R.noi_p50)*((p-50)/50);
     marker.style.left='calc('+p+'% - 4px)';
-    scrubLabel.textContent='At the '+Math.round(p<=50?10+p*0.8:50+(p-50)*0.8)+'th percentile of 5,000 simulated years: '+fK(v)+' net operating income.';
+    scrubLabel.textContent='We ran 2027 five thousand times. In '+Math.round(p<=50?10+p*0.8:50+(p-50)*0.8)+' runs out of 100, we kept less than '+fK(v)+'.';
   }
   s.append(
     h('p',{cls:'eyebrow',text:'The recommendation'}),
     h('h2',{text:'Buy '+R.units+' one-bedroom condos downtown.'}),
     h('div','row',[
-      h('div',{cls:'card grow'},[noi,h('p',{cls:'note',text:'expected 2027 net operating income'})]),
-      h('div',{cls:'card grow'},[yld,h('p',{cls:'note',text:'return on all-in cost'})]),
+      h('div',{cls:'card grow'},[noi,h('p',{cls:'note',text:'rent left over in 2027, after every cost'})]),
+      h('div',{cls:'card grow'},[yld,h('p',{cls:'note',text:'a year, on the money we spend'})]),
       h('div',{cls:'card grow'},[dep,h('p',{cls:'note',text:Object.keys(R.allocation).map(k=>R.allocation[k]+' '+hoodLabel(k)).join(' · ')})])
     ]),
     h('div',{cls:'card',style:'gap:16px'},[
-      h('p',{style:'font-size:26px;font-weight:700',text:'Drag to walk the distribution'}),
+      h('p',{style:'font-size:26px;font-weight:700',text:'Drag it: how good or bad a year could be'}),
       track,
       h('input',{attr:{type:'range',min:0,max:100,value:50,'aria-label':'Percentile of simulated years'},on:{input:e=>setScrub(+e.target.value)}}),
       scrubLabel
     ]),
-    h('div',{cls:'row',style:'gap:16px'},[h('p',{cls:'pill good',text:'Nightly stays, '+R.nightly_months}),h('p',{cls:'pill',text:'Furnished stays of 30+ nights, '+R.furnished_months})])
+    h('div',{cls:'row',style:'gap:16px'},[h('p',{cls:'pill good',text:'Nightly stays, '+R.nightly_months}),h('p',{cls:'pill',text:'Long stays of a month or more, '+R.furnished_months})])
   );
   setScrub(50);
   s.enter=()=>{counter(noi,R.noi_p50,fK);counter(yld,R.yield_p50,v=>fP(v));counter(dep,R.deployed,fM);};
@@ -457,11 +461,16 @@ slide({id:'recommendation',build(s){
 
 /* ===================== 3. funnel ===================== */
 slide({id:'funnel',build(s){
-  const F=M.funnel, box=h('div','bars'), why=h('p',{cls:'note',style:'font-size:27px;min-height:70px'});
-  const REASON={0:'Every listing in the 15 June 2026 file.',1:'Private rooms and shared rooms are not an investable asset here.',
-    2:'Without a licence number in the listing text we cannot treat it as a legal short-term rental.',
-    3:'A listing with no review in the last year is not trading.',
-    4:'Inside Airbnb estimates nights from review counts, so a listing opened this spring has no full year to estimate from.'};
+  const F=M.funnel, box=h('div','bars tight'), why=h('p',{cls:'note',style:'font-size:24px;min-height:34px'});
+  const strip=h('div',{style:'display:flex;align-items:center;gap:8px'},
+      [['db','One public file'],['filter','Clean and filter'],['tag','Fix June prices'],['calc','Cost out one home'],['dice','Run 2027 5,000 times'],['check','Check on September']]
+      .flatMap(([ic,t],i,arr)=>[
+        h('div',{style:'display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--emerald);padding:8px 14px'},[icon(ic,'#087A5D',30),h('span',{style:'font-size:21px;font-weight:700;white-space:nowrap',text:t})]),
+        i<arr.length-1?h('span',{style:'font-size:24px;color:var(--slate);font-weight:800',text:'\u2192'}):null]));
+  const REASON={0:'Every listing in the 15 June 2026 file.',1:'A spare room is not something a fund can buy.',
+    2:'No licence number in the ad, so we cannot count it as legal.',
+    3:'No review in a year means nobody is staying there.',
+    4:'The data guesses nights booked from the number of reviews. A place listed in March has no full year to guess from.'};
   function draw(sel){
     barList(box,F.map((f,i)=>({label:f.step,v:f.listings,text:num(f.listings),cls:i===F.length-1?'gold':(i===sel?'':'grey'),hl:i===sel,
       tip:[f.step,[['Listings',num(f.listings)],['Share of start',fP(f.listings/F[0].listings,0)]]]})));
@@ -470,6 +479,7 @@ slide({id:'funnel',build(s){
   draw(F.length-1); why.textContent='Click a step.';
   s.append(h('p',{cls:'eyebrow',text:'The data · click a step'}),
     h('h2',{text:'We kept '+num(M.profile.comps)+' of '+num(M.profile.rows)+' listings.'}),
+    strip,
     box, why);
 }});
 
@@ -486,25 +496,25 @@ slide({id:'houses',build(s){
   const PRE=[STRAT['Few large: west-side houses'],STRAT['Houses, east side'],STRAT['Many small: apartments city-wide'],STRAT['Core 1-2 bedroom apartments'],STRAT['Core one-bedroom apartments']];
   function render(res){
     barList(box,POOLS.map((p,i)=>({label:p.label,v:res[i].p50,text:fK(res[i].p50),cls:p.hl?'':(i<2?'bad':'grey'),hl:p.hl,
-      tip:[p.label,[['Expected NOI',fK(res[i].p50)],['1 year in 10 below',fK(res[i].p10)],['Chance of under 1% yield',fP(res[i].below,0)],['Units bought',num(res[i].units)]]]})));
+      tip:[p.label,[['Rent left over',fK(res[i].p50)],['A bad year',fK(res[i].p10)],['Chance of earning under 1%',fP(res[i].below,0)],['Homes bought',num(res[i].units)]]]})));
   }
   render(PRE.map(r=>({p50:r.noi_p50,p10:r.noi_p10,below:r.prob_yield_below_1pct,units:r.units})));
-  const run=h('button',{cls:'btn',text:'Re-run the simulation',on:{click(){
-    status.textContent='Drawing portfolios…';
+  const run=h('button',{cls:'btn',text:'Run it again',on:{click(){
+    status.textContent='Buying portfolios…';
     setTimeout(()=>{
       const t0=performance.now();
       const res=POOLS.map(p=>describe(simulate(pool(p.f),BASE,p.mode,{seed:(Math.random()*1e9)|0,nsim:600,budget:M.budget,erosion:0,tax:false})));
       render(res);
-      status.textContent='600 fresh portfolios per strategy, drawn in '+Math.round(performance.now()-t0)+' ms. The ranking does not move.';
+      status.textContent='We just bought 600 new $10M portfolios for each row, in '+Math.round(performance.now()-t0)+' ms. The order never changes.';
     },30);
   }}});
   s.append(h('p',{cls:'eyebrow',text:'Few big or many small?'}),
     h('h2',{text:'Houses look big. They earn almost nothing.'}),
-    h('p',{cls:'sub',text:'Expected 2027 income, $10M portfolio'}),
+    h('p',{cls:'sub',text:'Rent left over in 2027, after every cost, spending the whole $10M'}),
     box,
     h('div',{cls:'row',style:'align-items:center;gap:18px'},[run,status]),
-    h('div','row',[h('p',{cls:'pill bad',text:'Houses '+fP(M.assets.house.net_yield)+' · '+fP(M.assets.house.share_losing_money,0)+' lose money'}),
-                   h('p',{cls:'pill good',text:'Condos '+fP(M.assets.condo.net_yield)})])
+    h('div','row',[h('p',{cls:'pill bad',text:'A house keeps '+fP(M.assets.house.net_yield)+' a year. '+fP(M.assets.house.share_losing_money,0)+' of them lose money'}),
+                   h('p',{cls:'pill good',text:'A condo keeps '+fP(M.assets.condo.net_yield)})])
   );
 }});
 
@@ -514,9 +524,9 @@ slide({id:'map',build(s){
   const svg=sv('svg',{id:'mapsvg',viewBox:'0 0 '+D.width+' '+D.height,role:'img','aria-label':'Map of Vancouver neighbourhoods'});
   const gH=sv('g',{},svg), gD=sv('g',{},svg);
   const RAMP={
-    yield:{title:'Net yield on cost, apartments',steps:[[0.005,'#D9E6F7'],[0.01,'#A8C4EA'],[0.015,'#6E9BDC'],[0.02,'#3E6FC4'],[9,'#17408B']],
+    yield:{title:'What an apartment keeps a year, per dollar spent',steps:[[0.005,'#D9E6F7'],[0.01,'#A8C4EA'],[0.015,'#6E9BDC'],[0.02,'#3E6FC4'],[9,'#17408B']],
       val:x=>(x.condo_comps||0)>=15?x.condo_yield:null,fmt:v=>fP(v),labels:['<0.5%','0.5–1%','1–1.5%','1.5–2%','2%+']},
-    supply:{title:'Share of entire homes at a 90-night minimum',steps:[[0.2,'#FDE4DE'],[0.35,'#F9B7A8'],[0.5,'#EE7B62'],[0.65,'#C9301A'],[9,'#7A1608']],
+    supply:{title:'Whole homes that only take stays of 90 nights or more',steps:[[0.2,'#FDE4DE'],[0.35,'#F9B7A8'],[0.5,'#EE7B62'],[0.65,'#C9301A'],[9,'#7A1608']],
       val:x=>(x.nightly+x.long90)>=20?x.long90/(x.nightly+x.long90):null,fmt:v=>fP(v,0),labels:['<20%','20–35%','35–50%','50–65%','65%+']},
     plan:{title:'Where the '+R.units+' units go',steps:null,val:x=>R.allocation[x.name]||null,fmt:v=>v+' units',labels:[]}
   };
@@ -533,7 +543,7 @@ slide({id:'map',build(s){
     p.addEventListener('focus',()=>select(i));
     bindTip(p,()=>{
       const r=RAMP[state.layer],v=r.val(x);
-      return [hoodLabel(x.name),[[r.title,v==null?'too few listings':r.fmt(v)],['Comparable listings',num(x.comps)],['Median nights',isFinite(x.median_nights)?num(x.median_nights):'—']]];
+      return [hoodLabel(x.name),[[r.title,v==null?'too few listings':r.fmt(v)],['Listings we can compare',num(x.comps)],['Typical nights booked a year',isFinite(x.median_nights)?num(x.median_nights):'—']]];
     });
     return p;
   });
@@ -557,7 +567,7 @@ slide({id:'map',build(s){
     animView(svg,boxOf(paths[i],34,D.width/D.height),820);
     zoomBtn.textContent='Zoom back out'; state.zoomed=true;
   }
-  function zoomOut(){animView(svg,FULL,760);zoomBtn.textContent='Zoom into the selection';state.zoomed=false;}
+  function zoomOut(){animView(svg,FULL,760);zoomBtn.textContent='Zoom in';state.zoomed=false;}
   function select(i){
     state.sel=i; const x=HOODS[i], r=RAMP[state.layer], v=r.val(x);
     if(state.zoomed)zoomHood(i);
@@ -565,13 +575,13 @@ slide({id:'map',build(s){
     panelTitle.textContent=hoodLabel(x.name);
     panelBig.textContent=v==null?'—':r.fmt(v);
     panelBig.style.color=state.layer==='supply'?'var(--coral)':'var(--emerald)';
-    panelNote.textContent=v==null?'Fewer than 15 comparable apartments here, so we do not price a purchase off it.':r.title+'.';
+    panelNote.textContent=v==null?'Fewer than 15 apartments to compare here, so we do not trust a number from it.':r.title+'.';
     rows.replaceChildren(
-      kv('Comparable listings',num(x.comps)),
-      kv('On the nightly market',num(x.nightly)),
-      kv('At a 90-night minimum',num(x.long90)),
-      kv('Median booked nights',isFinite(x.median_nights)?num(x.median_nights):'—'),
-      kv('Units we buy here',String(R.allocation[x.name]||0),!!R.allocation[x.name])
+      kv('Listings we can compare',num(x.comps)),
+      kv('Rented by the night',num(x.nightly)),
+      kv('Long stays only (90+ nights)',num(x.long90)),
+      kv('Typical nights booked a year',isFinite(x.median_nights)?num(x.median_nights):'—'),
+      kv('Homes we buy here',String(R.allocation[x.name]||0),!!R.allocation[x.name])
     );
   }
   function paint(){
@@ -580,13 +590,13 @@ slide({id:'map',build(s){
     drawLegend(); select(state.sel);
   }
   const switcher=seg([{label:'Yield',value:'yield'},{label:'90-night supply',value:'supply'},{label:'Our plan',value:'plan'}],'yield',v=>{state.layer=v;paint();});
-  const zoomBtn=h('button',{cls:'btn',text:'Zoom into the selection',on:{click(){state.zoomed?zoomOut():zoomHood(state.sel);}}});
-  const dotBtn=h('button',{cls:'btn ghost',text:'Show the listings',on:{click(e){
+  const zoomBtn=h('button',{cls:'btn',text:'Zoom in',on:{click(){state.zoomed?zoomOut():zoomHood(state.sel);}}});
+  const dotBtn=h('button',{cls:'btn ghost',text:'Show every listing',on:{click(e){
     state.dots=!state.dots; gD.setAttribute('opacity',state.dots?'1':'0');
-    e.target.textContent=state.dots?'Hide the listings':'Show the listings';
+    e.target.textContent=state.dots?'Hide them':'Show every listing';
   }}});
   s.append(h('p',{cls:'eyebrow',text:'Where · hover, click, zoom in'}),
-    h('h2',{text:'Downtown earns the most per dollar.'}),
+    h('h2',{text:'Downtown earns the most per dollar spent.'}),
     h('div','maprow',[
       h('div',{attr:{id:'mapwrap'}},[svg]),
       h('div','panel',[
@@ -608,16 +618,16 @@ slide({id:'price',build(s){
   WK.forEach(([l,v])=>{
     const bar=h('div','bar'); bar.style.height='0%'; bar.style.background=v>1.3?'var(--coral)':'var(--grey)';
     const w=h('div','colw',[h('span',{cls:'cv',text:'+'+((v-1)*100).toFixed(0)+'%'}),bar,h('span',{cls:'cx',text:l})]);
-    bindTip(w,()=>['Check-in week of '+l,[['June quote vs September',v.toFixed(3)+'×'],['Premium','+'+((v-1)*100).toFixed(0)+'%']]]);
+    bindTip(w,()=>['Check-in week of '+l,[['June price vs September',v.toFixed(2)+' times'],['Premium','+'+((v-1)*100).toFixed(0)+'%']]]);
     w._bar=bar; w._v=v; cols.appendChild(w);
   });
   s.append(h('p',{cls:'eyebrow',text:'Finding 1 · hover a bar'}),
     h('h2',{text:'June prices were World Cup prices.'}),
-    h('p',{cls:'sub',text:'June vs September quote, same '+num(PB.n_same_listing)+' listings, by check-in week'}),
+    h('p',{cls:'sub',text:'How much more the same '+num(PB.n_same_listing)+' places cost in June than in September, by week of the stay'}),
     h('div',{cls:'row',style:'align-items:flex-start;gap:50px;margin-top:10px'},[cols,
       h('div',{cls:'card grow'},[h('p',{cls:'big',style:'color:var(--coral)',text:'+'+((PB.june_over_sept_all-1)*100).toFixed(0)+'%'}),
-        h('p','note',[document.createTextNode('for the same listings in June than in September, and up to +'+((PB.peak_week_ratio-1)*100).toFixed(0)+'% in match weeks')]),
-        h('p',{cls:'note',style:'color:var(--emerald);font-weight:700;font-size:26px',text:'Decision 1: June quotes ÷ '+PB.june_over_sept.condo.toFixed(2)})])]));
+        h('p','note',[document.createTextNode('dearer in June than in September, for the very same homes. Up to +'+((PB.peak_week_ratio-1)*100).toFixed(0)+'% in World Cup match weeks.')]),
+        h('p',{cls:'note',style:'color:var(--emerald);font-weight:700;font-size:26px',text:'So we cut every June price by '+((1-1/PB.june_over_sept.condo)*100).toFixed(0)+'% before using it.'})])]));
   s.enter=()=>{[...cols.children].forEach((w,i)=>setTimeout(()=>{w._bar.style.height=Math.min(100,(w._v-1)*100*2.3)+'%';},80+i*90));};
   s.leave=()=>{[...cols.children].forEach(w=>{w._bar.style.height='0%';});};
 }});
@@ -643,13 +653,13 @@ slide({id:'unit',build(s){
   sv('circle',{cx:pick[0],cy:pick[1],r:5.5,fill:'#C9301A',stroke:'#FFFFFF','stroke-width':2},svg);
   const bars=h('div','bars');
   barList(bars,[
-    {label:'Nightly stays, '+R.nightly_months,v:m.guest,text:f$(m.guest),tip:['Nightly income',[['Rate after rescaling',f$(e.adr*S.peak_adr_uplift)],['Nights in season',num(e.nights*S.peak_share)]]]},
+    {label:'Nightly stays, '+R.nightly_months,v:m.guest,text:f$(m.guest),tip:['Renting by the night',[['Price a night',f$(e.adr*S.peak_adr_uplift)],['Nights booked in summer',num(e.nights*S.peak_share)]]]},
     {label:'Furnished stays, '+R.furnished_months,v:m.mid,text:f$(m.mid),cls:'gold'},
     {label:'Airbnb fee ('+fP(A.airbnb_fee)+')',v:-m.fee,text:f$(-m.fee),cls:'bad'},
     {label:'Management',v:-(m.mg+m.mfee),text:f$(-(m.mg+m.mfee)),cls:'bad'},
     {label:'Cleaning, supplies, turnovers',v:-(m.cs+m.turn),text:f$(-(m.cs+m.turn)),cls:'bad'},
-    {label:'Strata, property tax, upkeep, insurance',v:-e.fixed,text:f$(-e.fixed),cls:'bad'},
-    {label:'Net operating income',v:m.noi,text:f$(m.noi),hl:true}
+    {label:'Strata fees, property tax, repairs, insurance',v:-e.fixed,text:f$(-e.fixed),cls:'bad'},
+    {label:'What is left over',v:m.noi,text:f$(m.noi),hl:true}
   ]);
   const zb=h('button',{cls:'btn',text:'Zoom to the unit',on:{click(){
     const atCity=(svg.getAttribute('viewBox')===FULL.join(' ')||+svg.getAttribute('viewBox').split(' ')[2]>400);
@@ -663,11 +673,11 @@ slide({id:'unit',build(s){
       h('div',{cls:'col grow',style:'gap:16px'},[
         h('div',{cls:'card',style:'gap:8px'},[
           h('p',{style:'font-size:30px;font-weight:800',text:'A comparable one-bedroom apartment in '+hoodLabel(hood.name)}),
-          h('p',{cls:'note',style:'font-size:24px',text:num(pick[NI])+' nights · '+f$(e.adr)+' a night · '+f$(e.allin)+' all-in'}),
+          h('p',{cls:'note',style:'font-size:24px',text:'Booked '+num(pick[NI])+' nights a year · '+f$(e.adr)+' a night · '+f$(e.allin)+' to buy, furnish and open'}),
           h('p',{cls:'note',style:'font-size:22px',text:'One listing from the public file. No host, link or licence number.'})]),
         bars,
         h('div',{cls:'row',style:'gap:16px'},[
-          h('p',{cls:'pill good',text:fP(m.noi/e.allin)+' yield on all-in cost'}),
+          h('p',{cls:'pill good',text:fP(m.noi/e.allin)+' a year on the money spent'}),
           h('p',{cls:'pill',text:'× '+R.units+' = '+fK(m.noi*R.units)})])
       ])
     ]));
@@ -705,13 +715,13 @@ slide({id:'calendar',build(s){
     out.textContent=fK(r.total);
     out.style.color=r.misses?'var(--coral)':'var(--emerald)';
     warn.textContent=r.misses
-      ? r.midMonths+' furnished months: under the six-month test, so both vacancy taxes apply.'
-      : r.midMonths+' furnished months clear the six-month test. '+fP(r.share,0)+' of a year’s stays.';
+      ? 'Only '+r.midMonths+' months of long stays. That is under the six-month rule, so the empty-home taxes hit.'
+      : r.midMonths+' months of long stays clears the six-month rule. These months hold '+fP(r.share,0)+' of the year\u2019s bookings.';
     barList(bars,[
-      {label:'Nightly all year',v:NIGHT.noi_p50,text:fK(NIGHT.noi_p50),cls:'grey'},
-      {label:'Nightly, with vacancy taxes',v:TAXED.noi_p50,text:fK(TAXED.noi_p50),cls:'bad'},
-      {label:'12-month lease',v:LEASEM.noi_p50,text:fK(LEASEM.noi_p50),cls:'grey'},
-      {label:'Your calendar',v:r.total,text:fK(r.total),cls:r.misses?'bad':'',hl:true}
+      {label:'By the night, all year',v:NIGHT.noi_p50,text:fK(NIGHT.noi_p50),cls:'grey'},
+      {label:'By the night, once the taxes hit',v:TAXED.noi_p50,text:fK(TAXED.noi_p50),cls:'bad'},
+      {label:'A normal year-long lease',v:LEASEM.noi_p50,text:fK(LEASEM.noi_p50),cls:'grey'},
+      {label:'The months you picked',v:r.total,text:fK(r.total),cls:r.misses?'bad':'',hl:true}
     ]);
     [...cols.children].forEach((w,i)=>w.classList.toggle('on',chosen.has(i+1)));
   }
@@ -720,14 +730,14 @@ slide({id:'calendar',build(s){
     bar.style.height=(S.month_share[String(m)]*100*6.3)+'%';
     const w=h('div','colw click',[h('span',{cls:'cv',text:fP(S.month_share[String(m)],0)}),bar,h('span',{cls:'cx',text:mn})]);
     w.addEventListener('click',()=>{chosen.has(m)?chosen.delete(m):chosen.add(m);refresh();});
-    bindTip(w,()=>[mn,[['Share of a year’s stays',fP(S.month_share[String(m)],1)],['In your nightly season',chosen.has(m)?'yes':'no']]]);
+    bindTip(w,()=>[mn,[['Share of the year’s bookings',fP(S.month_share[String(m)],1)],['Rented by the night',chosen.has(m)?'yes':'no']]]);
     cols.appendChild(w);
   });
   s.append(h('p',{cls:'eyebrow',text:'How to run it · click the months'}),
-    h('h2',{text:'Renting by the night all year invites a tax bill.'}),
+    h('h2',{text:'Rent by the night all year and the tax bill eats it.'}),
     h('div',{cls:'row',style:'gap:46px;align-items:flex-start'},[
-      h('div',{cls:'col grow'},[h('p',{cls:'sub',style:'font-size:25px',text:'Share of a year’s stays. Green months are let nightly.'}),cols,bars]),
-      h('div',{cls:'card',style:'width:520px;flex:none'},[h('p',{cls:'note',style:'font-size:25px',text:'Expected 2027 net operating income, '+R.units+' units'}),out,warn])
+      h('div',{cls:'col grow'},[h('p',{cls:'sub',style:'font-size:25px',text:'When people actually book. Green months we rent by the night.'}),cols,bars]),
+      h('div',{cls:'card',style:'width:520px;flex:none'},[h('p',{cls:'note',style:'font-size:25px',text:'Rent left over in 2027, all '+R.units+' homes (straight-line estimate)'}),out,warn])
     ]));
   refresh();
 }});
@@ -741,19 +751,19 @@ slide({id:'risk',build(s){
     const hyb=describe(simulate(rows,BASE,'hybrid',{seed:7,nsim:400,budget:M.budget,erosion:er,tax:false}));
     const ngt=describe(simulate(rows,BASE,'nightly',{seed:7,nsim:400,budget:M.budget,erosion:er,tax:false}));
     barList(bars,[
-      {label:'Two calendars (our plan)',v:hyb.p50,text:fK(hyb.p50),hl:true,tip:['Two calendars',[['Expected NOI',fK(hyb.p50)],['1 in 10 below',fK(hyb.p10)],['Units short of the 6-month test',hyb.missed.toFixed(1)]]]},
-      {label:'Nightly only',v:ngt.p50,text:fK(ngt.p50),cls:'bad',tip:['Nightly only',[['Expected NOI',fK(ngt.p50)],['1 in 10 below',fK(ngt.p10)]]]},
-      {label:'12-month lease',v:LEASEM.noi_p50,text:fK(LEASEM.noi_p50),cls:'grey'}
+      {label:'Our plan: two calendars',v:hyb.p50,text:fK(hyb.p50),hl:true,tip:['Our plan',[['Rent left over',fK(hyb.p50)],['A bad year',fK(hyb.p10)],['Homes that miss the 6-month rule',hyb.missed.toFixed(1)]]]},
+      {label:'By the night only',v:ngt.p50,text:fK(ngt.p50),cls:'bad',tip:['By the night only',[['Rent left over',fK(ngt.p50)],['A bad year',fK(ngt.p10)]]]},
+      {label:'A normal year-long lease',v:LEASEM.noi_p50,text:fK(LEASEM.noi_p50),cls:'grey'}
     ]);
     caption.textContent=er===0
-      ? 'Live re-run of 400 portfolios. Drag the slider.'
-      : 'Nightly revenue −'+fP(er,0)+': two calendars hold '+fK(hyb.p50)+', nightly-only '+fK(ngt.p50)+'.';
+      ? 'This just bought 400 portfolios, live. Now drag the slider.'
+      : 'Earning '+fP(er,0)+' less by the night: our plan still keeps '+fK(hyb.p50)+'. Renting by the night alone drops to '+fK(ngt.p50)+'.';
   }
   s.append(h('p',{cls:'eyebrow',text:'Biggest risk · drag the slider'}),
-    h('h2',{text:'A rule change could add supply. We priced it.'}),
-    h('p',{cls:'sub',text:'Kelowna opted out of the principal-residence rule on 1 June 2026. Vancouver could follow.'}),
+    h('h2',{text:'One rule change could flood the market. We priced it.'}),
+    h('p',{cls:'sub',text:'Kelowna dropped the live-in-it rule on 1 June 2026. If Vancouver follows, thousands of homes could start renting by the night.'}),
     h('div',{cls:'card',style:'gap:18px'},[
-      slider('Nightly revenue per listing falls by',0,40,1,0,v=>v+'%',v=>{clearTimeout(timer);timer=setTimeout(()=>run(v/100),110);}),
+      slider('If renting by the night earns less, per home',0,40,1,0,v=>v+'%',v=>{clearTimeout(timer);timer=setTimeout(()=>run(v/100),110);}),
       bars, caption
     ]));
   run(0);
@@ -762,12 +772,12 @@ slide({id:'risk',build(s){
 /* ===================== risks and mitigation ===================== */
 slide({id:'mitigation',build(s){
   const CARDS=[
-    ['shield','Vancouver opts out',fK(OPT[1].noi_p50),'at 20% less nightly revenue. Nightly-only: '+fK(NOPT20.noi_p50),
-     'Eight furnished months sit outside the nightly market.'],
-    ['tag','We pay too much',fP(SENS['Purchase price'].downside_yield),'at 20% above benchmark, from '+fP(SENS['Purchase price'].base_yield),
-     'An offer ceiling, and a year of real bookings per seller.'],
-    ['scale','Our tax reading is wrong','−'+fK(Math.abs(TAXED.noi_p50)),'a year if a unit misses the six-month test',
-     'Counsel signs off before the first offer.']];
+    ['shield','Vancouver drops the rule',fK(OPT[1].noi_p50),'is what we still keep if we earn 20% less by the night. By the night alone: '+fK(NOPT20.noi_p50),
+     'Eight months of long stays are not touched by that rule.'],
+    ['tag','We pay too much',fP(SENS['Purchase price'].downside_yield),'is all we keep if we overpay by 20%, instead of '+fP(SENS['Purchase price'].base_yield),
+     'Set a top price per building. Ask each seller for a year of real bookings.'],
+    ['scale','We read the tax rules wrong','−'+fK(Math.abs(TAXED.noi_p50)),'a year if the homes miss the six-month rule and both empty-home taxes hit',
+     'A tax lawyer signs this off before we buy anything.']];
   s.append(h('p',{cls:'eyebrow',text:'Risks and mitigation'}),
     h('h2',{text:'Three things could break it.'}),
     h('p',{cls:'sub',text:'Each has a number and a plan.'}),
@@ -777,17 +787,17 @@ slide({id:'mitigation',build(s){
         h('p',{style:'font-size:62px;font-weight:800;line-height:1',text:big}),
         h('p',{cls:'note',style:'font-size:24px',text:sub}),
         h('p',{style:'font-size:24px;line-height:1.3;color:var(--emerald);font-weight:700',text:mit})]))),
-    h('p',{cls:'note',text:'Also: strata bylaws, and capital value — this yield counts income only.'}));
+    h('p',{cls:'note',text:'Two more: building rules that ban short stays, and the price of the condo itself — we counted rent only.'}));
 }});
 
 /* ===================== 10. tested, didn't hold ===================== */
 slide({id:'tested',build(s){
   const DROP=[
-    ['Superhost premium',num(T.superhost.estimated_nights)+' vs '+num(T.not_superhost.estimated_nights)+' nights','That estimate is reviews × 6, and the forward calendar shows no gap: it measures reviews, not bookings. Left out.'],
-    ['One-night minimum','no clean pattern','Estimated nights favoured it, but the calendar did not agree, so we do not rely on it.'],
-    ['Five nightly months',T.five_month?'':'','A fifth month leaves '+(PMODE[Object.keys(PMODE).find(k=>k.indexOf('five-month')>=0)].units_missing_tenancy_test).toFixed(1)+' of '+R.units+' units short of the six-month tenancy test.'],
-    ['Two-bedrooms',fP(T.two_bedroom.hybrid_yield)+' vs '+fP(T.two_bedroom.one_bedroom_hybrid_yield),'More rent, but the extra purchase price and costs more than eat it.'],
-    ['House with suite and laneway',fP(T.house_suite_laneway.net_yield),'The best house structure we could build still lands under a core condo.']
+    ['Superhost premium',num(T.superhost.estimated_nights)+' vs '+num(T.not_superhost.estimated_nights)+' nights','Superhosts just have more reviews, and the data turns reviews into nights. Their real calendars look the same. Dropped.'],
+    ['One-night minimum','no clean pattern','It looked better until we checked the real calendars, which did not agree.'],
+    ['Five nightly months',T.five_month?'':'','A fifth month leaves '+(PMODE[Object.keys(PMODE).find(k=>k.indexOf('five-month')>=0)].units_missing_tenancy_test).toFixed(1)+' of '+R.units+' of the homes would miss the six-month rule and get taxed.'],
+    ['Two-bedrooms',fP(T.two_bedroom.hybrid_yield)+' vs '+fP(T.two_bedroom.one_bedroom_hybrid_yield),'More rent, but they cost so much more to buy that it is a worse deal.'],
+    ['House with suite and laneway',fP(T.house_suite_laneway.net_yield),'The best house setup we could build still earns less than a downtown condo.']
   ];
   const detail=h('p',{cls:'note',style:'font-size:27px;min-height:92px'});
   const list=h('div','col');
@@ -802,9 +812,9 @@ slide({id:'tested',build(s){
   });
   detail.textContent='Click any one to hear what we found.';
   const held=h('div','col');
-  [[fP(V.v5_core1_yield_sept)+' vs '+fP(V.v5_core1_yield_june),'core yield on the September snapshot against June'],
-   [fP(V.v2_occupancy_formula_match,1),'of listings: Inside Airbnb’s own occupancy formula reproduced'],
-   [fP(V.v4_top3_beat_average_share,0),'of 300 split samples: the top segments stayed on top']]
+  [[fP(V.v5_core1_yield_sept)+' vs '+fP(V.v5_core1_yield_june),'we re-ran everything on a different month of data and got nearly the same answer'],
+   [fP(V.v2_occupancy_formula_match,1),'of listings: we rebuilt their own booking maths and matched it'],
+   [fP(V.v4_top3_beat_average_share,0),'of 300 random half-splits: the same areas still came out on top']]
    .forEach(([a,b])=>held.appendChild(h('div','card',[h('p',{style:'font-size:48px;font-weight:800;color:var(--emerald)',text:a}),h('p',{cls:'note',text:b})])));
   s.append(h('p',{cls:'eyebrow',text:'Honest checks · click a card'}),
     h('h2',{text:'We tested these. They didn’t hold.'}),
@@ -814,24 +824,52 @@ slide({id:'tested',build(s){
     ]));
 }});
 
+/* ===================== the home, in 3D (video) ===================== */
+slide({id:'room',build(s){
+  const furnish=A.furnish_base.condo+A.furnish_per_bed*1;
+  const vid=h('video',{attr:{src:'room_tour.mp4',poster:'room_tour.jpg',muted:'',loop:'',playsinline:'',preload:'auto',
+    'aria-label':'3D tour of one furnished one-bedroom condo, switching from the summer nightly set-up to the winter long-stay set-up'},
+    style:'width:1180px;height:664px;display:block;background:#EFEBE1;cursor:pointer;border:1px solid var(--line)'});
+  vid.muted=true;
+  vid.addEventListener('click',()=>{vid.paused?vid.play():vid.pause();});
+  const STEPS=[
+    ['Licensed and registered','before the first guest arrives'],
+    ['May to August','listed by the night, self check-in, a cleaner between guests'],
+    ['September to April','listed for stays of 30 nights or more, one tenant at a time'],
+    ['Furnished once, '+f$(furnish),'the same furniture works for both']];
+  s.append(h('p',{cls:'eyebrow',text:'One home, up close · 3D tour'}),
+    h('h2',{text:'What DDD is buying, and how we list it.'}),
+    h('div',{cls:'row',style:'gap:36px;align-items:flex-start'},[
+      vid,
+      h('div',{cls:'col grow',style:'gap:18px'},[
+        h('h3',{text:'How we list it'}),
+        ...STEPS.map(([t,d],i)=>h('div',{style:'display:flex;gap:16px;align-items:flex-start'},[
+          h('span',{style:'width:46px;height:46px;flex:none;background:'+(i===1?'var(--emerald)':i===2?'var(--navy)':'var(--ink)')+';color:#fff;font-weight:800;font-size:24px;display:flex;align-items:center;justify-content:center',text:String(i+1)}),
+          h('div',{cls:'col',style:'gap:2px'},[h('p',{style:'font-size:26px;font-weight:800;line-height:1.2',text:t}),h('p',{cls:'note',style:'font-size:22px',text:d})])]))
+      ])
+    ]));
+  s.enter=()=>{try{vid.currentTime=0;vid.play();}catch(e){}};
+  s.leave=()=>{vid.pause();};
+}});
+
 /* ===================== 11. next steps ===================== */
 slide({id:'next',build(s){
-  const STEPS=[['1','Before buying',['Written tax advice on the six-month tenancy test','Screen each building: strata bylaws, licence, 12 months of real bookings']],
-    ['2','By 1 January 2027',['Furnish and register each unit','Line up furnished tenants for September to April']],
-    ['3','How we will know',['About '+num(R.unit_nights*S.peak_share)+' booked nights a unit in May to August','The 28 February opt-out deadline and the published vacancy rate']]];
+  const STEPS=[['1','Before buying',['Get written tax advice on the six-month rule','Check each building: its rules, its licence, a year of real bookings']],
+    ['2','By 1 January 2027',['Furnish each home and register it','Find long-stay tenants for September to April']],
+    ['3','How we will know it is working',['About '+num(R.unit_nights*S.peak_share)+' nights booked per home over the summer','Watch the 28 February rule-change deadline']]];
   s.append(h('p',{cls:'eyebrow',text:'Next steps'}),h('h2',{text:'What DDD does first.'}),
     h('div',{cls:'row',style:'gap:24px'},STEPS.map(([n,t,items])=>
       h('div',{cls:'card grow'},[h('p',{style:'font-size:58px;font-weight:800;color:var(--emerald)',text:n}),h('h3',{text:t}),
         h('ul',{},items.map(i=>h('li',{text:i})))]))),
-    h('p',{cls:'note',style:'font-size:27px;color:var(--emerald);font-weight:700',text:'We re-run the pipeline on each new snapshot.'}));
+    h('p',{cls:'note',style:'font-size:27px;color:var(--emerald);font-weight:700',text:'Every time new data comes out, we run the whole thing again.'}));
 }});
 
 /* ===================== 12. close ===================== */
 slide({id:'close',dark:true,build(s){
   s.append(h('p',{cls:'eyebrow',text:'The ask'}),
-    h('h1',{text:'Approve '+R.units+' condos downtown, subject to counsel’s sign-off.'}),
+    h('h1',{text:'Approve '+R.units+' one-bedroom condos downtown, once a tax lawyer signs off.'}),
     h('p',{cls:'sub',style:'color:var(--mint);font-weight:700;font-size:34px',text:fK(R.noi_p50)+' expected in 2027 on '+fM(R.deployed)+', with the risks priced in.'}),
-    h('p',{cls:'note',style:'color:#CFE4F2;max-width:1500px;font-size:26px',text:'Built with Claude under our direction, checked three ways. The tax reading is ours and needs counsel.'}));
+    h('p',{cls:'note',style:'color:#CFE4F2;max-width:1500px;font-size:26px',text:'Built with Claude under our direction, and checked three ways. The tax reading is ours, and a lawyer needs to confirm it.'}));
 }});
 
 /* ===================== backup: every assumption is a slider ===================== */
@@ -989,8 +1027,8 @@ setInterval(()=>{
   if(t0===null)return;
   const sec=Math.floor((Date.now()-t0)/1000);
   clock.textContent=Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
-  clock.classList.toggle('warn',sec>=390&&sec<420);
-  clock.classList.toggle('over',sec>=420);
+  clock.classList.toggle('warn',sec>=570&&sec<600);
+  clock.classList.toggle('over',sec>=600);
 },500);
 clock.addEventListener('click',()=>{t0=null;clock.textContent='0:00';clock.className='';});
 

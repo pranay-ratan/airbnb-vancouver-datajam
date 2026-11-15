@@ -1,87 +1,176 @@
-# Talk script: DDD Vancouver pitch (about 8 minutes)
+# Final-round script — Team Pandas
 
-Click once per map pin on slides 4, 7 and 8. About 140 words a minute; trim the Q&A-style detail if you have 7. Backup slides 13–19 are for Q&A.
+**15 slides, 10 minutes. Divya takes the odd slides, Pranay the even ones.**
+The timer in the nav bar turns amber at 9:30 and red at 10:00.
+Every figure is read from `outputs/metrics.json`, so this script and the slides cannot disagree.
 
-## 1. Cover (0:00–0:15)
+| # | Slide | Starts | Speaker |
+|---|---|---|---|
+| 1 | Cover | 0:00 | **DIVYA** |
+| 2 | The problem | 0:20 | **PRANAY** |
+| 3 | The recommendation | 0:55 | **DIVYA** |
+| 4 | The data | 1:35 | **PRANAY** |
+| 5 | Few big or many small | 2:50 | **DIVYA** |
+| 6 | Where | 3:25 | **PRANAY** |
+| 7 | June prices | 4:00 | **DIVYA** |
+| 8 | One unit | 4:40 | **PRANAY** |
+| 9 | Two calendars | 5:15 | **DIVYA** |
+| 10 | The biggest risk | 6:00 | **PRANAY** |
+| 11 | Risks and mitigation | 6:40 | **DIVYA** |
+| 12 | What didn't hold | 7:15 | **PRANAY** |
+| 13 | One home, in 3D | 8:05 | **DIVYA** |
+| 14 | Next steps | 8:55 | **PRANAY** |
+| 15 | The ask | 9:20 | **DIVYA** |
 
-Good morning. We're Team Two Calendars: Chitransh, Divya and Pranay. DDD asked where to put ten million dollars of short-term rental money. Our answer is 14 small condos downtown, each run on two calendars. We'll show you the answer, the number, and why you can believe it.
+---
 
-## 2. The problem (0:15–0:40)
+### 1 · Cover — 0:00 — DIVYA
 
-Here is the question in front of DDD. Ten million dollars, and three things to decide: where, how many and what kind, and how to run them. Vancouver allows short-term letting only in a principal residence, with a licence and provincial registration, and a home left empty for six months owes the Empty Homes Tax and the Speculation and Vacancy Tax. Those rules do most of the work in this answer.
+- Good morning — we're Team Pandas: Chitransh, Divya and Pranay
+- DDD asked where to put $10M of short-term rental money
+- Our answer: 14 small condos downtown, each run on two calendars
+- Built only on public data — and the pitch is live: the map, the sliders and the simulation run as we talk
 
-## 3. The recommendation (0:15–1:05)
+### 2 · The problem — 0:20 — PRANAY
 
-Fourteen one-bedroom condos: nine Downtown, four in Gastown and Chinatown, one in the West End. We expect $270K of net operating income in 2027, and in eight simulated years out of ten it lands between $213K and $340K. That is a 2.8% return on all-in cost. Our metric is 2027 net operating income divided by everything it costs to get a unit running: price, BC transfer tax, legal and furnishing. We chose it over revenue per dollar because property tax, strata and upkeep rise with price, and that is exactly what sinks houses. It is all cash, income only, with no price growth assumed. The two calendars come up in a few minutes.
+- Three decisions: where, how many and what kind, and how to run them
+- You may only rent out the home you live in, and you need a licence
+- Leave a home empty six months → Empty Homes Tax plus Speculation and Vacancy Tax: 4% of its value, every year
+- What we had to answer it with: one public Inside Airbnb snapshot, plus public prices, rents and tax rules — nothing private, nothing bought
 
-## 4. From 6,509 listings to 1,037 comparables (1:05–1:30)
+### 3 · The recommendation — 0:55 — DIVYA
 
-Our data is the 15 June Inside Airbnb file: 6,509 listings. We kept entire homes that are licensed, on the nightly market and reviewed for at least a year, which leaves 1,037 comparables. We insisted on a year of history because Inside Airbnb's occupancy is reviews times six nights, and a listing opened in March has no full year. That decision moved the core yield from 1.6% to 2.3%.
+- 14 one-bedroom condos: 9 Downtown, 4 in Gastown and Chinatown, 1 in the West End
+- $270K of rent left over in 2027, after every cost
+- 2.8% a year on the money we spend — price, transfer tax, lawyer, furniture
+- We ran 2027 five thousand times; 8 runs in 10 land between $213K and $340K
+- All cash, rent only, no bet on prices going up
 
-## 5. Houses earn almost nothing (1:05–1:45)
+### 4 · The data — 1:35 — PRANAY
 
-On those comparables, a typical house earns revenue but after property tax and upkeep keeps 0.4% on cost; condos keep 2.2%. We simulated five portfolio shapes for ten million dollars. 87% of west-side house portfolios earn under one percent; for our fourteen condos it is 5%. So: many small units.
+- Our data: Inside Airbnb's Vancouver file, scraped 15 June 2026 — 6,509 listings, 90 columns, a year of calendar ahead, and every review
+- We also pulled the December, March and September files — so we could check our answer on data we didn't build it on
+- From outside the file: house prices from Greater Vancouver REALTORS, furnished rents from liv.rent, vacancy from CMHC, tax rules from the City and the Province
+- How we processed it, left to right on the strip: one public file → clean and filter → fix the June prices → cost out one home → run 2027 five thousand times → check it on September
+- The filter, step by step: 6,509 listings → 5,322 whole homes → 3,826 rented by the night → 2,219 a fund could actually buy → 1,981 with both a City licence and a BC registration → 1,037 with a full year of reviews
+- Three things we caught before we trusted it: the price is a quote for one stay, not an average; nights booked are estimated from reviews, not recorded — we rebuilt their formula and matched 99.9% of listings; and 27% of whole homes only take stays of 90 nights or more
+- Why a full year of reviews: a place listed in March has no year to estimate from. That one rule moved the answer from 1.6% to 2.3%
 
-## 6. Map: where apartments earn most (1:45–2:30)
+### 5 · Few big or many small — 2:50 — DIVYA
 
-Each neighbourhood is shaded by what apartments there earn on cost. Click through. Downtown: 2.4% from 436 comparable listings. Gastown and Chinatown, 2.2%. Inside Airbnb files those towers under Downtown Eastside, but they trade like downtown, so we price them at the west-side benchmark; the east-side price would have flattered them at 2.8%. West End, 2.1%. Kitsilano drops to 1.2%. Mount Pleasant looks as good as the core, but it rests on 48 listings, with a range of 1.2% to 3.4%. We do not buy on that.
+- Five ways to spend the $10M, each one simulated. Houses lose
+- A house keeps 0.4% a year after property tax and repairs — 49% lose money outright
+- A condo keeps 2.2%
+- That just bought 600 new portfolios for every row — the order never changes
+- The reason: costs rise with the price of the home; rent doesn't
 
-## 7. Finding 1: June prices were World Cup prices (2:30–3:10)
+### 6 · Where — 3:25 — PRANAY
 
-First finding, and it is not obvious. The price field in the June file is a quote for one stay near the scrape date, mostly the week of 15 June, with later quotes in match weeks. Compare the same 2,865 listings against the September file and June costs 16 percent more, and up to 37 percent more in match weeks. Taking the price at face value would have lifted our core yield from 2.3% to 3.0%. Decision one: we divide June quotes by 1.14. Winter prices run 12 percent below September, so we also build a price index by month rather than using one flat price.
+- A downtown apartment keeps 2.4% a year per dollar spent — from 436 listings we can compare
+- Gastown and Chinatown 2.2%; Kitsilano drops to 1.2% — same rent, pricier buildings
+- The data files the Gastown towers under Downtown Eastside, but they sell like downtown — so we price them at the west-side price
+- Mount Pleasant looks as good, but on only 48 listings — not enough to buy on
 
-## 8. Two calendars (3:10–3:55)
+### 7 · June prices — 4:00 — DIVYA
 
-Decision five. Letting by the night all year earns about $220K, roughly what a plain twelve-month lease earns, $228K. Worse, a home that is not rented for six months in stays of thirty nights or more owes the City's Empty Homes Tax of three percent and the Province's Speculation and Vacancy Tax of one percent of assessed value. Nightly-only would turn into a loss of about $152K. Half of a year's stays fall in May to August, so we let by the night then, and furnished for thirty nights or more the rest of the year: $270K. We tested a fifth nightly month; it leaves 3.9 of fourteen units short of the six-month test. That tax reading is ours, and we want counsel to confirm it before any offer.
+- The price in the file is a quote for one stay near the day it was scraped
+- Same 2,865 places, checked against September: June costs 16% more
+- Up to 37% more in World Cup match weeks — the World Cup is sitting inside the data
+- So we cut every June price by 12% before using it
+- Taking it as printed would have shown 3.0% instead of 2.3%
 
-## 9. Map: the supply that returns if Vancouver opts out (3:55–4:35)
+### 8 · One unit — 4:40 — PRANAY
 
-This is the biggest risk. A city can ask the Province to opt out of the principal-residence rule if its rental vacancy has been three percent or more for two years. Kelowna did on 1 June 2026. A Vancouver request by 28 February 2027 could take effect on 1 June, five months into our measured year. The map shows where that supply sits: the share of entire homes with a ninety-night minimum, which is outside the short-term definition today. In the core there are 657 such apartments against 1,254 on the nightly market. If every one switched and demand stayed flat, nightly revenue per listing would fall 34 percent. Our two-calendar plan holds $232K at a twenty percent fall, while nightly-only drops to $153K. That is the main reason for the furnished months.
+- A real listing we can compare to: one bedroom downtown, booked 156 nights a year
+- No host, no link, no licence number
+- By the night in summer, long stays the rest of the year
+- Then the Airbnb fee, the manager, the cleaning, and the cost of owning it
+- About $19,000 left over — times 14, that's the $270K
 
-## 10. Map: where the 14 units go (4:35–5:05)
+### 9 · Two calendars — 5:15 — DIVYA
 
-Here is where the money goes. Nine units Downtown, where the most evidence sits. Four in Gastown and Chinatown. One in the West End. Each unit costs about $691K all-in, so fourteen use $9.7M and leave $0.3M in reserve because a fifteenth does not fit. We kept the mix in proportion to where comparable listings actually are, rather than chasing the single best postcode.
+- By the night all year: about $220K — about what a normal lease brings in, $228K
+- Worse: no six months of long stays → both empty-home taxes → a loss of $152K
+- A fifth month by the night breaks the six-month rule — that's the red number
+- Half the year's bookings are May to August: by the night then, long stays the rest → $270K
 
-## 11. Risks and mitigation (5:05–5:50)
+### 10 · The biggest risk — 6:00 — PRANAY
 
-Three risks. First, the opt-out. At ten, twenty and thirty-four percent less nightly revenue, income is $250K, $232K and $202K. The mitigation is built in: eight months of the year are furnished stays outside the nightly market. Second, paying too much. Twenty percent above benchmark takes the yield from 2.9% to 2.3%; we set an offer ceiling per building and ask each seller for twelve months of actual bookings, because occupancy here is an estimate. Third, our tax reading. Counsel signs off before the first offer. Two more, briefly: strata bylaws that ban short stays, and capital value, since apartment prices fell five point nine percent in the year to October. Our yield counts income only.
+- A city with 3% rental vacancy for two years can ask the Province to drop the live-in-it rule
+- Kelowna did, on 1 June 2026
+- If Vancouver asks by 28 February, it lands five months into our year — thousands of homes could start renting by the night
+- At 20% less by the night: our plan still keeps $232K; by the night alone drops to $153K
+- That gap is why the long-stay months exist
 
-## 12. We tested it; it didn't hold (5:50–6:25)
+### 11 · Risks and mitigation — 6:40 — DIVYA
 
-We also tell you what did not hold. Superhosts show 168 estimated nights against 132, but that estimate is just reviews times six, and the forward calendar shows no gap, so we left that premium out. A one-night minimum looked better, but the calendar showed no clean pattern, so we did not rely on it. Five nightly months, two-bedrooms and a house with a suite and laneway home all lost to the plan. And what held up: re-running everything on the September snapshot gives 2.2% against 2.3%; we reproduced Inside Airbnb's own occupancy formula for 100% of listings; and the top segments stayed on top in 99% of three hundred random splits.
+- Three things could break this — each has a number and a plan
+- The rule change: the long-stay months already absorb it
+- Overpay by 20% and we keep 2.3% instead of 2.9% → a top price per building, and a year of real bookings from every seller
+- The booking numbers here are a guess, not a fact
+- Our own reading of the tax rules → a tax lawyer signs off before we buy anything
 
-## 13. Next steps (6:25–6:45)
+### 12 · What didn't hold — 7:15 — PRANAY
 
-Three steps. Before buying: written tax advice on the six-month test, and a building-by-building screen for strata bylaws, licences and real bookings. By the first of January: furnish and register each unit, and line up furnished tenants for September to April. And here is how you will know it is working: about 77 booked nights per unit in May to August, and a close eye on the twenty-eighth of February opt-out deadline and the published vacancy rate. We re-run the whole pipeline on each new Inside Airbnb snapshot.
+- We'll tell you what we threw away
+- Superhosts look like 168 nights against 132 — but the data turns reviews into nights, and they just have more reviews. Their real calendars look the same. Dropped
+- Also tested and lost: one-night minimums, a five-month summer, two-bedrooms, a house with a suite and laneway
+- Three limits: one day's scrape; nights are a guess from reviews; prices are area averages, not real buildings
+- What held: their booking maths rebuilt and matched for 99.9% of listings; September's data gives 2.2% against 2.3%; the same areas on top in 99% of 300 random half-splits
 
-## 14. The ask (6:45–7:00)
+### 13 · One home, in 3D — 8:05 — DIVYA
 
-Our ask: approve fourteen one-bedroom condos downtown, subject to counsel's sign-off on the tax reading. About two hundred and seventy thousand dollars expected in 2027, with the risks priced in. One last thing on method: we used Claude to help write the pipeline and these slides, and we checked it three ways: reproducing Inside Airbnb's own formulas, re-running on the September snapshot, and tracing every number on these slides to code in our repository. We're happy to take questions.
+- This is one of the 14: a one-bedroom downtown, furnished once for $18,000
+- May to August it's listed by the night: self check-in lock, fresh linens and a welcome kit, a cleaner between guests
+- About 77 nights booked over the summer
+- Then it switches: September to April, listed for stays of 30 nights or more, one tenant at a time — $2,900 a month
+- The desk, the full wardrobe, the coat rack — that's what makes a month-long tenant say yes
+- Licensed and provincially registered before the first guest
+- Same home, same furniture, two calendars — the whole plan in one picture
 
-## 15. Backup: data and cleaning (Q&A)
+### 14 · Next steps — 8:55 — PRANAY
 
-Backup. Cleaning funnel is in outputs/tables/cleaning_funnel.csv.
+- Before buying: written tax advice, and a check of every building — its rules, its licence, a year of real bookings
+- By January: furnish, register, find long-stay tenants
+- Two numbers to watch: about 77 nights booked per home over the summer, and the 28 February deadline
+- Every time new data comes out, we run the whole thing again
 
-## 16. Backup: key assumptions (Q&A)
+### 15 · The ask — 9:20 — DIVYA
 
-Keep this slide up during Q&A. Every number is in src/assumptions.py and the dashboard sliders move each one.
+- Approve 14 one-bedroom condos downtown, once a tax lawyer signs off
+- $270K expected in 2027 on $9.7M, with the risks priced in
+- We used Claude to help build the pipeline and this page
+- Checked three ways: the data provider's own formulas, a different month's data, and a test that compares every number on screen with what the code produces
+- Happy to take questions
 
-## 17. Backup: decision log 1 (Q&A)
+---
 
-Decisions 1–3. Each has what we chose, why, and what it changed.
+## What to click (keep this beside the laptop)
+- **1 · Cover** — Full screen (F) and reset the timer before you start
+- **3 · The recommendation** — Drag the scrubber to the bad end and back
+- **4 · The data** — Point along the process strip at the bottom; click the last bar
+- **5 · Few big or many small** — Press "Run it again"
+- **6 · Where** — Hover Downtown, click it, press "Zoom in"; flick to "Our plan"
+- **7 · June prices** — Hover the tallest bar
+- **8 · One unit** — Wait for the zoom to land
+- **9 · Two calendars** — Click September on, show the red, click it off again
+- **10 · The biggest risk** — Drag the slider slowly to 20%
+- **12 · What didn't hold** — Click the Superhost card
+- **13 · One home, in 3D** — The video plays on its own; click it to pause if a judge asks something
 
-## 18. Backup: decision log 2 (Q&A)
+## Q&A — who takes what
+Pranay takes the data and the checks (slides 2, 4, 6, 8, 10, 12, 14). Divya takes the money and the plan (slides 3, 5, 7, 9, 11, 13, 15).
 
-Decisions 4–8.
+- **"Why not houses?"** → 5. Rent goes up with price, but so do property tax, strata fees and repairs
+- **"Why only four months by the night?"** → 9, click September on, show the red
+- **"What if prices are higher?"** → B, then drag the purchase-price slider
+- **"Isn't the booking number just reviews?"** → yes, and we say so: it's why we demand a full year of history and real bookings from every seller
+- **"What if Vancouver drops the rule?"** → 10, drag the slider
+- **"Slide 9 shows more than $270K."** → slide 9 adds the months up in a straight line so you can watch them change; the headline is the middle of 5,000 simulated years, which also carries the first-year discount and the shocks
+- **"How do we know the code is right?"** → 12, and the repo: September's file is different data through the same code
+- **"Is the 3D home real?"** → it's our model of one of the 14: a typical downtown one-bedroom layout, furnished to the $18,000 budget in our numbers
 
-## 19. Backup: validation (Q&A)
-
-Backup. The September re-run is the main out-of-sample test: different snapshot, same code.
-
-## 20. Backup: limits and use of AI (Q&A)
-
-Backup. [Confirm before presenting: each team member can explain every step.]
-
-## 21. Sources (Q&A)
-
-Backup. Links are in the dashboard's Method section.
+## Before you walk in
+- Both of you can defend **any of the eight logged decisions** — 9 of the 30 marks, and the judges pick which
+- Run it once end to end with the timer going
+- Decide whether Chitransh fields questions, so nobody hesitates

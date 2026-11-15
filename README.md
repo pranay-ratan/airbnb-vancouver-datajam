@@ -27,7 +27,10 @@ Data: Inside Airbnb, Vancouver, 15 June 2026, CC BY 4.0. No host names, listing 
 | **Interactive pitch** (presented live: zoomable map, month toggles, opt-out slider, in-browser Monte Carlo) | `deliverables/build_pitch.py` + `pitch_template.html` | `outputs/pitch/index.html` |
 | Slide deck (same analysis, static; exports to .pptx) | `deliverables/build_deck.py` | `deliverables/deck/project/` |
 | Dashboard (deep dive) | `deliverables/build_dashboard.py` | `outputs/dashboard/index.html` |
-| Talk script and rubric map | — | `docs/talk_script.md`, `docs/rubric_check.md` |
+| 3D room tour (one home, summer set-up switching to winter set-up; plays on slide 13) | `deliverables/room_tour/build_room_tour.py` + `scene.html` (three.js) | `outputs/pitch/room_tour.mp4` |
+| Talk script and rubric map | `deliverables/build_script.py` | `docs/talk_script.md`, `docs/rubric_check.md` |
+
+The room tour needs `cd deliverables/room_tour && npm install` and ffmpeg, and takes about six minutes to render, so `run_all.sh` does not rebuild it; run `python3 -I deliverables/room_tour/build_room_tour.py` after the numbers change.
 
 Each builder reads only `metrics.json`, so every figure on a slide comes from the table above. The pitch and the dashboard re-run the same unit economics and Monte Carlo in the browser: `build_pitch.py` lifts that JavaScript verbatim out of `dashboard_template.html`, which mirrors `src/04_unit_economics.py` and `src/05_portfolio.py`.
 

@@ -1,4 +1,4 @@
-# Devpost draft: Team Two Calendars (SFU DSSS DataJam 2026)
+# Devpost draft: Team Pandas (SFU DSSS DataJam 2026)
 
 Status: DRAFT. I could not find a public Devpost page for this DataJam, and the case brief names only two deliverables (a pitch and a GitHub repo). If your organisers gave you a Devpost link, paste the fields below into it.
 

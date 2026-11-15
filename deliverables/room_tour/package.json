@@ -1,0 +1,6 @@
+{
+  "name": "room-tour",
+  "private": true,
+  "description": "3D tour of one furnished one-bedroom, rendered to video by build_room_tour.py",
+  "dependencies": { "three": "0.169.0" }
+}

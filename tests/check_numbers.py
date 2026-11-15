@@ -27,6 +27,10 @@ check(bool(pitch), "the interactive pitch is built (outputs/pitch/index.html)")
 check(M["credit"] in pitch, "the pitch carries the Inside Airbnb credit line")
 check("__DATA__" not in pitch and "__MODEL__" not in pitch, "the pitch template placeholders were filled in")
 check("function simulate(" in pitch, "the pitch runs the same simulation as src/05_portfolio.py")
+tour = ROOT / "outputs/pitch/room_tour.mp4"
+check("room_tour.mp4" in pitch and tour.exists() and tour.stat().st_size < 20e6, "the 3D room tour video is built and under the 20 MB artifact limit")
+scene = (ROOT / "deliverables/room_tour/scene.html").read_text()
+check("window.__CFG" in scene, "the 3D tour reads its numbers from metrics.json, not hard-coded text")
 for name in ["listing_url", "host_name", "host_url", "picture_url", '"license"']:
     data = (ROOT / "outputs/dashboard_data.json").read_text()
     check(name not in dash and name not in data and name not in pitch, f"no '{name}' field in the pitch, dashboard or data")
