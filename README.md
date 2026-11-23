@@ -1,10 +1,30 @@
-# The Airbnb Vancouver Problem: SFU DSSS DataJam 2026
+# The Airbnb Vancouver Problem
 
-**Answer.** Buy 14 one-bedroom condos in Downtown, Gastown/Chinatown and the West End ($9.7M of $10M). Let them by the night May to August and by the month (30+ nights) September to April. Expected 2027 net operating income **$270K** (8 years in 10 between $213K and $340K), a 2.8% return on all-in cost. Return metric: 2027 NOI / (price + BC transfer tax + legal + furnishing), all cash.
+Where should a $10M fund buy short-term rentals in Vancouver, and how should it run them? A reproducible pipeline and interactive dashboard built for the SFU DSSS DataJam 2026, for an investment committee deciding where to put the money.
+
+**Live dashboard:** https://pranay-ratan.github.io/airbnb-vancouver-datajam/ · **Code:** this repo
+
+![Dashboard screenshot](docs/screenshot-dashboard.png)
+<!-- TODO: add docs/screenshot-dashboard.png (top of the dashboard: recommendation + NOI range) -->
+
+**Stack:** Python (pandas, NumPy) · Monte Carlo simulation · static HTML/JS dashboard and slide deck generated from the pipeline outputs
+
+## Key results
+All figures come from `outputs/metrics.json`; `tests/check_numbers.py` checks the deck and dashboard against it.
+
+- **Recommendation:** buy 14 one-bedroom condos ($9.68M of the $10M budget): 9 in Downtown, 4 in Downtown Eastside (Gastown/Chinatown) and 1 in the West End.
+- **Expected 2027 net operating income: $270K** (P10–P90: $213K–$340K), a **2.8%** median return on all-in cost.
+- Comparables: 321 licensed listings, filtered from 6,509 in the 15 June 2026 Inside Airbnb snapshot.
+- Inside Airbnb's own revenue and occupancy formulas are reproduced (revenue correlation 1.00, occupancy formula match 99.9%).
+
+- **Operating plan:** rent by the night May to August and by the month (30+ nights) September to April.
+- Return metric: 2027 NOI / (price + BC transfer tax + legal + furnishing), all cash.
 
 Data: Inside Airbnb, Vancouver, 15 June 2026, CC BY 4.0. No host names, listing URLs or licence numbers are published anywhere in this repo.
 
-## Reproduce
+## Run it locally
+The outputs, dashboard and deck are committed, so you can open `outputs/dashboard/index.html` straight away. To rebuild everything from raw data:
+
 1. Download from https://insideairbnb.com/get-the-data/ (Vancouver) into `data/raw/insideairbnb/<date>/` : `listings.csv.gz`, `calendar.csv.gz`, `reviews.csv.gz` for `2026-06-15` (the brief's dataset) and `2026-09-17`; `listings.csv.gz` for `2025-12-14` and `2026-03-21`; `neighbourhoods.geojson` in `data/raw/insideairbnb/`.
 2. `pip install -r requirements.txt` then `./run_all.sh` (runs 9 scripts, builds the dashboard and deck, runs the tests).
 
