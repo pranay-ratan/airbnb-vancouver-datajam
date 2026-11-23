@@ -5,7 +5,6 @@ Where should a $10M fund buy short-term rentals in Vancouver, and how should it 
 **Live dashboard:** https://pranay-ratan.github.io/airbnb-vancouver-datajam/ · **Code:** this repo
 
 ![Dashboard screenshot](docs/screenshot-dashboard.png)
-<!-- TODO: add docs/screenshot-dashboard.png (top of the dashboard: recommendation + NOI range) -->
 
 **Stack:** Python (pandas, NumPy) · Monte Carlo simulation · static HTML/JS dashboard and slide deck generated from the pipeline outputs
 
